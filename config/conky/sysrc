@@ -1,0 +1,79 @@
+conky.config = {
+alignment = 'top_left',
+background = false,
+border_width = 1,
+cpu_avg_samples = 2,
+default_color = 'white',
+default_outline_color = 'white',
+default_shade_color = 'white',
+draw_borders = false,
+draw_graph_borders = true,
+draw_outline = false,
+draw_shades = false,
+use_xft = true,
+font = 'Input Mono:size=9',
+gap_x = 300,
+gap_y = 300,
+minimum_size = '5 5',
+net_avg_samples = 2,
+double_buffer = true,
+out_to_console = false,
+out_to_stderr = false,
+extra_newline = false,
+own_window = true,
+own_window_class = 'Conky',
+own_window_type = 'desktop',
+stippled_borders = 0,
+update_interval = 1.0,
+uppercase = false,
+use_spacer = 'none',
+show_graph_scale = false,
+show_graph_range = false,
+own_window_transparent = true
+}
+
+conky.text = [[
+${color ce2c51}Kernel${color ffffff}
+ +
+ | @ ${kernel}
+ +
+${color ce2c51}Systeme${color ffffff}
+ +
+ | @ CPU:  ${cpu cpu0}% @$freq Mhz
+ | @ RAM:  $mem/$memmax - $memperc%
+ | @ Core Temp: ${hwmon 1 temp 2}C° 
+ | @ /:    ${fs_free /root}/${fs_size /root}
+ +
+${if_existing /sys/class/net/enp7s0/operstate up}${color ce2c51}Ethernet${color ffffff}
+ +
+ | @ U: ${upspeed enp7s0}/s ~${totalup enp7s0} 
+ | @ D: ${downspeed enp7s0}/s ~${totaldown enp7s0}
+ +
+${endif}${if_existing /sys/class/net/wlp1s0/operstate up}${color ce2c51}Wifi${color ffffff}
+ +
+ | @ U: ${upspeed wlp1s0}/s ~${totalup wlp1s0}
+ | @ D: ${downspeed wlp1s0}/s ~${totaldown wlp1s0}
+ +
+${endif}${if_existing /sys/class/net/enp0s29u1u3/operstate}${color ce2c51}Phone${color ffffff}
+ +
+ | @ U: ${upspeed enp0s29u1u3}/s ~${totalup enp0s29u1u3}
+ | @ D: ${downspeed enp0s29u1u3}/s ~${totaldown enp0s29u1u3}
+ +
+${endif}${color ce2c51}Processus${color ffffff}
+ +
+ | + NOM                        PID     
+ | @ ${top name 1} $alignr ${top pid 1} ${top cpu 1}
+ | @ ${top name 2} $alignr ${top pid 2} ${top cpu 2}
+ | @ ${top name 3} $alignr ${top pid 3} ${top cpu 3}
+ | @ ${top name 4} $alignr ${top pid 4} ${top cpu 4}
+ | @ ${top name 5} $alignr ${top pid 5} ${top cpu 5}
+ +
+${color ce2c51}Memoire${color ffffff}
+ +
+ | + NOM                        PID     
+ | @ ${top_mem name 1} $alignr ${top_mem pid 1} ${top_mem mem 1}
+ | @ ${top_mem name 2} $alignr ${top_mem pid 2} ${top_mem mem 2}
+ | @ ${top_mem name 3} $alignr ${top_mem pid 3} ${top_mem mem 3}
+ | @ ${top_mem name 4} $alignr ${top_mem pid 4} ${top_mem mem 4}
+ | @ ${top_mem name 5} $alignr ${top_mem pid 5} ${top_mem mem 5}
+ ]]

@@ -1,0 +1,18 @@
+# Wallpaper
+wp_name="wallpaper.png"
+wp_path="/home/burakkose/.config/wallpaper"
+wallpaper="$wp_path/$wp_name"
+feh -F "$wallpaper" --bg-fill &
+
+volumeicon &
+
+compton --config ~/.config/compton.conf -b &
+
+tint2 &
+plank &
+
+conky -c ~/.config/conky/sysrc &
+conky -c ~/.config/conky/timerc &
+conky -c ~/.config/conky/daterc &
+
+lxpolkit &
