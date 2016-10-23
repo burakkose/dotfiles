@@ -33,4 +33,4 @@ done
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 #packages (so, install script is based on Arch system [yaourt])
-yaourt -Syyua --noconfirm && yaourt -S leafpad spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git --noconfirm --needed
+yaourt -Syyua --noconfirm && yaourt -S leafpad spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata --noconfirm --needed
