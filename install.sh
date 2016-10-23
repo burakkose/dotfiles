@@ -21,7 +21,7 @@ echo "Changing to the $dir directory"
 cd $dir
 echo "...done"
 
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks 
+# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
 for file in $files; do
     echo "Moving any existing dotfiles from ~ to $olddir"
     mv ~/.$file ~/dotfiles_old/
@@ -29,8 +29,20 @@ for file in $files; do
     ln -s $dir/$file ~/.$file
 done
 
-#oh-my-zsh
+# oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-#packages (so, install script is based on Arch system [yaourt])
+# Packages (so, install script is based on Arch system [yaourt])
 yaourt -Syyua --noconfirm && yaourt -S leafpad spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata --noconfirm --needed
+
+# Firefox Extensions
+# -> AdBlocker
+# -> Developer Tools - toolbar button
+# -> Firebug
+# -> FireStorage Plus
+# -> Grammarly
+# -> S3.Google Translator
+# -> Screengrab
+# -> Send to Kindle
+# -> VimFx
+wget https://addons.mozilla.org/firefox/downloads/latest/adblocker-ultimate/addon-686646-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/grammarly-1/addon-566314-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/firebug/addon-1843-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/web-developer-tools-/addon-353054-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/firestorage-plus/addon-423470-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/sendtokindle/addon-399764-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/screengrab-fix-version/addon-355813-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/s3google-translator/addon-285546-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/vimfx/addon-404785-latest.xpi && firefox *.xpi && rm *.xpi
