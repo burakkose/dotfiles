@@ -10,7 +10,7 @@
 				<item label="Edit autostart">
 					<action name="Execute">
 						<execute>
-							mousepad ~/.config/openbox/autostart
+							leafpad ~/.config/openbox/autostart
 						</execute>
 					</action>
 				</item>
@@ -76,7 +76,7 @@
 				<item label="Edit tint2rc">
 					<action name="Execute">
 						<execute>
-							mousepad ~/.config/tint2/tint2rc
+							leafpad ~/.config/tint2/tint2rc
 						</execute>
 					</action>
 				</item>
@@ -106,13 +106,6 @@
 				<action name="Execute">
 					<execute>
 						lxappearance
-					</execute>
-				</action>
-			</item>
-			<item label="Wallpaper">
-				<action name="Execute">
-					<execute>
-						nitrogen
 					</execute>
 				</action>
 			</item>
