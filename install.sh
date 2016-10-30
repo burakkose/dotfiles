@@ -20,7 +20,8 @@ files="themes zshrc config atom"       # list of files/folders to symlink in hom
 ##########
 
 function install {
-  sudo pacman -S curl tar makepkg
+  sudo pacman -S curl tar --noconfirm --needed
+
   if hash yaourt 2>/dev/null; then
     echo "Yaourt is OK!"
   else
@@ -44,7 +45,7 @@ function install {
   fi
 
   # Packages (so, install script is based on Arch system [yaourt])
-  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller powerline-fonts arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata --noconfirm --needed
+  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata --noconfirm --needed
 
   # oh-my-zsh
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
