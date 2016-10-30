@@ -207,6 +207,50 @@
     </keybind>
     <chainQuitKey>C-g</chainQuitKey>
     <!-- Keybindings for desktop switching -->
+    <keybind key="C-A-H">
+      <action name="GoToDesktop">
+        <to>left</to>
+        <wrap>no</wrap>
+      </action>
+    </keybind>
+   <keybind key="C-S-A-Left">  
+      <action name="MoveResizeTo">
+ 	<monitor>2</monitor>
+      </action>
+   </keybind>
+   <keybind key="C-S-A-Right"> 
+      <action name="MoveResizeTo">
+	<monitor>1</monitor>
+      </action>
+   </keybind>
+   <keybind key="C-S-A-H">  
+      <action name="MoveResizeTo">
+ 	<monitor>2</monitor>
+      </action>
+   </keybind>
+   <keybind key="C-S-A-L"> 
+      <action name="MoveResizeTo">
+	<monitor>1</monitor>
+      </action>
+   </keybind>
+    <keybind key="C-A-L">
+      <action name="GoToDesktop">
+        <to>right</to>
+        <wrap>no</wrap>
+      </action>
+    </keybind>
+    <keybind key="C-A-K">
+      <action name="GoToDesktop">
+        <to>up</to>
+        <wrap>no</wrap>
+      </action>
+    </keybind>
+    <keybind key="C-A-J">
+      <action name="GoToDesktop">
+        <to>down</to>
+        <wrap>no</wrap>
+      </action>
+    </keybind>
     <keybind key="C-A-Left">
       <action name="GoToDesktop">
         <to>left</to>
@@ -398,9 +442,7 @@
         <action name="Resize"/>
       </mousebind>
       <mousebind button="A-Middle" action="Press">
-        <action name="Lower"/>
-        <action name="FocusToBottom"/>
-        <action name="Unfocus"/>
+	<action name="Close"/>
       </mousebind>
       <mousebind button="A-Up" action="Click">
         <action name="GoToDesktop">
