@@ -185,10 +185,17 @@
     <keybind key="A-Down">
       <action name="Unmaximize"/>
     </keybind>
-    <keybind key="A-d">
+    <keybind key="A-r">
       <action name="Execute">
         <command>
           rofi -show run
+        </command>
+      </action>
+    </keybind>
+    <keybind key="A-w">
+      <action name="Execute">
+        <command>
+          rofi -show window
         </command>
       </action>
     </keybind>
