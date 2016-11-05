@@ -70,6 +70,7 @@ numix-circle-icon-theme-git
 thefuck 
 the_silver_searcher 
 jq 
+libreoffice-fresh
 ttf-inconsolata
 ```
 
