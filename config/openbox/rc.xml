@@ -151,11 +151,6 @@
     <keybind key="A-S-d">
       <action name="ToggleDecorations"/>
     </keybind>
-    <keybind key="C-A-l">
-      <action name="Execute">
-        <command>xautolock -locknow</command>
-      </action>
-    </keybind>
     <keybind key="A-Left">
       <action name="UnmaximizeFull"/>
       <action name="MaximizeVert"/>
