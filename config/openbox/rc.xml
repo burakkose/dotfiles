@@ -231,6 +231,13 @@
         </command>
             </action>
         </keybind>
+        <keybind key="A-d"> #Rofi script for changing desktop
+            <action name="Execute">
+                <command>
+          sh ~/dotfiles/config/rofi/openbox_switch_workspace.sh
+        </command>
+            </action>
+        </keybind>
         <keybind key="A-w">
             <action name="Execute">
                 <command>

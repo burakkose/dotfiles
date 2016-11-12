@@ -72,6 +72,7 @@ the_silver_searcher
 jq 
 libreoffice-fresh
 ttf-inconsolata
+wmctrl
 ```
 
 Install script also contains Firefox plugins. Here is the list of plugins that is installed automatically
