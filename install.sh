@@ -13,9 +13,9 @@ read yes
 
 ########## Variables
 
-dir=~/dotfiles                                # dotfiles directory
-olddir=~/dotfiles_old                         # old dotfiles backup directory
-files="themes zshrc config atom nano nanorc"  # list of files/folders to symlink in homedir
+dir=~/dotfiles                                        # dotfiles directory
+olddir=~/dotfiles_old                         	      # old dotfiles backup directory
+files="themes zshrc config atom nano nanorc xinitrc"  # list of files/folders to symlink in homedir
 
 ##########
 
