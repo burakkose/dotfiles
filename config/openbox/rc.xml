@@ -250,6 +250,13 @@
         </command>
       </action>
     </keybind>
+    <keybind key="A-t">
+      <action name="Execute">
+        <command>
+          thunar
+        </command>
+      </action>
+    </keybind>
     <keybind key="C-A-t">
       <action name="Execute">
         <command>terminator</command>
