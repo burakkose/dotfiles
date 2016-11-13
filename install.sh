@@ -13,9 +13,9 @@ read yes
 
 ########## Variables
 
-dir=~/dotfiles                                        # dotfiles directory
-olddir=~/dotfiles_old                         	      # old dotfiles backup directory
-files="themes zshrc config atom nano nanorc xinitrc"  # list of files/folders to symlink in homedir
+dir=~/dotfiles                                            # dotfiles directory
+olddir=~/dotfiles_old                         	      	  # old dotfiles backup directory
+files="themes zshrc config atom nano nanorc xinitrc bin"  # list of files/folders to symlink in homedir
 
 ##########
 
@@ -45,7 +45,7 @@ function install {
   fi
 
   # Packages (so, install script is based on Arch system [yaourt])
-  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller auto-xflux wmctrl powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata libreoffice-fresh --noconfirm --needed
+  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller auto-xflux i3lock imagemagick wmctrl powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata libreoffice-fresh --noconfirm --needed
 
   # oh-my-zsh
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"

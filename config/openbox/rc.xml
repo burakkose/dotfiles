@@ -224,6 +224,13 @@
     <keybind key="W-A-S-Down">
       <action name="Unmaximize"/>
     </keybind>
+    <keybind key="W-l">
+      <action name="Execute">
+        <command>
+          sh ~/.bin/lock
+        </command>
+      </action>
+    </keybind>
     <keybind key="A-m">
       <action name="Execute">
         <command>
