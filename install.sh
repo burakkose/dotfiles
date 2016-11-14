@@ -9,7 +9,10 @@ echo "so please check before installing..."
 echo "================================================"
 echo ""
 echo -n "Proceed with installation? [Y/n] "
-read yes
+read scriptOpt
+echo ""
+echo -n "Do you want to install firefox extensions? [Y/n] "
+read firefoxOpt
 
 ########## Variables
 
@@ -45,7 +48,7 @@ function install {
   fi
 
   # Packages (so, install script is based on Arch system [yaourt])
-  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller oh-my-zsh-git auto-xflux i3lock imagemagick wmctrl powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata libreoffice-fresh --noconfirm --needed
+  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller oh-my-zsh-git auto-xflux i3lock-blur imagemagick wmctrl powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad-noheader spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata libreoffice-fresh --noconfirm --needed
 
   # create dotfiles_old in homedir
   echo "Creating $olddir for backup of any existing dotfiles in ~"
@@ -68,21 +71,23 @@ function install {
   # Active zsh changes
   source ~/.zshrc
 
-  # Firefox Extensions
-  # -> AdBlocker
-  # -> Developer Tools - toolbar button
-  # -> Firebug
-  # -> FireStorage Plus
-  # -> Grammarly
-  # -> S3.Google Translator
-  # -> Screengrab
-  # -> Send to Kindle
-  # -> VimFx
-  # -> Thumbnail Zoom Plus
-  wget https://addons.mozilla.org/firefox/downloads/latest/adblocker-ultimate/addon-686646-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/grammarly-1/addon-566314-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/firebug/addon-1843-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/web-developer-tools-/addon-353054-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/firestorage-plus/addon-423470-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/sendtokindle/addon-399764-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/screengrab-fix-version/addon-355813-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/s3google-translator/addon-285546-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/vimfx/addon-404785-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/thumbnail-zoom-plus/addon-337643-latest.xpi && firefox *.xpi && rm *.xpi
+  if [[ $firefoxOpt == "Y" || $firefoxOpt == "y" || $firefoxOpt == "" ]]; then
+    # Firefox Extensions
+    # -> AdBlocker
+    # -> Developer Tools - toolbar button
+    # -> Firebug
+    # -> FireStorage Plus
+    # -> Grammarly
+    # -> S3.Google Translator
+    # -> Screengrab
+    # -> Send to Kindle
+    # -> VimFx
+    # -> Thumbnail Zoom Plus
+    wget https://addons.mozilla.org/firefox/downloads/latest/adblocker-ultimate/addon-686646-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/grammarly-1/addon-566314-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/firebug/addon-1843-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/web-developer-tools-/addon-353054-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/firestorage-plus/addon-423470-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/sendtokindle/addon-399764-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/screengrab-fix-version/addon-355813-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/s3google-translator/addon-285546-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/vimfx/addon-404785-latest.xpi && wget https://addons.mozilla.org/firefox/downloads/latest/thumbnail-zoom-plus/addon-337643-latest.xpi && firefox *.xpi && rm *.xpi
+  fi
 }
 
-if [[ $yes == "Y" || $yes == "y" || $yes == "" ]]; then
+if [[ $scriptOpt == "Y" || $scriptOpt == "y" || $scriptOpt == "" ]]; then
   install
 else
   echo "Exiting ..."
