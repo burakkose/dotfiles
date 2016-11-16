@@ -13,10 +13,13 @@ read scriptOpt
 echo ""
 echo -n "Do you want to install firefox extensions? [Y/n] "
 read firefoxOpt
+echo ""
+echo -n "Do you want to install extra fonts? [Y/n] "
+read fontsOpt
 
 ########## Variables
 
-dir=~/dotfiles                                            	     # dotfiles directory
+dir=~/dotfiles                                            	         # dotfiles directory
 olddir=~/dotfiles_old                         	      	             # old dotfiles backup directory
 files="themes bin zsh zshrc config atom nano nanorc xinitrc wgetrc"  # list of files/folders to symlink in homedir
 
@@ -50,6 +53,26 @@ function install {
   # Packages (so, install script is based on Arch system [yaourt])
   yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller xorg-xprop oh-my-zsh-git auto-xflux i3lock-blur imagemagick wmctrl powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad-noheader spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata libreoffice-fresh --noconfirm --needed
 
+  if ! grep -q "infinality" "/etc/pacman.conf" && [[ $fontsOpt == "Y" || $fontsOpt == "y" || $fontsOpt == "" ]]; then
+      echo "Installing extra fonts"
+      sudo echo "
+    [infinality-bundle]
+    Server = http://bohoomil.com/repo/$arch
+
+    [infinality-bundle-multilib]
+    Server = http://bohoomil.com/repo/multilib/$arch
+
+    [infinality-bundle-fonts]
+    Server = http://bohoomil.com/repo/fonts
+    " >> /etc/pacman.conf
+    sudo pacman-key -r 962DDE58
+    sudo pacman-key --lsign-key 962DDE58
+    sudo pacman -Syyu
+    yaourt -S ttf-bitstream-vera ttf-inconsolata ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-linux-libertine ttf-liberation otf-ipafont ttf-amiri ttf-ancient-fonts ttf-ms-fonts ttf-monaco ttf-noto ttf-vista-fonts infinality-bundle infinality-bundle-multilib ibfonts-meta-base --noconfirm  --needed
+    sudo ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+    fi
+
+
   # create dotfiles_old in homedir
   echo "Creating $olddir for backup of any existing dotfiles in ~"
   mkdir -p $olddir
@@ -72,6 +95,7 @@ function install {
   source ~/.zshrc
 
   if [[ $firefoxOpt == "Y" || $firefoxOpt == "y" || $firefoxOpt == "" ]]; then
+    echo "Installing Firefox extensions"
     # Firefox Extensions
     # -> AdBlocker
     # -> Developer Tools - toolbar button
