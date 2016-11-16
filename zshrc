@@ -1,5 +1,5 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export ZSH=/home/burakkose/.oh-my-zsh
+export ZSH=/usr/share/oh-my-zsh/
 
 DISABLE_AUTO_UPDATE="true"
 
@@ -20,6 +20,7 @@ alias ....='cd ../../..'
 alias grep='grep --color=auto'
 alias ping='ping -c 5'
 alias df='df -h'
+alias c='clear'
 chpwd() ls
 
 eval "$(thefuck --alias)"
