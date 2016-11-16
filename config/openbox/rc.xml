@@ -287,22 +287,12 @@
     </keybind>
     <keybind key="C-S-A-Left">
       <action name="MoveResizeTo">
-        <monitor>2</monitor>
+        <monitor>1</monitor>
       </action>
     </keybind>
     <keybind key="C-S-A-Right">
       <action name="MoveResizeTo">
-        <monitor>1</monitor>
-      </action>
-    </keybind>
-    <keybind key="C-S-A-H">
-      <action name="MoveResizeTo">
         <monitor>2</monitor>
-      </action>
-    </keybind>
-    <keybind key="C-S-A-L">
-      <action name="MoveResizeTo">
-        <monitor>1</monitor>
       </action>
     </keybind>
     <keybind key="C-A-L">
