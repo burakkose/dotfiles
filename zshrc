@@ -20,6 +20,7 @@ alias ....='cd ../../..'
 # Helpers
 alias zshrc='nano ~/.zshrc'
 alias szshrc='source ~/.zshrc'
+alias openboxrc='nano ~/.config/openbox/rc.xml'
 alias grep='grep --color=auto'
 alias ping='ping -c 5'
 alias df='df -h'
