@@ -12,6 +12,7 @@ source $ZSH/oh-my-zsh.sh
 export ARCHFLAGS="-arch x86_64"
 
 # Filesystem
+alias .='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -29,10 +30,10 @@ eval "$(rbenv init -)"
 alias lock="sh ~/.bin/lock"
 
 # zsh-bd
-. $HOME/.zsh/plugins/bd/bd.zsh
+source $HOME/.zsh/plugins/bd/bd.zsh
 
 # git-flow-auto
-. $HOME/.zsh/plugins/git-flow-auto/git-flow-completion.zsh
+source $HOME/.zsh/plugins/git-flow-auto/git-flow-completion.zsh
 
 #THEME
 ZSH_THEME_GIT_PROMPT_DIRTY='±'
