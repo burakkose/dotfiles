@@ -18,11 +18,16 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # Helpers
+alias zshrc='nano ~/.zshrc'
+alias szshrc='source ~/.zshrc'
 alias grep='grep --color=auto'
 alias ping='ping -c 5'
 alias df='df -h'
 alias c='clear'
 chpwd() ls
+
+alias shutdown='sudo shutdown -h now'
+alias reboot='sudo shutdown -r now'
 
 eval "$(thefuck --alias)"
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -67,3 +72,11 @@ PROMPT_SU='%(!.%{%k%F{blue}%K{black}%}%{%F{yellow}%} ⚡ %{%k%F{black}%}.%{%k
 PROMPT='%{%f%b%k%}$PROMPT_HOST$(_git_info)$PROMPT_DIR$PROMPT_SU
 $(virtualenv_info)❯ '
 RPROMPT='%{$fg[green]%}[%*]%{$reset_color%}'
+
+USE_STYLE="2"
+export INFINALITY_FT_FRINGE_FILTER_STRENGTH="50"
+export INFINALITY_FT_USE_VARIOUS_TWEAKS="true"
+export INFINALITY_FT_CHROMEOS_STYLE_SHARPENING_STRENGTH="20"
+export INFINALITY_FT_GAMMA_CORRECTION="30 80"
+export INFINALITY_FT_STEM_ALIGNMENT_STRENGTH="25"
+export INFINALITY_FT_STEM_FITTING_STRENGTH="25"
