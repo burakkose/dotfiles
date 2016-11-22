@@ -1,5 +1,6 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH=/usr/share/oh-my-zsh/
+export GITFOLDER=~/git
 
 DISABLE_AUTO_UPDATE="true"
 
@@ -16,6 +17,7 @@ alias .='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias cgit='cd $GITFOLDER'
 
 # Helpers
 alias zshrc='nano ~/.zshrc'
