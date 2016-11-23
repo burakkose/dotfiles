@@ -1,16 +1,16 @@
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export ZSH=/usr/share/oh-my-zsh/
 export GITFOLDER=~/git
+export DOTFILES=~/dotfiles
+export ARCHFLAGS="-arch x86_64"
+export ZSH=/usr/share/oh-my-zsh/
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 DISABLE_AUTO_UPDATE="true"
-
 HIST_STAMPS="mm/dd/yyyy"
 
 plugins=(git docker jsontools lein mvn sudo web-search )
 
 source $ZSH/oh-my-zsh.sh
-
-export ARCHFLAGS="-arch x86_64"
 
 # Filesystem
 alias .='cd'
@@ -18,24 +18,26 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias cgit='cd $GITFOLDER'
+alias dotfiles='cd $DOTFILES'
 
 # Helpers
+chpwd() ls
+alias c='clear'
+alias df='df -h'
+alias ping='ping -c 5'
+alias lock="sh ~/.bin/lock"
 alias zshrc='nano ~/.zshrc'
 alias szshrc='source ~/.zshrc'
-alias openboxrc='nano ~/.config/openbox/rc.xml'
 alias grep='grep --color=auto'
-alias ping='ping -c 5'
-alias df='df -h'
-alias c='clear'
-chpwd() ls
-
-alias shutdown='sudo shutdown -h now'
 alias reboot='sudo shutdown -r now'
+alias shutdown='sudo shutdown -h now'
+alias openboxrc='nano ~/.config/openbox/rc.xml'
 
 eval "$(thefuck --alias)"
-export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-alias lock="sh ~/.bin/lock"
+
+# auto complete for alias
+setopt complete_aliases
 
 # zsh-bd
 source $HOME/.zsh/plugins/bd/bd.zsh
@@ -43,7 +45,7 @@ source $HOME/.zsh/plugins/bd/bd.zsh
 # git-flow-auto
 source $HOME/.zsh/plugins/git-flow-auto/git-flow-completion.zsh
 
-#THEME
+# Theme
 ZSH_THEME_GIT_PROMPT_DIRTY='±'
 
 function _git_prompt_info() {
