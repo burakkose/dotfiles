@@ -47,6 +47,9 @@ source $HOME/.zsh/plugins/bd/bd.zsh
 # git-flow-auto
 source $HOME/.zsh/plugins/git-flow-auto/git-flow-completion.zsh
 
+#alias-tip
+source $HOME/.zsh/plugins/alias-tips/alias-tips.plugin.zsh
+
 # Theme
 ZSH_THEME_GIT_PROMPT_DIRTY='±'
 
