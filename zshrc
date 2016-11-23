@@ -17,8 +17,10 @@ alias .='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias ogit='nano $GITFOLDER'
 alias cgit='cd $GITFOLDER'
-alias dotfiles='cd $DOTFILES'
+alias cdot='cd $DOTFILES'
+alias odot='nano $DOTFILES'
 
 # Helpers
 chpwd() ls
