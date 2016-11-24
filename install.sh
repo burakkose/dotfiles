@@ -94,6 +94,9 @@ function install {
   # Active zsh changes
   source ~/.zshrc
 
+  sudo ln -s themes/obtheme /usr/share/themes/obtheme
+  sudo ln -s oblogout.conf  /etc/oblogout.conf
+
   if [[ $firefoxOpt == "Y" || $firefoxOpt == "y" || $firefoxOpt == "" ]]; then
     echo "Installing Firefox extensions"
     # Firefox Extensions
