@@ -234,7 +234,7 @@
     <keybind key="A-m">
       <action name="Execute">
         <command>
-          sh ~/.config/openbox/scripts/xflux.sh
+          sh ~/.config/openbox/scripts/redshift.sh
         </command>
       </action>
     </keybind>
