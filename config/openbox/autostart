@@ -1,10 +1,11 @@
 # Wallpaper
 wp_name="wallpaper.png"
-wp_path="/home/burakkose/.config/wallpaper"
+wp_path="/home/burak/.config/wallpaper"
 wallpaper="$wp_path/$wp_name"
 feh -F "$wallpaper" --bg-fill &
 
 volumeicon &
+nm-applet &
 
 compton --config ~/.config/compton.conf -b &
 
@@ -16,5 +17,3 @@ conky -c ~/.config/conky/timerc &
 conky -c ~/.config/conky/daterc &
 
 xrdb ~/.Xresources &
-
-lxpolkit &
