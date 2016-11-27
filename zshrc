@@ -1,3 +1,4 @@
+export EDITOR=nano
 export GITFOLDER=~/git
 export DOTFILES=~/dotfiles
 export ARCHFLAGS="-arch x86_64"
