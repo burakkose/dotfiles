@@ -26,6 +26,7 @@ alias odot='nano $DOTFILES'
 # Helpers
 chpwd() ls
 alias c='clear'
+alias e='exit'
 alias df='df -h'
 alias ping='ping -c 5'
 alias lock="sh ~/.bin/lock"
