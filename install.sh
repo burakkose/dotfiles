@@ -51,7 +51,7 @@ function install {
   fi
 
   # Packages (so, install script is based on Arch system [yaourt])
-  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller xorg-xprop oh-my-zsh-git redshift i3lock-blur imagemagick wmctrl powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad-noheader spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata libreoffice-fresh --noconfirm --needed
+  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller arc-gtk-theme cbatticon xorg-xprop oh-my-zsh-git redshift i3lock-blur imagemagick wmctrl powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad-noheader spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata libreoffice-fresh --noconfirm --needed
 
   if ! grep -q "infinality" "/etc/pacman.conf" && [[ $fontsOpt == "Y" || $fontsOpt == "y" || $fontsOpt == "" ]]; then
       echo "Installing extra fonts"

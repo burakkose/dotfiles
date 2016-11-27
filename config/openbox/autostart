@@ -6,6 +6,7 @@ feh -F "$wallpaper" --bg-fill &
 
 volumeicon &
 nm-applet &
+cbatticon &
 
 compton --config ~/.config/compton.conf -b &
 
