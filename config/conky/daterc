@@ -28,3 +28,4 @@ override_utf8_locale no
 TEXT
 ${color ce2c51}${time %a}. ${time %d} 
 ${color ffffff}${time %B} ${time %Y}
+${color ffffff}${exec timedatectl status | grep "zone" | sed -e 's/^[ ]*Time zone: \(.*\) (.*)$/\1/g'}
