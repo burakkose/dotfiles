@@ -19,9 +19,9 @@ read fontsOpt
 
 ########## Variables
 
-dir=~/dotfiles                                            	         # dotfiles directory
-olddir=~/dotfiles_old                         	      	             # old dotfiles backup directory
-files="themes bin zsh zshrc config atom nano nanorc xinitrc wgetrc"  # list of files/folders to symlink in homedir
+dir=~/dotfiles                                            	                # dotfiles directory
+olddir=~/dotfiles_old                         	      	                        # old dotfiles backup directory
+files="themes bin zsh zshrc config atom nano nanorc Xresources xinitrc wgetrc"  # list of files/folders to symlink in homedir
 
 ##########
 
