@@ -82,8 +82,7 @@ mouse_pressed_icon_asb = 100 0 0
 
 #-------------------------------------
 # Taskbar
-taskbar_mode = multi_desktop
-taskbar_padding = 2 3 2
+taskbar_padding = 0 0 0
 taskbar_background_id = 3
 taskbar_active_background_id = 3
 taskbar_name = 0
@@ -97,7 +96,7 @@ taskbar_name_font_color = #000000 100
 taskbar_name_active_font_color = #000000 100
 taskbar_distribute_size = 0
 taskbar_sort_order = none
-task_align = left
+task_align = center
 
 #-------------------------------------
 # Task
@@ -121,18 +120,12 @@ task_background_id = 2
 task_active_background_id = 1
 task_urgent_background_id = 4
 task_iconified_background_id = 2
-mouse_left = toggle_iconify
-mouse_middle = none
-mouse_right = close
-mouse_scroll_up = toggle
-mouse_scroll_down = iconify
-
 #-------------------------------------
 # System tray (notification area)
 systray_padding = 5 2 5
 systray_background_id = 1
 systray_sort = ascending
-systray_icon_size = 16
+systray_icon_size = 0
 systray_icon_asb = 100 -10 -5
 systray_monitor = 1
 
@@ -149,10 +142,8 @@ launcher_tooltip = 0
 
 #-------------------------------------
 # Clock
-time1_format = %H:%M
-time2_format = %A %d %B
+time1_format = %a %d %b ~ %H:%M
 time1_font = sans 8
-time2_font = sans 6
 clock_font_color = #ffffff 74
 clock_padding = 4 4
 clock_background_id = 1
@@ -179,3 +170,10 @@ tooltip_background_id = 0
 tooltip_font_color = #ffffff 100
 tooltip_font = Sans 12
 
+#-------------------------------------
+# Mouse
+mouse_left = toggle_iconify
+mouse_middle = close
+mouse_right = none
+mouse_scroll_up = prev_task
+mouse_scroll_down = next_task
