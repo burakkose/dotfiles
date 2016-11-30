@@ -35,6 +35,7 @@ alias szshrc='source ~/.zshrc'
 alias grep='grep --color=auto'
 alias reboot='sudo shutdown -r now'
 alias shutdown='sudo shutdown -h now'
+alias suspend='sudo systemctl suspend'
 alias openboxrc='nano ~/.config/openbox/rc.xml'
 
 eval "$(thefuck --alias)"
