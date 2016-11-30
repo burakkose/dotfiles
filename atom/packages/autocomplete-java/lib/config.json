@@ -1,0 +1,51 @@
+{
+  "inclusionPriority": {
+    "title": "Inclusion priority",
+    "description": "Inclusion priority in relation to other autocomplete-plus providers",
+    "type": "integer",
+    "default": 20,
+    "order": 0
+  },
+  "excludeLowerPriority": {
+    "title": "Exclude lower priority providers",
+    "description": "Whether to exclude lower priority providers",
+    "type": "boolean",
+    "default": false,
+    "order": 1
+  },
+  "loadClassMembers": {
+    "title": "Load class members",
+    "description": "If enabled, you can examine methods and other members of a class e.g. 'ArrayList.con...'.  NOTE: On a large project it might take a while to scan all classes on your classpath.",
+    "type": "boolean",
+    "default": true,
+    "order": 2
+  },
+  "refreshClassOnSave": {
+    "title": "Refresh class on save",
+    "description": "",
+    "type": "boolean",
+    "default": true,
+    "order": 3
+  },
+  "classpathFilePath": {
+    "title": "Classpath file name",
+    "description": "If you bump into conflicts with other tools, e.g. Eclipse that uses .classpath in XML format, use this to rename the .classpath file to .classpath-atom or something else.",
+    "type": "string",
+    "default": ".classpath",
+    "order": 4
+  },
+  "javaHome": {
+    "title": "JAVA_HOME",
+    "description": "By default autocomplete-java uses JAVA_HOME and PATH enviroment variables to find JDK tools, but you can override your JAVA_HOME environment setting here, e.g. /usr/lib/jvm/java-7-openjdk-amd64",
+    "type": "string",
+    "default": "",
+    "order": 5
+  },
+  "foldImports": {
+    "title": "Fold imports",
+    "description": "",
+    "type": "boolean",
+    "default": true,
+    "order": 6
+  }
+}

@@ -1,0 +1,60 @@
+# Unset existing commands
+'body':
+  'ctrl-o': 'core:nop'
+  'cmd-o': 'core:nop'
+
+# Common keybindings (all platforms)
+'atom-text-editor:not([mini])':
+  'alt-up': 'editor:move-line-up'
+  'alt-down': 'editor:move-line-down'
+  'alt-shift-up': 'bracket-matcher:select-inside-brackets'
+
+# Mac keybindings
+'.platform-darwin atom-text-editor:not([mini])':
+  'cmd-d': 'editor:delete-line'
+  'cmd-F': 'editor:auto-indent'
+  'cmd-l': 'go-to-line:toggle'
+  'cmd-alt-down': 'editor:duplicate-lines'
+  'cmd-alt-j': 'editor:join-lines'
+  'cmd-o': 'symbols-view:toggle-file-symbols'
+  'cmd-e': 'fuzzy-finder:toggle-buffer-finder'
+  'cmd-X': 'editor:upper-case'
+  'cmd-Y': 'editor:lower-case'
+  'cmd-shift-p': 'bracket-matcher:go-to-matching-bracket'
+  'cmd-shift-c': 'editor:toggle-line-comments'
+
+'.platform-darwin atom-workspace':
+  'cmd-R': 'fuzzy-finder:toggle-file-finder'
+  'cmd-e': 'fuzzy-finder:toggle-buffer-finder'
+  'ctrl-h': 'project-find:show'
+  'cmd-S': 'window:save-all'
+  'cmd-3': 'command-palette:toggle'
+
+'.platform-darwin .tree-view:not([mini])':
+  'cmd-3': 'command-palette:toggle'
+
+
+# Win & Linux keybindings
+'.platform-win32 atom-text-editor:not([mini]), .platform-linux atom-text-editor:not([mini])':
+  'ctrl-d': 'editor:delete-line'
+  'ctrl-F': 'editor:auto-indent'
+  'ctrl-l': 'go-to-line:toggle'
+  'ctrl-alt-down': 'editor:duplicate-lines'
+  'ctrl-alt-j': 'editor:join-lines'
+  'ctrl-o': 'symbols-view:toggle-file-symbols'
+  'ctrl-e': 'fuzzy-finder:toggle-buffer-finder'
+  'ctrl-X': 'editor:upper-case'
+  'ctrl-Y': 'editor:lower-case'
+  'alt-/': 'autocomplete-plus:activate'
+  'ctrl-shift-p': 'bracket-matcher:go-to-matching-bracket'
+  'ctrl-shift-c': 'editor:toggle-line-comments'
+
+'.platform-win32 atom-workspace, .platform-linux atom-workspace':
+  'ctrl-R': 'fuzzy-finder:toggle-file-finder'
+  'ctrl-e': 'fuzzy-finder:toggle-buffer-finder'
+  'ctrl-h': 'project-find:show'
+  'ctrl-S': 'window:save-all'
+  'ctrl-3': 'command-palette:toggle'
+
+'.platform-win32 .tree-view:not([mini]), .platform-linux .tree-view:not([mini])':
+  'ctrl-3': 'command-palette:toggle'

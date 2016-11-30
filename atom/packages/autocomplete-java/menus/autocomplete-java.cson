@@ -1,0 +1,43 @@
+# See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Autocomplete Java'
+      'submenu': [
+        {
+          'label': 'Organize Imports'
+          'command': 'autocomplete-java:organize-imports'
+        },
+        {
+          'label': 'Refresh Project'
+          'command': 'autocomplete-java:refresh-project'
+        },
+        {
+          'label': 'Full Refresh'
+          'command': 'autocomplete-java:full-refresh'
+        }
+      ]
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Autocomplete Java'
+      'submenu': [
+        {
+          'label': 'Organize Imports'
+          'command': 'autocomplete-java:organize-imports'
+        },
+        {
+          'label': 'Refresh Project'
+          'command': 'autocomplete-java:refresh-project'
+        },
+        {
+          'label': 'Full Refresh'
+          'command': 'autocomplete-java:full-refresh'
+        }
+      ]
+    ]
+  }
+]
