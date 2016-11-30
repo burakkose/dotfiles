@@ -834,35 +834,27 @@
   <applications>
     <application role="browser">
       <desktop>2</desktop>
-      <maximized>yes</maximized>
     </application>
     <application class="Thunderbird">
       <desktop>2</desktop>
-      <maximized>yes</maximized>
     </application>
     <application class="jetbrains-idea">
       <desktop>3</desktop>
-      <maximized>yes</maximized>
     </application>
     <application class="Atom">
       <desktop>3</desktop>
-      <maximized>yes</maximized>
     </application>
     <application name="libreoffice">
       <desktop>4</desktop>
-      <maximized>yes</maximized>
     </application>
     <application title="Popcorn Time">
       <desktop>5</desktop>
-      <maximized>yes</maximized>
     </application>
     <application class="Slack">
       <desktop>5</desktop>
-      <maximized>yes</maximized>
     </application>
     <application class="telegram-desktop">
       <desktop>5</desktop>
-      <maximized>yes</maximized>
     </application>
     <!--
   # this is an example with comments through out. use these to make your
