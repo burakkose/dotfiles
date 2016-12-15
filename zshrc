@@ -9,7 +9,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="mm/dd/yyyy"
 
-plugins=(git docker jsontools lein mvn sudo web-search )
+plugins=(git docker jsontools archlinux lein mvn sudo web-search )
 
 source $ZSH/oh-my-zsh.sh
 
