@@ -78,7 +78,7 @@
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
-    <keepBorder>yes</keepBorder>
+    <keepBorder>no</keepBorder>
     <animateIconify>yes</animateIconify>
   </theme>
   <desktops>
@@ -266,7 +266,7 @@
     </keybind>
     <keybind key="C-A-t">
       <action name="Execute">
-        <command>terminator</command>
+        <command>urxvt</command>
       </action>
     </keybind>
     <keybind key="A-q">
@@ -832,8 +832,14 @@
     <!-- show the manage desktops section in the client-list-(combined-)menu -->
   </menu>
   <applications>
+   <application class="*"> 
+      <decor>no</decor> 
+    </application>
     <application role="browser">
       <desktop>2</desktop>
+    </application>
+    <application class="URxvt">
+      <maximized>yes</maximized>
     </application>
     <application class="Thunderbird">
       <desktop>2</desktop>
