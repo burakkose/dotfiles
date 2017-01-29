@@ -28,6 +28,7 @@ chpwd() ls
 alias c='clear'
 alias e='exit'
 alias df='df -h'
+alias clear='clear && archey3'
 alias ping='ping -c 5'
 alias lock="sh ~/.bin/lock"
 alias zshrc='nano ~/.zshrc'
@@ -52,6 +53,17 @@ source $HOME/.zsh/plugins/git-flow-auto/git-flow-completion.zsh
 
 #alias-tip
 source $HOME/.zsh/plugins/alias-tips/alias-tips.plugin.zsh
+
+# TMUX
+if which tmux >/dev/null 2>&1; then
+    # if no session is started, start a new session
+    test -z ${TMUX} && tmux
+
+    # when quitting tmux, try to attach
+    while test -z ${TMUX}; do
+        tmux attach || break
+    done
+fi
 
 # Theme
 ZSH_THEME_GIT_PROMPT_DIRTY='±'
@@ -86,10 +98,4 @@ PROMPT='%{%f%b%k%}$PROMPT_HOST$(_git_info)$PROMPT_DIR$PROMPT_SU
 $(virtualenv_info)❯ '
 RPROMPT='%{$fg[green]%}[%*]%{$reset_color%}'
 
-USE_STYLE="2"
-export INFINALITY_FT_FRINGE_FILTER_STRENGTH="50"
-export INFINALITY_FT_USE_VARIOUS_TWEAKS="true"
-export INFINALITY_FT_CHROMEOS_STYLE_SHARPENING_STRENGTH="20"
-export INFINALITY_FT_GAMMA_CORRECTION="30 80"
-export INFINALITY_FT_STEM_ALIGNMENT_STRENGTH="25"
-export INFINALITY_FT_STEM_FITTING_STRENGTH="25"
+archey3
