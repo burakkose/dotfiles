@@ -18,3 +18,5 @@ conky -c ~/.config/conky/timerc &
 conky -c ~/.config/conky/daterc &
 
 xrdb ~/.Xresources &
+
+ssh-add ~/.ssh/id_rsa
