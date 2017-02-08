@@ -26,20 +26,20 @@ Xft.rgba:rgb
 Xcursor.theme: Vanilla-DMZ
 Xcursor.size:  16
 
-! Fonts
-URxvt.font:           xft:Consolas for Powerline:regular:pixelsize=13,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9
-URxvt.boldFont:       xft:Consolas for Powerline:bold:pixelsize=13,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9
-URxvt.italicFont:     xft:Consolas for Powerline:italic:pixelsize=13,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9
-URxvt.boldItalicFont: xft:Consolas for Powerline:bold:italic:pixelsize=13,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9
-URxvt.keysym.M-C-1:command:\033]710;xft:Consolas:pixelsize=12,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9\007
-URxvt.keysym.M-C-2:command:\033]710;xft:Consolas:pixelsize=13,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9\007
-URxvt.keysym.M-C-3:command:\033]710;xft:Consolas:pixelsize=14,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9\007
-URxvt.keysym.M-C-4:command:\033]710;xft:Consolas:pixelsize=15,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9\007
-URxvt.keysym.M-C-5:command:\033]710;xft:Consolas:pixelsize=16,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9\007
-URxvt.keysym.M-C-6:command:\033]710;xft:Consolas:pixelsize=17,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9\007
-URxvt.keysym.M-C-7:command:\033]710;xft:Consolas:pixelsize=18,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9\007
-URxvt.keysym.M-C-8:command:\033]710;xft:Consolas:pixelsize=20,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9\007
-URxvt.keysym.M-C-9:command:\033]710;xft:Consolas:pixelsize=24,xft:symbola:size=9,xft:Inconsolata for Powerline:size=9\007
+! Font
+URxvt.font:           xft:Inconsolata for Powerline:size=11,xft:symbola:size=9
+URxvt.boldFont:       xft:Inconsolata for Powerline:size=11:bold:pixelsize=13,xft:symbola:size=9
+URxvt.italicFont:     xft:Inconsolata for Powerline:size=11:italic:pixelsize=13,xft:symbola:size=9
+URxvt.boldItalicFont: xft:Inconsolata for Powerline:size=11:bold:italic:pixelsize=13,xft:symbola:size=9
+URxvt.keysym.M-C-1:command:\033]710;xft:Inconsolata for Powerline:size=12,xft:symbola:size=9\007
+URxvt.keysym.M-C-2:command:\033]710;xft:Inconsolata for Powerline:size=13,xft:symbola:size=9\007
+URxvt.keysym.M-C-3:command:\033]710;xft:Inconsolata for Powerline:size=14,xft:symbola:size=9\007
+URxvt.keysym.M-C-4:command:\033]710;xft:Inconsolata for Powerline:size=15,xft:symbola:size=9\007
+URxvt.keysym.M-C-5:command:\033]710;xft:Inconsolata for Powerline:size=16,xft:symbola:size=9\007
+URxvt.keysym.M-C-6:command:\033]710;xft:Inconsolata for Powerline:size=17,xft:symbola:size=9\007
+URxvt.keysym.M-C-7:command:\033]710;xft:Inconsolata for Powerline:size=18,xft:symbola:size=9\007
+URxvt.keysym.M-C-8:command:\033]710;xft:Inconsolata for Powerline:size=19,xft:symbola:size=9\007
+URxvt.keysym.M-C-9:command:\033]710;xft:Inconsolata for Powerline:size=20,xft:symbola:size=9\007
 
 ! URxvt Settings
 URxvt.title:rxvt-unicode
