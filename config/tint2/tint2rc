@@ -3,8 +3,8 @@
 rounded = 5
 border_width = 0
 border_sides = TBLR
-background_color = #00897b 60
-background_color2 = #00897b 0
+background_color = #429bf4 60
+background_color2 = #429bf4 0
 gradient = 0
 border_color = #ffffff 20
 background_color_hover = #000000 60
