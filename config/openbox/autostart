@@ -19,4 +19,5 @@ conky -c ~/.config/conky/daterc &
 
 xrdb ~/.Xresources &
 
+eval `ssh-agent -s`
 ssh-add ~/.ssh/id_rsa
