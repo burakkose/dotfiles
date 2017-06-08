@@ -3,8 +3,12 @@ export GITFOLDER=~/git
 export DOTFILES=~/dotfiles
 export ARCHFLAGS="-arch x86_64"
 export ZSH=/usr/share/oh-my-zsh/
+export DOT_SCRIPT=~/.config/scripts/
 export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH:$DOT_SCRIPT
+
+export SPARK_HOME=/opt/apache-spark
+export PATH=$SPARK_HOME/bin:$PATH
 
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="mm/dd/yyyy"
