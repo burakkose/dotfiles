@@ -51,27 +51,7 @@ function install {
   fi
 
   # Packages (so, install script is based on Arch system [yaourt])
-  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller arc-gtk-theme cbatticon xorg-xprop oh-my-zsh-git redshift i3lock-blur imagemagick wmctrl powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad-noheader spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata libreoffice-fresh --noconfirm --needed
-
-  if ! grep -q "infinality" "/etc/pacman.conf" && [[ $fontsOpt == "Y" || $fontsOpt == "y" || $fontsOpt == "" ]]; then
-      echo "Installing extra fonts"
-      sudo echo "
-    [infinality-bundle]
-    Server = http://bohoomil.com/repo/$arch
-
-    [infinality-bundle-multilib]
-    Server = http://bohoomil.com/repo/multilib/$arch
-
-    [infinality-bundle-fonts]
-    Server = http://bohoomil.com/repo/fonts
-    " >> /etc/pacman.conf
-    sudo pacman-key -r 962DDE58
-    sudo pacman-key --lsign-key 962DDE58
-    sudo pacman -Syyu
-    yaourt -S ttf-bitstream-vera ttf-inconsolata ttf-ubuntu-font-family ttf-dejavu ttf-freefont ttf-linux-libertine ttf-liberation otf-ipafont ttf-amiri ttf-ancient-fonts ttf-ms-fonts ttf-monaco ttf-noto ttf-vista-fonts infinality-bundle infinality-bundle-multilib ibfonts-meta-base --noconfirm  --needed
-    sudo ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
-    fi
-
+  yaourt -Syyua --noconfirm && yaourt -S base base-devel file-roller arc-gtk-theme cbatticon xorg-xprop oh-my-zsh-git redshift i3lock-blur imagemagick wmctrl powerline-fonts gsimplecal arandr pcmanfm vlc openbox-menu lxappearance lxinput scrot obmenu obconf obkey oblogout lxmenu-data leafpad-noheader spotify intellij-idea-ultimate-edition terminator rofi tint2 firefox conky plank slack-desktop telegram-desktop-bin atom-editor-bin thunderbird popcorntime-bin google-chrome transmission-gtk docker compton gtk2 gtk3 feh openbox thunar xorg-xinit volumeicon lightdm jdk8-openjdk sbt scala clojure numix-circle-icon-theme-git thefuck the_silver_searcher jq ttf-inconsolata libreoffice-fresh tig --noconfirm --needed
 
   # create dotfiles_old in homedir
   echo "Creating $olddir for backup of any existing dotfiles in ~"
