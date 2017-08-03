@@ -1,0 +1,5 @@
+---
+configs:
+  user: burak
+  dotfile_repo_path: ~/dotfiles
+  dotfile_backup_path: ~/dotfiles.bak

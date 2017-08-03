@@ -1,0 +1,28 @@
+---
+- name: Create backup directory
+  file:
+      path: "{{configs.dotfile_backup_path}}"
+      state: directory
+
+- name: Move existing dotfiles to backup directory
+  shell: mv ~/.{{ item }} ~/{{configs.dotfile_backup_path}}
+  ignore_errors: yes
+  with_items:
+      "{{ files }}"
+
+- name: Apply new dotfiles
+  file:
+      src: '{{configs.dotfile_repo_path}}/data/{{ item }}'
+      dest: '~/.{{ item }}'
+      state: link
+  with_items:
+      "{{ files }}"
+
+- name: Apply obtheme
+  file:
+      src: "{{ item[0] }}"
+      dest: "{{ item[1] }}"
+      state: link
+  with_items:
+      - ['~/.themes/obtheme', '/usr/share/themes/obtheme']
+      - ['{{configs.dotfile_repo_path}}//data/oblogout.conf', '/etc/oblogout.conf']

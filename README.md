@@ -1,8 +1,7 @@
 
 # Overview
-This repository is my personal template to tracking dotfiles. It contains lots of personal applications and settings, so if you decide to use installer script, please check the application list, review the code, and remove things you don’t want.
- 
-**Not: If you are willing to use installer script, you need to have Arch Linux. Otherwise, you need to do manually.**
+
+This repository is my personal template to tracking dotfiles via Ansible. It contains lots of personal applications and settings, so if you decide to use, please check the application list, and remove things you don’t want.
 
 ## What's in it?
 
@@ -11,94 +10,96 @@ This repository is my personal template to tracking dotfiles. It contains lots o
 * Launcher: Rofi
 * Wallpaper Manager: feh
 * Compositor: Compton
-* System monitor: Conky 
-* Terminal: Terminator
+* System monitor: Conky
+* Terminal: urxvt
 * Shell: zsh
 
 After installation, you will have these packages and packages groups.
 
-```
-yaourt
-zsh
-base 
-base-devel 
-file-roller 
-powerline-fonts 
-arandr 
-pcmanfm 
-vlc 
-openbox-menu 
-lxappearance 
-lxinput 
-scrot 
-obmenu 
-obconf 
-obkey 
-oblogout 
-lxmenu-data 
-leafpad 
-spotify 
-intellij-idea-ultimate-edition 
-terminator 
-rofi 
-tint2 
-firefox 
-conky 
-plank 
-slack-desktop 
-telegram-desktop-bin 
-atom-editor-bin 
-thunderbird 
-popcorntime-bin 
-google-chrome 
-transmission-gtk 
-docker 
-compton 
-gtk2 
-gtk3 
-feh 
-openbox 
-thunar 
-xorg-xinit 
-volumeicon 
-lightdm 
-jdk8-openjdk 
-sbt 
-scala 
-clojure 
-numix-circle-icon-theme-git 
-thefuck 
-the_silver_searcher 
-jq 
-libreoffice-fresh
-ttf-inconsolata
-wmctrl
-```
-
-Install script also contains Firefox plugins. Here is the list of plugins that is installed automatically
+> Please see, roles/system/vars/main.yml
 
 ```
-  # -> AdBlocker
-  # -> Developer Tools - toolbar button
-  # -> Firebug
-  # -> FireStorage Plus
-  # -> Grammarly
-  # -> S3.Google Translator
-  # -> Screengrab
-  # -> Send to Kindle
-  # -> VimFx
+- arandr
+- arc-gtk-theme
+- atom-editor-bin
+- base
+- base-devel
+- cbatticon
+- clojure
+- compton
+- conky
+- docker
+- feh
+- file-roller
+- firefox
+- google-chrome
+- gsimplecal
+- gtk2
+- gtk3
+- i3lock-blur
+- imagemagick
+- intellij-idea-ultimate-edition
+- jdk8-openjdk
+- jq
+- leafpad-noheader
+- libreoffice-fresh
+- lightdm
+- lxappearance
+- lxinput
+- lxmenu-data
+- numix-circle-icon-theme-git
+- obconf
+- obkey
+- oblogout
+- obmenu
+- oh-my-zsh-git
+- openbox
+- openbox-menu
+- pcmanfm
+- plank
+- popcorntime-bin
+- powerline-fonts
+- redshift
+- rofi
+- sbt
+- scala
+- scrot
+- slack-desktop
+- spotify
+- telegram-desktop-bin
+- terminator
+- the_silver_searcher
+- thefuck
+- thunar
+- thunderbird
+- tig
+- tint2
+- transmission-gtk
+- ttf-inconsolata
+- vlc
+- volumeicon
+- wmctrl
+- xorg-xinit
+- xorg-xprop
 ```
 
 ## Installation
 
-``` cd && git clone https://github.com/burakkose/dotfiles.git && cd dotfiles && sh install.sh ```
+Make sure that, you are using correct configuration in ```vars/config.yml```
+
+```
+pacman -S ansible
+cd && git clone https://github.com/burakkose/dotfiles.git && cd dotfiles && make
+```
 
 To update, `cd` into your local dotfiles repository and then:
 
-``` sh install.sh ```
+``` make ```
 
-Add your user name to configs file.
-```
-config/openbox/autostart
-zshrc
-```
+You can also only apply dotfiles
+
+```make dotfiles```
+
+or system
+
+```make system```

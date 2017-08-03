@@ -1,0 +1,13 @@
+---
+files:
+  - atom
+  - bin
+  - config
+  - nano
+  - nanorc
+  - themes
+  - wgetrc
+  - xinitrc
+  - Xresources
+  - zsh
+  - zshrc

@@ -1,0 +1,10 @@
+---
+- name: Upgrade the system
+  pacman:
+    update_cache: yes
+    upgrade: yes
+
+- name: Install packages
+  command: yaourt -S "{{ item }}" --noconfirm --needed
+  with_items:
+      "{{ packages }}"

@@ -1,0 +1,9 @@
+- name: Provision dotfiles
+  become: yes
+  become_user: {{configs.user}}
+  hosts: target
+  gather_facts: false
+  roles:
+    - dotfile
+  vars_files:
+    - vars/config.yml
