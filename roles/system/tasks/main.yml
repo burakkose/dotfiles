@@ -6,5 +6,6 @@
 
 - name: Install packages
   command: yaourt -S "{{ item }}" --noconfirm --needed
+  ignore_errors: yes
   with_items:
       "{{ packages }}"

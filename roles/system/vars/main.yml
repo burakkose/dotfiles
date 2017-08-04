@@ -56,6 +56,6 @@ packages:
   - vlc
   - volumeicon
   - wmctrl
-  - Xarchiver
+  - xarchiver
   - xorg-xinit
   - xorg-xprop
