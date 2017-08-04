@@ -260,7 +260,7 @@
     <keybind key="A-t">
       <action name="Execute">
         <command>
-          thunar
+          pcmanfm
         </command>
       </action>
     </keybind>
@@ -832,8 +832,8 @@
     <!-- show the manage desktops section in the client-list-(combined-)menu -->
   </menu>
   <applications>
-   <application class="*"> 
-      <decor>no</decor> 
+   <application class="*">
+      <decor>no</decor>
     </application>
     <application role="browser">
       <desktop>2</desktop>
