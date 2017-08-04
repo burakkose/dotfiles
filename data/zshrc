@@ -22,10 +22,11 @@ alias .='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias ogit='nano $GITFOLDER'
 alias cgit='cd $GITFOLDER'
 alias cdot='cd $DOTFILES'
-alias odot='nano $DOTFILES'
+
+# App alias
+alias leafpad='l3afpad'
 
 # Helpers
 chpwd() ls
