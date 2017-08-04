@@ -11,18 +11,16 @@ packages:
   - conky
   - docker
   - feh
-  - file-roller
   - firefox
   - google-chrome
   - gsimplecal
   - gtk2
   - gtk3
   - i3lock-blur
-  - imagemagick
   - intellij-idea-ultimate-edition
   - jdk8-openjdk
   - jq
-  - leafpad-noheader
+  - l3afpad
   - libreoffice-fresh
   - lightdm
   - lxappearance
@@ -38,27 +36,26 @@ packages:
   - openbox-menu
   - pcmanfm
   - plank
-  - popcorntime-bin
   - powerline-fonts
   - redshift
   - rofi
   - sbt
   - scala
   - scrot
-  - slack-desktop 
+  - slack-desktop
   - spotify
   - telegram-desktop-bin
-  - terminator
   - the_silver_searcher
   - thefuck
-  - thunar
   - thunderbird
   - tig
   - tint2
   - transmission-gtk
   - ttf-inconsolata
+  - unrar
   - vlc
   - volumeicon
   - wmctrl
+  - Xarchiver
   - xorg-xinit
   - xorg-xprop
