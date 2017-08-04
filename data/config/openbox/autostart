@@ -1,6 +1,6 @@
 # Wallpaper
 wp_name="wallpaper.png"
-wp_path="/home/burak/.config/wallpaper"
+wp_path="~/.config/wallpaper"
 wallpaper="$wp_path/$wp_name"
 feh -F "$wallpaper" --bg-fill &
 

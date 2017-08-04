@@ -100,5 +100,5 @@ URxvt.matcher.pattern.2:  \\B(/\\S+?):(\\d+)(?=:|$)
 URxvt.matcher.launcher.2: gvim +$2 $1
 
 ! URxvt Color Settings
-#include "/home/burak/.config/color_schemes/color_scheme"
+#include "~/.config/color_schemes/color_scheme"
 ! }}}
