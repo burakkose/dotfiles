@@ -253,6 +253,14 @@
                 </command>
             </action>
         </keybind>
+        <keybind key="A-B">
+            #Rofi script for bookmarks
+            <action name="Execute">
+                <command>
+                    python ~/dotfiles/config/rofi/bookmarks.py
+                </command>
+            </action>
+        </keybind>
         <keybind key="A-w">
             <action name="Execute">
                 <command>
