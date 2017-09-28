@@ -379,7 +379,7 @@ class Rofi(object):
         optionstr = '\n'.join(option.replace('\n', ' ') for option in options)
 
         # Set up arguments.
-        args = ['rofi', '-dmenu', '-p', prompt, '-format', 'i']
+        args = ['rofi', '-dmenu', '-i', '-p', prompt, '-format', '-i', 's']
         if select is not None:
             args.extend(['-selected-row', str(select)])
 
@@ -487,7 +487,7 @@ class Rofi(object):
 
         # Keep going until we get something valid.
         while True:
-            args = ['rofi', '-dmenu', '-p', prompt, '-format', 's']
+            args = ['rofi', '-dmenu', '-i', '-p', prompt, '-format', '-i', 's']
 
             # Add any error to the given message.
             msg = message or ""
