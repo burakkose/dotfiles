@@ -7,5 +7,5 @@ with open('bookmarks.csv') as csvfile:
     attr = list(reader)[1:]
     (options, values) = zip(*attr)
     r = rofi.Rofi()
-    index = r.select('Select bookmark', options)[0]
+    index = r.select('Select bookmark: ', options)[0]
     subprocess.call(['firefox', values[index]])
