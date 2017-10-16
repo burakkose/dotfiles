@@ -43,6 +43,7 @@ alias reboot='sudo shutdown -r now'
 alias shutdown='sudo shutdown -h now'
 alias suspend='sudo systemctl suspend'
 alias openboxrc='nano ~/.config/openbox/rc.xml'
+alias weather='curl wttr.in/Amsterdam'
 
 eval "$(thefuck --alias)"
 eval "$(rbenv init -)"
