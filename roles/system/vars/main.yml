@@ -59,3 +59,4 @@ packages:
   - xarchiver
   - xorg-xinit
   - xorg-xprop
+  - fpp-git
