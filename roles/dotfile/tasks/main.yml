@@ -10,6 +10,10 @@
   with_items:
       "{{ files }}"
 
+- name: Clone tmux plugin manager
+  shell: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  ignore_errors: yes
+
 - name: Apply new dotfiles
   file:
       src: '{{configs.dotfile_repo_path}}/data/{{ item }}'
