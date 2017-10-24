@@ -1,8 +1,8 @@
 default:
-	ansible-playbook -i inventory -l target provision.yml --ask-sudo-pass
+	ansible-playbook -i inventory -l target provision.yml
 
 dotfiles:
-	ansible-playbook -i inventory -l target provision-dotfiles.yml --ask-sudo-pass
+	ansible-playbook -i inventory -l target provision-dotfiles.yml
 
 system:
-	ansible-playbook -i inventory -l target provision-system.yml --ask-sudo-pass
+	ansible-playbook -i inventory -l target provision-system.yml

@@ -1,6 +1,5 @@
 - name: Provision system
   become: yes
-  become_user: "{{configs.user}}"
   hosts: target
   gather_facts: false
   roles:
@@ -8,3 +7,4 @@
     - system
   vars_files:
     - vars/config.yml
+    - vars/sudo-local.yml
