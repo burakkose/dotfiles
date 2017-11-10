@@ -11,7 +11,7 @@ packages:
   - conky
   - docker
   - feh
-  - firefox
+  - firefox-developer
   - google-chrome
   - gsimplecal
   - gtk2
