@@ -13,6 +13,7 @@ This repository is my personal template to tracking dotfiles via Ansible. It con
 * System monitor: Conky
 * Terminal: urxvt
 * Shell: zsh
+* AUR Helper: trizen
 
 After installation, you will have these packages and packages groups.
 
@@ -30,7 +31,7 @@ After installation, you will have these packages and packages groups.
 - conky
 - docker
 - feh
-- firefox
+- firefox-developer
 - google-chrome
 - gsimplecal
 - gtk2
@@ -70,6 +71,7 @@ After installation, you will have these packages and packages groups.
 - tig
 - tint2
 - transmission-gtk
+- trizen
 - ttf-inconsolata
 - unrar
 - vlc
@@ -88,10 +90,6 @@ Make sure that, you are using correct configuration in ```vars/config.yml```
 pacman -S ansible
 cd && git clone https://github.com/burakkose/dotfiles.git && cd dotfiles && make
 ```
-
-To update, `cd` into your local dotfiles repository and then:
-
-``` make ```
 
 You can also only apply dotfiles
 
