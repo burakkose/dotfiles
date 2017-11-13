@@ -1,0 +1,27 @@
+---
+- name: Check if trizen is installed
+  shell: pacman -Q trizen
+  ignore_errors: yes
+  register: is_trizen_installed
+
+- name: "Download trizen package"
+  become: no
+  shell: curl  https://aur.archlinux.org/cgit/aur.git/snapshot/trizen.tar.gz  | tar xz -C /tmp/
+  when: is_trizen_installed.rc != 0
+
+- name: "makepkg trizen"
+  become: no
+  shell: cd /tmp/trizen && makepkg -s --noconfirm
+  when: is_trizen_installed.rc != 0
+
+- name: "Install trizen"
+  shell: cd /tmp/trizen && sudo pacman -U *xz --noconfirm
+  when: is_trizen_installed.rc != 0
+
+- name: Clean tmp
+  file:
+    state: absent
+    path: /tmp/trizen
+  when: is_trizen_installed.rc != 0
+
+

@@ -5,7 +5,7 @@
     upgrade: yes
 
 - name: Install packages
-  command: yaourt -S "{{ item }}" --noconfirm --needed
-  ignore_errors: yes
+  command: trizen -S "{{ item }}" --noconfirm --needed
+  become: no
   with_items:
       "{{ packages }}"
