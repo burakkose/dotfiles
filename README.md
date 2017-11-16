@@ -1,7 +1,6 @@
-
 # Overview
 
-This repository is my personal template to tracking dotfiles via Ansible. It contains lots of personal applications and settings, so if you decide to use, please check the application list, and remove things you don’t want.
+This repository is my personal template to tracking dotfiles via Ansible in Arch Linux. It contains lots of personal applications and settings, so if you decide to use, please check the application list, and remove things you don’t want.
 
 ## What's in it?
 
@@ -20,6 +19,7 @@ After installation, you will have these packages and packages groups.
 > Please see, roles/system/vars/main.yml
 
 ```
+- ansible
 - arandr
 - arc-gtk-theme
 - atom-editor-bin
@@ -86,8 +86,11 @@ After installation, you will have these packages and packages groups.
 Make sure that, you are using correct configuration in ```vars/config.yml```
 
 ```
-pacman -S ansible
-cd && git clone https://github.com/burakkose/dotfiles.git && cd dotfiles && make
+cd
+git clone https://github.com/burakkose/dotfiles.git 
+cd dotfiles
+make install-deps
+make
 ```
 
 You can also only apply dotfiles

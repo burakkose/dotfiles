@@ -6,3 +6,6 @@ dotfiles:
 
 system:
 	ansible-playbook -i inventory -l target provision-system.yml
+
+install-deps:
+	sudo pacman -S ansible --needed
