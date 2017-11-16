@@ -55,7 +55,6 @@ After installation, you will have these packages and packages groups.
 - openbox
 - openbox-menu
 - pcmanfm
-- plank
 - powerline-fonts
 - redshift
 - rofi

@@ -35,7 +35,6 @@ packages:
   - openbox
   - openbox-menu
   - pcmanfm
-  - plank
   - powerline-fonts
   - redshift
   - rofi
