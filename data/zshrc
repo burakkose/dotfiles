@@ -13,7 +13,7 @@ export PATH=$SPARK_HOME/bin:$PATH
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="mm/dd/yyyy"
 
-plugins=(git docker jsontools archlinux lein mvn sudo web-search )
+plugins=(git docker jsontools archlinux lein mvn sudo web-search ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -47,9 +47,8 @@ alias weather='curl wttr.in/Amsterdam'
 eval "$(thefuck --alias)"
 eval "$(rbenv init -)"
 
-# ssh magic
-eval `ssh-agent -s` &>/dev/null
-ssh-add ~/.ssh/id_rsa &>/dev/null
+# ssh agent
+zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 # auto complete for alias
 setopt complete_aliases
