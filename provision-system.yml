@@ -3,7 +3,7 @@
   hosts: target
   gather_facts: false
   roles:
-    - yaourt
+    - trizen
     - system
   vars_files:
     - vars/config.yml
