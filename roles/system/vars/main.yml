@@ -26,6 +26,7 @@ packages:
   - lxappearance
   - lxinput
   - lxmenu-data
+  - neofetch
   - numix-circle-icon-theme-git
   - obconf
   - obkey
