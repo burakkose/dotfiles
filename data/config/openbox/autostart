@@ -11,13 +11,9 @@ cbatticon &
 compton --config ~/.config/compton.conf -b &
 
 tint2 &
-plank &
 
 conky -c ~/.config/conky/sysrc &
 conky -c ~/.config/conky/timerc &
 conky -c ~/.config/conky/daterc &
 
 xrdb ~/.Xresources &
-
-eval `ssh-agent -s`
-ssh-add ~/.ssh/id_rsa

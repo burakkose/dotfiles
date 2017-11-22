@@ -22,12 +22,11 @@ alias .='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias ogit='nano $GITFOLDER'
 alias cgit='cd $GITFOLDER'
 alias cdot='cd $DOTFILES'
-
-# App alias
-alias leafpad='l3afpad'
-
+alias odot='nano $DOTFILES'
+alias celmar='cd $GITFOLDER/elmar'
 # Helpers
 chpwd() ls
 alias c='clear'
@@ -47,6 +46,10 @@ alias weather='curl wttr.in/Amsterdam'
 
 eval "$(thefuck --alias)"
 eval "$(rbenv init -)"
+
+# ssh magic
+eval `ssh-agent -s` &>/dev/null
+ssh-add ~/.ssh/id_rsa &>/dev/null
 
 # auto complete for alias
 setopt complete_aliases
