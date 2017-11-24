@@ -1,8 +1,7 @@
 ---
-files:
+directly:
   - atom
   - bin
-  - config
   - nano
   - nanorc
   - themes
@@ -13,3 +12,6 @@ files:
   - zshrc
   - wgetrc
   - tmux.conf
+
+partially:
+  - config

@@ -1,36 +1,61 @@
 ---
-- set_fact:
+- name: Define timestamp
+  set_fact:
     current: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
-    backup_dir: "{{configs.dotfile_backup_path}}/{{current}}"
+
+- name: Define variables
+  set_fact:
+    backup_dir: "{{ configs.dotfile_backup_path }}/{{ current }}"
 
 - name: Create backup directory
   file:
-      path: "{{backup_dir}}"
-      state: directory
+    path: "{{ backup_dir }}"
+    state: directory
 
-- name: Copy existing dotfiles to backup directory
-  shell: cp -Lr ~/.{{ item }} ~/{{backup_dir}}/{{item}}
+- name: Copy existing dotfiles to backup directory (Directly)
+  command: cp -Lr ~/.{{ item }} {{ backup_dir }}/{{ item }}
   with_items:
-      "{{ files }}"
+    "{{ directly }}"
 
-- name: Clone tmux plugin manager
-  shell: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-  ignore_errors: yes
+- name: Copy existing dotfiles to backup directory (Partially)
+  include_role:
+    name: dotfile
+    tasks_from: backup-partially
+  with_items:
+    "{{ partially }}"
+  loop_control:
+    loop_var: dir
 
-- name: Apply new dotfiles
+- name: Apply files directly (Directly)
   file:
-      src: '{{configs.dotfile_repo_path}}/data/{{ item }}'
-      dest: '~/.{{ item }}'
-      state: link
+    src: '{{ configs.dotfile_repo_path }}/data/{{ item }}'
+    dest: '~/.{{ item }}'
+    state: link
+    force: yes
   with_items:
-      "{{ files }}"
+    "{{ directly }}"
+
+- name: Apply files partially (Partially)
+  include_role:
+    name: dotfile
+    tasks_from: apply-partially
+  with_items:
+    "{{ partially }}"
+  loop_control:
+    loop_var: dir
+
+- git:
+    repo: 'https://github.com/tmux-plugins/tpm.git'
+    dest: ~/.tmux/plugins/tpm
+    clone: yes
 
 - name: Apply obtheme
   become: yes
-  file:
-      src: "{{ item[0] }}"
-      dest: "{{ item[1] }}"
-      state: link
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
   with_items:
-      - ['~/.themes/obtheme', '/usr/share/themes/obtheme']
-      - ['{{configs.dotfile_repo_path}}//data/oblogout.conf', '/etc/oblogout.conf']
+    - {src: '{{ configs.dotfile_repo_path }}/data/themes/obtheme', dest: '/usr/share/themes/'}
+    - {src: '{{ configs.dotfile_repo_path }}/data/oblogout.conf', dest: '/etc/oblogout.conf'}

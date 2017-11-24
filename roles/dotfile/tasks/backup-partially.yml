@@ -1,0 +1,10 @@
+- command: 'ls {{ configs.dotfile_repo_path }}/data/{{ dir }}'
+  register: dir_out
+
+- file:
+    path: '{{ backup_dir }}/{{ dir }}'
+    state: directory
+
+- command: cp -Lr ~/.{{ dir }}/{{ item }} {{ backup_dir }}/{{ dir }}/{{ item }}
+  with_items:
+    "{{ dir_out.stdout_lines }}"
