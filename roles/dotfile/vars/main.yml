@@ -11,3 +11,5 @@ files:
   - Xresources
   - zsh
   - zshrc
+  - wgetrc
+  - tmux.conf

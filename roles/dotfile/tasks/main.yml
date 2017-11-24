@@ -1,12 +1,15 @@
 ---
+- set_fact:
+    current: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
+    backup_dir: "{{configs.dotfile_backup_path}}/{{current}}"
+
 - name: Create backup directory
   file:
-      path: "{{configs.dotfile_backup_path}}"
+      path: "{{backup_dir}}"
       state: directory
 
-- name: Move existing dotfiles to backup directory
-  shell: mv ~/.{{ item }} ~/{{configs.dotfile_backup_path}}
-  ignore_errors: yes
+- name: Copy existing dotfiles to backup directory
+  shell: cp -Lr ~/.{{ item }} ~/{{backup_dir}}/{{item}}
   with_items:
       "{{ files }}"
 
@@ -23,6 +26,7 @@
       "{{ files }}"
 
 - name: Apply obtheme
+  become: yes
   file:
       src: "{{ item[0] }}"
       dest: "{{ item[1] }}"
