@@ -13,11 +13,13 @@
     state: directory
 
 - name: Copy existing dotfiles to backup directory (Directly)
+  ignore_errors: yes
   command: cp -Lr ~/.{{ item }} {{ backup_dir }}/{{ item }}
   with_items:
     "{{ directly }}"
 
 - name: Copy existing dotfiles to backup directory (Partially)
+  ignore_errors: yes
   include_role:
     name: dotfile
     tasks_from: backup-partially
