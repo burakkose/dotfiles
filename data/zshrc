@@ -26,7 +26,9 @@ alias ogit='nano $GITFOLDER'
 alias cgit='cd $GITFOLDER'
 alias cdot='cd $DOTFILES'
 alias odot='nano $DOTFILES'
-alias celmar='cd $GITFOLDER/elmar'
+alias cde='cd $GITFOLDER/elmar'
+alias cdp='cd $GITFOLDER/personal'
+alias cdt='cd $GITFOLDER/third-party'
 # Helpers
 chpwd() ls
 alias c='clear'
@@ -43,6 +45,9 @@ alias shutdown='sudo shutdown -h now'
 alias suspend='sudo systemctl suspend'
 alias openboxrc='nano ~/.config/openbox/rc.xml'
 alias weather='curl wttr.in/Amsterdam'
+alias psearch='trizen -Sys'
+alias pinstall='trizen -Sy'
+alias update-system='trizen -Syu'
 
 eval "$(thefuck --alias)"
 eval "$(rbenv init -)"
