@@ -60,3 +60,4 @@ packages:
   - xorg-xinit
   - xorg-xprop
   - fpp-git
+  - ranger
