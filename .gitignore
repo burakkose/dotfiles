@@ -1,2 +1,4 @@
+.idea
 *.retry
 .vault-pass.txt
+*__pycache__
