@@ -27,7 +27,6 @@ packages:
   - lxinput
   - lxmenu-data
   - neofetch
-  - numix-circle-icon-theme-git
   - obconf
   - obkey
   - oblogout
@@ -61,3 +60,4 @@ packages:
   - xorg-xprop
   - fpp-git
   - ranger
+  - papirus-icon-theme
