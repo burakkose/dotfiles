@@ -27,4 +27,4 @@ uppercase no
 cpu_avg_samples 2
 override_utf8_locale no
 TEXT
-${color 000000}${time %H} ${color ce2c51}: ${color ffffff}${time %M}
+${color ffffff}${time %H} ${color ce2c51}: ${color ffffff}${time %M}
