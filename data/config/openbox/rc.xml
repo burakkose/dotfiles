@@ -285,7 +285,7 @@
         </keybind>
         <keybind key="A-f">
             <action name="Execute">
-                <command>firefox</command>
+                <command>firefox-developer-edition</command>
             </action>
         </keybind>
         <chainQuitKey>C-g</chainQuitKey>
