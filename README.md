@@ -19,66 +19,79 @@ After installation, you will have these packages and packages groups.
 > Please see, roles/system/vars/main.yml
 
 ```
-- ansible
-- arandr
-- arc-gtk-theme
-- atom-editor-bin
-- base
-- base-devel
-- cbatticon
-- clojure
-- compton
-- conky
-- docker
-- feh
-- firefox-developer
-- google-chrome
-- gsimplecal
-- gtk2
-- gtk3
-- i3lock-blur
-- intellij-idea-ultimate-edition
-- jdk8-openjdk
-- jq
-- l3afpad
-- libreoffice-fresh
-- lightdm
-- lxappearance
-- lxinput
-- lxmenu-data
-- numix-circle-icon-theme-git
-- obconf
-- obkey
-- oblogout
-- obmenu
-- oh-my-zsh-git
-- openbox
-- openbox-menu
-- pcmanfm
-- powerline-fonts
-- redshift
-- rofi
-- sbt
-- scala
-- scrot
-- slack-desktop
-- spotify
-- telegram-desktop-bin
-- the_silver_searcher
-- thefuck
-- thunderbird
-- tig
-- tint2
-- transmission-gtk
-- trizen
-- ttf-inconsolata
-- unrar
-- vlc
-- volumeicon
-- wmctrl
-- Xarchiver
-- xorg-xinit
-- xorg-xprop
+  - ansible
+  - arandr
+  - arc-gtk-theme
+  - atom-editor-bin
+  - base
+  - base-devel
+  - cbatticon
+  - clojure
+  - compton
+  - conky
+  - docker
+  - feh
+  - firefox-developer-edition
+  - fpp-git
+  - google-chrome
+  - gsimplecal
+  - gtk2
+  - gtk3
+  - i3lock-blur
+  - imagemagick
+  - intellij-idea-ultimate-edition
+  - jdk8-openjdk
+  - jq
+  - leafpad
+  - libreoffice-fresh
+  - lxappearance
+  - lxinput
+  - lxmenu-data
+  - neofetch
+  - network-manager-applet
+  - networkmanager-openvpn
+  - obconf
+  - obkey
+  - oblogout
+  - obmenu
+  - oh-my-zsh-git
+  - openbox
+  - openbox-menu
+  - openssh
+  - papirus-icon-theme
+  - pcmanfm
+  - powerline
+  - powerline-fonts
+  - ranger
+  - rbenv
+  - redshift
+  - rofi
+  - rxvt-unicode
+  - sbt
+  - scala
+  - scrot
+  - slack-desktop
+  - spotify
+  - telegram-desktop-bin
+  - the_silver_searcher
+  - thefuck
+  - thunderbird
+  - tig
+  - tint2
+  - tmux
+  - tpm
+  - transmission-gtk
+  - ttf-inconsolata
+  - ttf-ms-fonts
+  - unrar
+  - urxvt-perls
+  - vlc
+  - volumeicon
+  - wmctrl
+  - xarchiver
+  - xclip
+  - xorg
+  - xorg-xclipboard
 ```
 
 ## Installation
