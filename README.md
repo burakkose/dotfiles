@@ -33,6 +33,7 @@ After installation, you will have these packages and packages groups.
   - feh
   - firefox-developer-edition
   - fpp-git
+  - galculator
   - google-chrome
   - gsimplecal
   - gtk2
