@@ -6,5 +6,6 @@
     state: directory
 
 - command: cp -Lr ~/.{{ dir }}/{{ item }} {{ backup_dir }}/{{ dir }}/{{ item }}
+  ignore_errors: yes
   with_items:
     "{{ dir_out.stdout_lines }}"
