@@ -29,6 +29,7 @@ After installation, you will have these packages and packages groups.
   - compton
   - conky
   - docker
+  - evince
   - feh
   - firefox-developer-edition
   - fpp-git
@@ -36,6 +37,7 @@ After installation, you will have these packages and packages groups.
   - gsimplecal
   - gtk2
   - gtk3
+  - htop
   - i3lock-blur
   - imagemagick
   - intellij-idea-ultimate-edition
@@ -91,7 +93,7 @@ After installation, you will have these packages and packages groups.
   - xclip
   - xorg
   - xorg-xinit
-- xorg-xclipboard
+  - xorg-xclipboard
 ```
 
 ## Installation

@@ -10,6 +10,7 @@ packages:
   - compton
   - conky
   - docker
+  - evince
   - feh
   - firefox-developer-edition
   - fpp-git
@@ -17,6 +18,7 @@ packages:
   - gsimplecal
   - gtk2
   - gtk3
+  - htop
   - i3lock-blur
   - imagemagick
   - intellij-idea-ultimate-edition
