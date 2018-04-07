@@ -19,7 +19,6 @@ After installation, you will have these packages and packages groups.
 > Please see, roles/system/vars/main.yml
 
 ```
-  - ansible
   - arandr
   - arc-gtk-theme
   - atom-editor-bin
@@ -40,7 +39,7 @@ After installation, you will have these packages and packages groups.
   - i3lock-blur
   - imagemagick
   - intellij-idea-ultimate-edition
-  - jdk8-openjdk
+  - jdk9-openjdk
   - jq
   - leafpad
   - libreoffice-fresh
@@ -91,12 +90,13 @@ After installation, you will have these packages and packages groups.
   - xarchiver
   - xclip
   - xorg
-  - xorg-xclipboard
+  - xorg-xinit
+- xorg-xclipboard
 ```
 
 ## Installation
 
-Make sure that, you are using correct configuration in ```vars/config.yml```
+Make sure that, you are using correct configuration in ```vars/config.yml```. You should also know how Ansible Vault works, please use correct sudo pass(ansible_sudo_pass) in ```vars/sudo-local.yml```.
 
 ```
 cd
@@ -113,3 +113,6 @@ You can also only apply dotfiles
 or system
 
 ```make system```
+
+Note: Please change the user name in ```data/gtkrc-2.0```, ```data/Xresources```.
+
