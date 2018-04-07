@@ -12,6 +12,7 @@ directly:
   - zshrc
   - wgetrc
   - tmux.conf
+  - gtkrc-2.0
 
 partially:
   - config
