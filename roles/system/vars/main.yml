@@ -20,7 +20,7 @@ packages:
   - i3lock-blur
   - imagemagick
   - intellij-idea-ultimate-edition
-  - jdk8-openjdk
+  - jdk9-openjdk
   - jq
   - leafpad
   - libreoffice-fresh
@@ -71,5 +71,6 @@ packages:
   - xarchiver
   - xclip
   - xorg
+  - xorg-xinit
   - xorg-xclipboard
 
