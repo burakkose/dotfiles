@@ -50,7 +50,7 @@ Rxvt.borderLess: true
 URxvt.imLocale:en_US.UTF-8
 modifier:meta
 URxvt.saveLines:2000
-URxvt.scrollstyle:plain
+URxvt.scrollstyle:rxvt
 URxvt.jumpScroll:true
 URxvt.skipScroll:true
 URxvt.scrollBar:false
@@ -61,7 +61,7 @@ URxvt.mouseWheelScrollPage:true
 URxvt.skipBuiltinGlyphs:true
 URxvt.cursorBlink:false
 URxvt.transparent:false
-URxvt.depth:16
+URxvt.depth:32
 URxvt.iso14755:false
 URxvt.iso14755_52:false
 
@@ -84,6 +84,7 @@ URxvt.keysym.C-f:           perl:keyboard-select:search
 URxvt.keysym.C-C: perl:clipboard:copy
 URxvt.keysym.C-V: perl:clipboard:paste
 URxvt.keysym.C-A-V: perl:clipboard:paste_escaped
+URxvt.clipboard.autocopy: true
 ! Arrow keys
 URxvt.keysym.Control-Up:     \033[1;5A
 URxvt.keysym.Control-Down:   \033[1;5B
