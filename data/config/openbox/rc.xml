@@ -280,7 +280,7 @@
                 <command>urxvt</command>
             </action>
         </keybind>
-        <keybind key="A-q">
+        <keybind key="S-A-q">
             <action name="Close"/>
         </keybind>
         <keybind key="A-f">
