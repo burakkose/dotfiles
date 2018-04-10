@@ -2,17 +2,18 @@
 directly:
   - atom
   - bin
+  - gtkrc-2.0
   - nano
   - nanorc
+  - scalafmt.conf
   - themes
+  - tmux.conf
+  - wgetrc
   - wgetrc
   - xinitrc
   - Xresources
   - zsh
   - zshrc
-  - wgetrc
-  - tmux.conf
-  - gtkrc-2.0
 
 partially:
   - config
