@@ -20,6 +20,7 @@ packages:
   - gtk2
   - gtk3
   - htop
+  - httpie
   - i3lock-blur
   - imagemagick
   - intellij-idea-ultimate-edition
@@ -70,6 +71,7 @@ packages:
   - urxvt-perls
   - vlc
   - volumeicon
+  - wget
   - wmctrl
   - xarchiver
   - xclip

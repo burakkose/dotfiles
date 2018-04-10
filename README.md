@@ -39,6 +39,7 @@ After installation, you will have these packages and packages groups.
   - gtk2
   - gtk3
   - htop
+  - httpie
   - i3lock-blur
   - imagemagick
   - intellij-idea-ultimate-edition
@@ -89,6 +90,7 @@ After installation, you will have these packages and packages groups.
   - urxvt-perls
   - vlc
   - volumeicon
+  - wget
   - wmctrl
   - xarchiver
   - xclip
