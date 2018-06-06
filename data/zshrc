@@ -11,6 +11,10 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH:$DOT_SCRIPT
 export SPARK_HOME=/opt/apache-spark
 export PATH=$SPARK_HOME/bin:$PATH
 
+export HADOOP_HOME=/usr/lib/hadoop
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" 
+
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="mm/dd/yyyy"
 
