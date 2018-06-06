@@ -5,6 +5,7 @@ export ARCHFLAGS="-arch x86_64"
 export ZSH=/usr/share/oh-my-zsh/
 export DOT_SCRIPT=~/.config/scripts/
 export PATH="$HOME/.rbenv/bin:$PATH"
+export JAVA_HOME=/usr/lib/jvm/default 
 export PATH=$HOME/bin:/usr/local/bin:$PATH:$DOT_SCRIPT
 
 export SPARK_HOME=/opt/apache-spark
