@@ -13,19 +13,16 @@ rofi.color-window:                   #ffffff,#f5f5f5
 rofi.separator-style:                solid
 ! }}}
 
+! Xft ----------------
+Xft.dpi: 96
+Xft.lcdfilter: lcddefault
+Xft.antialias: true
+Xft.autohint: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+
 ! urxvt {{{
-Xft.autohint:0
-Xft.lcdfilter:lcddefault
-Xft.hintstyle:hintfull
-Xft.hinting:true
-Xft.antialias:true
-Xft.dpi:96
-Xft.rgba:rgb
-
-! X Cursor theme
-Xcursor.theme: Vanilla-DMZ
-Xcursor.size:  16
-
 ! Font
 URxvt.font:           xft:Inconsolata for Powerline:size=11,xft:symbola:size=9,xft:DejavuSansMonoForPowerline:pixelsize=11
 URxvt.keysym.M-C-0:command:\033]710;xft:Inconsolata for Powerline:size=11,xft:symbola:size=9,xft:DejavuSansMonoForPowerline:pixelsize=11\007
@@ -98,6 +95,7 @@ URxvt.matcher.pattern.1:  \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
 URxvt.matcher.pattern.2:  \\B(/\\S+?):(\\d+)(?=:|$)
 URxvt.matcher.launcher.2: gvim +$2 $1
 
+
 ! URxvt Color Settings
-#include "/home/burak/.config/color_schemes/color_scheme"
+#include "/home/burak/.config/color_schemes/default"
 ! }}}
