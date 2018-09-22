@@ -1,0 +1,11 @@
+---
+files:
+  - data/work/extrarc
+  - data/work/bin/amazon-chime
+  - data/work/bin/amazon-outlook
+  - data/work/bin/cloud-desktop
+  - data/work/bin/odin-tunnel
+  - data/config/rofi/bookmarks.csv
+  - data/vpn/personal/amsterdam.ovpn
+  - data/vpn/personal/dublin.ovpn
+  - data/vpn/personal/los_angeles.ovpn

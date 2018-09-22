@@ -1,6 +1,8 @@
+
+
 # Overview
 
-This repository is my personal template to tracking dotfiles via Ansible in Arch Linux. It contains lots of personal applications and settings, so if you decide to use, please check the application list, and remove things you don’t want.
+This repository is my template to tracking dotfiles via Ansible for Arch and Ubuntu. It contains a lot of personal applications and settings. Before you decide to use it, please check the application list, and remove things you don’t want to have.
 
 ## What's in it?
 
@@ -12,112 +14,41 @@ This repository is my personal template to tracking dotfiles via Ansible in Arch
 * System monitor: Conky
 * Terminal: urxvt
 * Shell: zsh
-* AUR Helper: trizen
+* AUR Helper for Arch: trizen
 
-After installation, you will have these packages and packages groups.
-
+After installation, you will have the following packages.
+#### Arch Linux
 > Please see, roles/system/vars/main.yml
 
-```
-  - arandr
-  - arc-gtk-theme
-  - atom-editor-bin
-  - base
-  - base-devel
-  - cbatticon
-  - clojure
-  - compton
-  - conky
-  - docker
-  - evince
-  - feh
-  - firefox-developer-edition
-  - fpp-git
-  - galculator
-  - google-chrome
-  - gsimplecal
-  - gtk2
-  - gtk3
-  - htop
-  - httpie
-  - i3lock-blur
-  - imagemagick
-  - intellij-idea-ultimate-edition
-  - jdk9-openjdk
-  - jq
-  - leafpad
-  - libreoffice-fresh
-  - lxappearance
-  - lxinput
-  - lxmenu-data
-  - neofetch
-  - network-manager-applet
-  - networkmanager-openvpn
-  - obconf
-  - obkey
-  - oblogout
-  - obmenu
-  - oh-my-zsh-git
-  - openbox
-  - openbox-menu
-  - openssh
-  - papirus-icon-theme
-  - pcmanfm
-  - powerline
-  - powerline-fonts
-  - ranger
-  - rbenv
-  - redshift
-  - rofi
-  - rxvt-unicode
-  - sbt
-  - scala
-  - scrot
-  - slack-desktop
-  - spotify
-  - telegram-desktop-bin
-  - the_silver_searcher
-  - thefuck
-  - thunderbird
-  - tig
-  - tint2
-  - tmux
-  - tpm
-  - transmission-gtk
-  - ttf-inconsolata
-  - ttf-ms-fonts
-  - unrar
-  - urxvt-perls
-  - vlc
-  - volumeicon
-  - wget
-  - wmctrl
-  - xarchiver
-  - xclip
-  - xorg
-  - xorg-xinit
-  - xorg-xclipboard
-```
+#### Ubuntu
+> Please see, roles/system-ubuntu/vars/main.yml
 
 ## Installation
 
-Make sure that, you are using correct configuration in ```vars/config.yml```. You should also know how Ansible Vault works, please use correct sudo pass(ansible_sudo_pass) in ```vars/sudo-local.yml```.
+Please make sure that you are using a correct configuration in ```vars/config.yml```. You will realize some encrypted files after you provision dotfiles. These are files that I use Ansible Vault. You can safely remove them.
 
+#### Arch
 ```
-cd
 git clone https://github.com/burakkose/dotfiles.git 
 cd dotfiles
-make install-deps
-make
+make install-deps-arch && make arch
 ```
 
-You can also only apply dotfiles
+#### Ubuntu
+```
+git clone https://github.com/burakkose/dotfiles.git 
+cd dotfiles
+make install-deps-ubuntu && make ubuntu
+```
+
+If you only prefer to provision dotfiles
 
 ```make dotfiles```
 
-or system
+#### Encryption & Decryption
+Ansible Vault is used to encrypt or decrypt sensitive data. Please see ```vars/vault.yml``` for files that are currently encrypted. 
 
-```make system```
+```make encrypt``` or ```make decrypt```
 
-Note: Please change the user name in ```data/gtkrc-2.0```, ```data/Xresources```.
+Note: Please change the username in ```data/gtkrc-2.0```, ```data/Xresources```, ```vars/config.yml```.
 

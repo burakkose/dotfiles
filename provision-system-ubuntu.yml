@@ -1,7 +1,8 @@
-- name: Provision dotfiles
+- name: Provision Ubuntu system
+  become: yes
   hosts: target
   gather_facts: false
   roles:
-    - dotfile
+    - system-ubuntu
   vars_files:
     - vars/config.yml

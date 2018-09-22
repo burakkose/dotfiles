@@ -2,3 +2,4 @@
 *.retry
 .vault-pass.txt
 *__pycache__
+*.pyc

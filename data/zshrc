@@ -2,11 +2,11 @@ export EDITOR=nano
 export GITFOLDER=~/git
 export DOTFILES=~/dotfiles
 export ARCHFLAGS="-arch x86_64"
-export ZSH=/usr/share/oh-my-zsh/
+export ZSH=~/.oh-my-zsh
 export DOT_SCRIPT=~/.config/scripts/
 export PATH="$HOME/.rbenv/bin:$PATH"
 export JAVA_HOME=/usr/lib/jvm/default 
-export PATH=$HOME/bin:/usr/local/bin:$PATH:$DOT_SCRIPT
+export PATH=$HOME/bin:/usr/local/bin:$PATH:$DOT_SCRIPT:$HOME/.toolbox/bin:$PATH
 
 export SPARK_HOME=/opt/apache-spark
 export PATH=$SPARK_HOME/bin:$PATH
@@ -21,6 +21,7 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(git docker jsontools archlinux lein mvn sudo web-search ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/.work/extrarc
 
 # Filesystem
 alias .='cd'
@@ -55,7 +56,6 @@ alias pinstall='trizen -Sy'
 alias update-system='trizen -Syu'
 
 eval "$(thefuck --alias)"
-eval "$(rbenv init -)"
 
 # ssh agent
 zstyle :omz:plugins:ssh-agent agent-forwarding on

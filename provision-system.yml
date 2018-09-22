@@ -1,4 +1,4 @@
-- name: Provision system
+- name: Provision Arch system
   become: yes
   hosts: target
   gather_facts: false
@@ -7,4 +7,3 @@
     - system
   vars_files:
     - vars/config.yml
-    - vars/sudo-local.yml
