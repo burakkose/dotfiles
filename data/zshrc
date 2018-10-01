@@ -1,5 +1,6 @@
 export EDITOR=nano
 export GITFOLDER=~/git
+export WORKSPACEFOLDER=~/workspace
 export DOTFILES=~/dotfiles
 export ARCHFLAGS="-arch x86_64"
 export ZSH=~/.oh-my-zsh
@@ -7,6 +8,7 @@ export DOT_SCRIPT=~/.config/scripts/
 export PATH="$HOME/.rbenv/bin:$PATH"
 export JAVA_HOME=/usr/lib/jvm/default 
 export PATH=$HOME/bin:/usr/local/bin:$PATH:$DOT_SCRIPT:$HOME/.toolbox/bin:$PATH
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 export SPARK_HOME=/opt/apache-spark
 export PATH=$SPARK_HOME/bin:$PATH
@@ -35,6 +37,7 @@ alias odot='nano $DOTFILES'
 alias cde='cd $GITFOLDER/elmar'
 alias cdp='cd $GITFOLDER/personal'
 alias cdt='cd $GITFOLDER/third-party'
+alias ws='cd $WORKSPACEFOLDER'
 # Helpers
 chpwd() ls
 alias c='clear'
@@ -55,6 +58,7 @@ alias psearch='trizen -Sys'
 alias pinstall='trizen -Sy'
 alias update-system='trizen -Syu'
 
+eval "$(rbenv init -)"
 eval "$(thefuck --alias)"
 
 # ssh agent
