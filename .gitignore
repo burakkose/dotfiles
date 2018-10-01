@@ -2,3 +2,7 @@
 *.retry
 .vault-pass.txt
 *__pycache__
+*.pyc
+data/nano/search_history
+data/config/gtk-3.0/bookmarks
+

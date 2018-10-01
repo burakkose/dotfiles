@@ -234,7 +234,7 @@
         <keybind key="A-m">
             <action name="Execute">
                 <command>
-                    sh ~/.config/openbox/scripts/redshift.sh
+                    bash ~/.config/openbox/scripts/redshift
                 </command>
             </action>
         </keybind>
@@ -249,7 +249,7 @@
             #Rofi script for changing desktop
             <action name="Execute">
                 <command>
-                    sh ~/.config/rofi/openbox_switch_workspace.sh
+                    bash ~/.config/rofi/openbox_switch_workspace
                 </command>
             </action>
         </keybind>
@@ -285,7 +285,12 @@
         </keybind>
         <keybind key="A-f">
             <action name="Execute">
-                <command>firefox-developer-edition</command>
+                <command>firefox</command>
+            </action>
+        </keybind>
+        <keybind key="Print">
+            <action name="Execute">
+                <command>gnome-screenshot</command>
             </action>
         </keybind>
         <chainQuitKey>C-g</chainQuitKey>
@@ -409,12 +414,6 @@
                 <menu>client-menu</menu>
             </action>
         </keybind>
-        <!-- Take a screenshot of the current window with gnome-screenshot when Alt+Print are pressed -->
-        <keybind key="A-Print">
-            <action name="Execute">
-                <command>gnome-screenshot -w</command>
-            </action>
-        </keybind>
         <!-- Keybindings for window switching -->
         <keybind key="A-Tab">
             <action name="NextWindow">
@@ -446,40 +445,24 @@
             </action>
         </keybind>
         <!-- Keybindings for window switching with the arrow keys -->
-        <keybind key="W-S-Right">
+        <keybind key="W-S-l">
             <action name="DirectionalCycleWindows">
                 <direction>right</direction>
             </action>
         </keybind>
-        <keybind key="W-S-Left">
+        <keybind key="W-S-h">
             <action name="DirectionalCycleWindows">
                 <direction>left</direction>
             </action>
         </keybind>
-        <keybind key="W-S-Up">
+        <keybind key="W-S-k">
             <action name="DirectionalCycleWindows">
                 <direction>up</direction>
             </action>
         </keybind>
-        <keybind key="W-S-Down">
+        <keybind key="W-S-j">
             <action name="DirectionalCycleWindows">
                 <direction>down</direction>
-            </action>
-        </keybind>
-        <!-- Keybindings for running applications -->
-        <keybind key="W-e">
-            <action name="Execute">
-                <startupnotify>
-                    <enabled>true</enabled>
-                    <name>Konqueror</name>
-                </startupnotify>
-                <command>kfmclient openProfile filemanagement</command>
-            </action>
-        </keybind>
-        <!-- Launch gnome-screenshot when Print is pressed -->
-        <keybind key="Print">
-            <action name="Execute">
-                <command>gnome-screenshot</command>
             </action>
         </keybind>
     </keyboard>

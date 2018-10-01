@@ -1,0 +1,101 @@
+---
+repo_ppa:
+  - ppa:webupd8team/atom
+  - ppa:webupd8team/java
+  - ppa:dawidd0811/neofetch
+  - ppa:ubuntu-mozilla-security/ppa
+  - ppa:papirus/papirus
+  - ppa:jasonpleau/rofi
+  - ppa:atareao/telegram
+  - ppa:mmk2410/intellij-ide
+  - ppa:alex-p/notesalexp-xenial
+  - ppa:fossfreedom/arc-gtk-theme-daily
+#  - ppa:network-manager/ppa
+  - ppa:onboard/stable
+  - ppa:dotovr/manokwari
+ 
+repo_deb:
+  - deb http://repository.spotify.com stable non-free
+  - deb https://dl.bintray.com/sbt/debian /
+
+keys:
+  - 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+  - 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+
+packages_pip:
+  - thefuck
+
+p:
+  - gsimplecal
+  - python-imaging
+  - python-distutils-extra
+  - git
+  - arandr
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - docker
+  - software-properties-common
+  - arc-theme
+  - atom
+  - build-essential
+  - cbatticon
+  - compton
+  - conky-all
+  - evince
+  - feh
+  - htop
+  - httpie
+  - i3lock
+  - imagemagick
+  - intellij-idea-community
+#  - oracle-java8-installer
+  - jq
+  - leafpad
+  - libreoffice
+  - lxappearance
+  - lxinput
+  - lxmenu-data
+  - neofetch
+#  - network-manager-applet
+#  - networkmanager-openvpn
+  - obconf
+  - obkey
+  - obmenu
+  - openbox-menu
+  - git-core
+  - zsh
+  - openbox
+  - obmenu
+  - openssh-server
+  - papirus-icon-theme
+  - pcmanfm
+  - powerline
+  - python-pip
+  - fonts-powerline
+  - ranger
+  - redshift
+  - rofi
+  - rxvt-unicode-256color
+  - sbt
+  - scrot
+  - spotify-client
+  - telegram
+  - silversearcher-ag
+  - python3-dev
+  - python3-pip
+  - thunderbird
+  - tig
+  - tint2
+  - tmux
+  - transmission-gtk
+#  - unrar
+  - vlc
+  - volumeicon-alsa
+  - wget
+  - wmctrl
+  - xarchiver
+  - xclip
+  - xorg
+  - xinit
+  - x11-apps

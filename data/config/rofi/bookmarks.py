@@ -12,4 +12,4 @@ with open(csv_file) as csvfile:
     r = rofi.Rofi()
     index = r.select('Select bookmark: ', options)[0]
     if index != -1:
-        subprocess.call(['firefox-developer-edition', values[index]])
+        subprocess.call(['firefox', values[index]])

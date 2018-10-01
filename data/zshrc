@@ -1,12 +1,14 @@
 export EDITOR=nano
 export GITFOLDER=~/git
+export WORKSPACEFOLDER=~/workspace
 export DOTFILES=~/dotfiles
 export ARCHFLAGS="-arch x86_64"
-export ZSH=/usr/share/oh-my-zsh/
+export ZSH=~/.oh-my-zsh
 export DOT_SCRIPT=~/.config/scripts/
 export PATH="$HOME/.rbenv/bin:$PATH"
 export JAVA_HOME=/usr/lib/jvm/default 
-export PATH=$HOME/bin:/usr/local/bin:$PATH:$DOT_SCRIPT
+export PATH=$HOME/bin:/usr/local/bin:$PATH:$DOT_SCRIPT:$HOME/.toolbox/bin:$PATH
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 export SPARK_HOME=/opt/apache-spark
 export PATH=$SPARK_HOME/bin:$PATH
@@ -21,6 +23,7 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(git docker jsontools archlinux lein mvn sudo web-search ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/.work/zshrc
 
 # Filesystem
 alias .='cd'
@@ -34,6 +37,7 @@ alias odot='nano $DOTFILES'
 alias cde='cd $GITFOLDER/elmar'
 alias cdp='cd $GITFOLDER/personal'
 alias cdt='cd $GITFOLDER/third-party'
+alias ws='cd $WORKSPACEFOLDER'
 # Helpers
 chpwd() ls
 alias c='clear'
@@ -54,8 +58,8 @@ alias psearch='trizen -Sys'
 alias pinstall='trizen -Sy'
 alias update-system='trizen -Syu'
 
-eval "$(thefuck --alias)"
 eval "$(rbenv init -)"
+eval "$(thefuck --alias)"
 
 # ssh agent
 zstyle :omz:plugins:ssh-agent agent-forwarding on
