@@ -1,6 +1,6 @@
 ---
 files:
-  - data/work/extrarc
+  - data/work/zshrc
   - data/work/bin/amazon-chime
   - data/work/bin/amazon-outlook
   - data/work/bin/cloud-desktop

@@ -23,7 +23,7 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(git docker jsontools archlinux lein mvn sudo web-search ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.work/extrarc
+source $HOME/.work/zshrc
 
 # Filesystem
 alias .='cd'
