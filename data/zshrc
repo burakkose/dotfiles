@@ -4,10 +4,9 @@ export WORKSPACEFOLDER=~/workspace
 export DOTFILES=~/dotfiles
 export ARCHFLAGS="-arch x86_64"
 export ZSH=~/.oh-my-zsh
-export DOT_SCRIPT=~/.config/scripts/
 export PATH="$HOME/.rbenv/bin:$PATH"
 export JAVA_HOME=/usr/lib/jvm/default 
-export PATH=$HOME/bin:/usr/local/bin:$PATH:$DOT_SCRIPT:$HOME/.toolbox/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH:$HOME/.bin:$HOME/.toolbox/bin:$PATH
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 export SPARK_HOME=/opt/apache-spark
@@ -45,7 +44,6 @@ alias e='exit'
 alias df='df -h'
 alias clear='clear && neofetch'
 alias ping='ping -c 5'
-alias lock="sh ~/.bin/lock"
 alias zshrc='nano ~/.zshrc'
 alias szshrc='source ~/.zshrc'
 alias grep='grep --color=auto'

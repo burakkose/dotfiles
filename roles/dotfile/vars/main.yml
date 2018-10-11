@@ -1,7 +1,8 @@
----
+\---
 directly:
   - atom
   - bin
+  - lib
   - gtkrc-2.0
   - nano
   - nanorc

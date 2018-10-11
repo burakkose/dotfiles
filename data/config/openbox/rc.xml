@@ -227,14 +227,14 @@
         <keybind key="W-l">
             <action name="Execute">
                 <command>
-                    sh ~/.bin/lock
+                    bash ~/.bin/lock
                 </command>
             </action>
         </keybind>
         <keybind key="A-m">
             <action name="Execute">
                 <command>
-                    bash ~/.config/openbox/scripts/redshift
+                    bash ~/.bin/redshift
                 </command>
             </action>
         </keybind>
@@ -249,7 +249,7 @@
             #Rofi script for changing desktop
             <action name="Execute">
                 <command>
-                    bash ~/.config/rofi/openbox_switch_workspace
+                    bash ~/.bin/openbox-switch-workspace
                 </command>
             </action>
         </keybind>
@@ -257,7 +257,7 @@
             #Rofi script for bookmarks
             <action name="Execute">
                 <command>
-                    python ~/.config/rofi/bookmarks.py
+                    python ~/.bin/bookmarks.py
                 </command>
             </action>
         </keybind>
