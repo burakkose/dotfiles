@@ -1,6 +1,5 @@
 \---
 directly:
-  - atom
   - bin
   - lib
   - gtkrc-2.0
