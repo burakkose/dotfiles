@@ -6,7 +6,6 @@ packages:
   - base
   - base-devel
   - cbatticon
-  - clojure
   - compton
   - conky
   - docker
@@ -24,7 +23,7 @@ packages:
   - i3lock-blur
   - imagemagick
   - intellij-idea-ultimate-edition
-  - jdk9-openjdk
+  - jdk10-openjdk
   - jq
   - leafpad
   - libreoffice-fresh
@@ -38,7 +37,7 @@ packages:
   - obkey
   - oblogout
   - obmenu
-  - oh-my-zsh-git
+#  - oh-my-zsh-git
   - openbox
   - openbox-menu
   - openssh
@@ -54,9 +53,8 @@ packages:
   - sbt
   - scala
   - scrot
-  - slack-desktop
   - spotify
-  - telegram-desktop-bin
+  - telegram-desktop
   - the_silver_searcher
   - thefuck
   - thunderbird

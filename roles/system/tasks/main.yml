@@ -9,3 +9,12 @@
   become: no
   with_items:
       "{{ packages }}"
+
+- name: Link oh my zsh
+  ignore_errors: yes
+  file:
+    src: '/usr/share/oh-my-zsh'
+    dest: '~/.oh-my-zsh'
+    state: link
+    force: yes
+  when: '"oh-my-zsh-git" in packages'
