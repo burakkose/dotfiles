@@ -50,5 +50,5 @@ Ansible Vault is used to encrypt or decrypt sensitive data. Please see ```vars/v
 
 ```make encrypt``` or ```make decrypt```
 
-Note: Please change the username in ```data/gtkrc-2.0```, ```data/Xresources```, ```vars/config.yml```.
+Note: Please change the username in ```vars/config.yml```.
 

@@ -1,4 +1,4 @@
-include "/home/burak/.gtkrc-2.0.mine"
+# include "/home/burak/.gtkrc-2.0.mine"
 gtk-theme-name="Arc"
 gtk-icon-theme-name="Papirus-Adapta-Nokto"
 gtk-font-name="Cantarell 11"
