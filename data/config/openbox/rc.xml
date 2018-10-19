@@ -158,7 +158,21 @@
                 <width>50%</width>
             </action>
         </keybind>
+        <keybind key="A-h">
+            <action name="UnmaximizeFull"/>
+            <action name="MoveResizeTo">
+                <x>0</x>
+                <width>50%</width>
+            </action>
+        </keybind>
         <keybind key="A-Right">
+            <action name="UnmaximizeFull"/>
+            <action name="MoveResizeTo">
+                <x>-0</x>
+                <width>50%</width>
+            </action>
+        </keybind>
+        <keybind key="A-l">
             <action name="UnmaximizeFull"/>
             <action name="MoveResizeTo">
                 <x>-0</x>
@@ -172,6 +186,13 @@
                 <height>50%</height>
             </action>
         </keybind>
+        <keybind key="A-k">
+            <action name="UnmaximizeFull"/>
+            <action name="MoveResizeTo">
+                <y>0</y>
+                <height>50%</height>
+            </action>
+        </keybind>
         <keybind key="A-Down">
             <action name="UnmaximizeFull"/>
             <action name="MoveResizeTo">
@@ -179,7 +200,23 @@
                 <height>50%</height>
             </action>
         </keybind>
+        <keybind key="A-j">
+            <action name="UnmaximizeFull"/>
+            <action name="MoveResizeTo">
+                <y>-0</y>
+                <height>50%</height>
+            </action>
+        </keybind>
         <keybind key="W-A-Left">
+            <action name="UnmaximizeFull"/>
+            <action name="MoveResizeTo">
+                <x>0</x>
+                <y>0</y>
+                <height>100%</height>
+                <width>50%</width>
+            </action>
+        </keybind>
+        <keybind key="W-A-h">
             <action name="UnmaximizeFull"/>
             <action name="MoveResizeTo">
                 <x>0</x>
@@ -197,7 +234,25 @@
                 <width>50%</width>
             </action>
         </keybind>
+        <keybind key="W-A-l">
+            <action name="UnmaximizeFull"/>
+            <action name="MoveResizeTo">
+                <x>-0</x>
+                <y>0</y>
+                <height>100%</height>
+                <width>50%</width>
+            </action>
+        </keybind>
         <keybind key="W-A-Up">
+            <action name="UnmaximizeFull"/>
+            <action name="MoveResizeTo">
+                <x>0</x>
+                <y>0</y>
+                <width>100%</width>
+                <height>50%</height>
+            </action>
+        </keybind>
+        <keybind key="W-A-k">
             <action name="UnmaximizeFull"/>
             <action name="MoveResizeTo">
                 <x>0</x>
@@ -215,13 +270,31 @@
                 <height>50%</height>
             </action>
         </keybind>
+        <keybind key="W-A-j">
+            <action name="UnmaximizeFull"/>
+            <action name="MoveResizeTo">
+                <x>0</x>
+                <y>-0</y>
+                <width>100%</width>
+                <height>50%</height>
+            </action>
+        </keybind>
         <keybind key="W-A-S-Up">
             <action name="Maximize"/>
             <action name="MoveToEdge">
                 <direction>north</direction>
             </action>
         </keybind>
+        <keybind key="W-A-S-k">
+            <action name="Maximize"/>
+            <action name="MoveToEdge">
+                <direction>north</direction>
+            </action>
+        </keybind>
         <keybind key="W-A-S-Down">
+            <action name="Unmaximize"/>
+        </keybind>
+        <keybind key="W-A-S-j">
             <action name="Unmaximize"/>
         </keybind>
         <keybind key="W-l">
@@ -306,7 +379,17 @@
                 <monitor>1</monitor>
             </action>
         </keybind>
+        <keybind key="C-S-A-h">
+            <action name="MoveResizeTo">
+                <monitor>1</monitor>
+            </action>
+        </keybind>
         <keybind key="C-S-A-Right">
+            <action name="MoveResizeTo">
+                <monitor>2</monitor>
+            </action>
+        </keybind>
+        <keybind key="C-S-A-l">
             <action name="MoveResizeTo">
                 <monitor>2</monitor>
             </action>
