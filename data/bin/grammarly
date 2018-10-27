@@ -1,0 +1,2 @@
+#!/bin/bash
+google-chrome --app=https://app.grammarly.com/  > /dev/null 2>&1 &

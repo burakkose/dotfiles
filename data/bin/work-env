@@ -17,5 +17,6 @@ xrandr \
  && (firefox > /dev/null 2>&1 &) \
  && (spotify > /dev/null 2>&1 &)\
  && (amazon-chime > /dev/null 2>&1 &) \
- && (amazon-outlook > /dev/null 2>&1 &)
+ && (amazon-outlook > /dev/null 2>&1 &) \
+ && (grammarly > /dev/null 2>&1 &)
 } &> /dev/null
