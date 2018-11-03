@@ -13,7 +13,8 @@ repo_ppa:
 #  - ppa:network-manager/ppa
   - ppa:onboard/stable
   - ppa:dotovr/manokwari
- 
+  - ppa:apandada1/brightness-controller
+
 repo_deb:
   - deb http://repository.spotify.com stable non-free
   - deb https://dl.bintray.com/sbt/debian /
@@ -26,6 +27,7 @@ packages_pip:
   - thefuck
 
 p:
+  - brightness-controller
   - gsimplecal
   - python-imaging
   - python-distutils-extra

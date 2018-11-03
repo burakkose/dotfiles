@@ -3,6 +3,7 @@ packages:
   - arandr
   - arc-gtk-theme
   - atom-editor-bin
+  - brightness-controller-git
   - base
   - base-devel
   - cbatticon
