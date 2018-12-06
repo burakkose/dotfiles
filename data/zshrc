@@ -39,6 +39,7 @@ alias cdt='cd $GITFOLDER/third-party'
 alias ws='cd $WORKSPACEFOLDER'
 # Helpers
 chpwd() ls
+
 alias c='clear'
 alias e='exit'
 alias df='df -h'
@@ -51,12 +52,10 @@ alias reboot='sudo shutdown -r now'
 alias shutdown='sudo shutdown -h now'
 alias suspend='sudo systemctl suspend'
 alias openboxrc='nano ~/.config/openbox/rc.xml'
-alias weather='curl wttr.in/Amsterdam'
-alias psearch='trizen -Sys'
-alias pinstall='trizen -Sy'
-alias update-system='trizen -Syu'
+alias weather='curl wttr.in/Dublin'
+alias json-pretty='jq .'
+alias json-minify='jq -c .'
 
-eval "$(rbenv init -)"
 eval "$(thefuck --alias)"
 
 # ssh agent
