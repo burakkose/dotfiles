@@ -53,8 +53,15 @@ alias shutdown='sudo shutdown -h now'
 alias suspend='sudo systemctl suspend'
 alias openboxrc='nano ~/.config/openbox/rc.xml'
 alias weather='curl wttr.in/Dublin'
-alias json-pretty='jq .'
-alias json-minify='jq -c .'
+alias json-file-pretty='jq .'
+alias json-file-minify='jq -c .'
+
+json-console-pretty() {
+ echo "$1" | jq .
+}
+json-console-minify() {
+ echo "$1" | jq -c .
+}
 
 eval "$(thefuck --alias)"
 
