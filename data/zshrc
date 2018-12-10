@@ -55,13 +55,14 @@ alias openboxrc='nano ~/.config/openbox/rc.xml'
 alias weather='curl wttr.in/Dublin'
 alias json-file-pretty='jq .'
 alias json-file-minify='jq -c .'
-
 json-console-pretty() {
  echo "$1" | jq .
 }
 json-console-minify() {
  echo "$1" | jq -c .
 }
+alias enableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0'
+alias disableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1'
 
 eval "$(thefuck --alias)"
 
