@@ -257,7 +257,7 @@
             #Rofi script for bookmarks
             <action name="Execute">
                 <command>
-                    python ~/.bin/bookmarks.py
+                    ~/.bin/rofi-bookmarks
                 </command>
             </action>
         </keybind>

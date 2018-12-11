@@ -1,0 +1,31 @@
+#! /usr/bin/env python3
+
+import sys
+import os
+
+home = os.getenv("HOME")
+sys.path.append(home + "/.lib/pybase")
+
+from rofi import Rofi
+import csv
+import yaml
+import os
+import subprocess
+
+def get_path(path_str):
+    return os.path.expanduser(path_str)
+
+config_path = get_path("~/.config/rofi/bookmarks-config.yaml")
+
+with open(config_path, "r") as stream:
+    files = yaml.load(stream)
+    attr = []
+    for file in files:
+        with open(get_path(file), "r") as csv_file:
+            reader = csv.reader(csv_file, delimiter=',')
+            attr.extend(list(reader)[1:])
+    (options, values) = zip(*attr)
+    r = Rofi()
+    index = r.select('Select bookmark: ', options)[0]
+    if index != -1:
+        subprocess.call(['firefox', values[index]])
