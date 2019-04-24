@@ -7,6 +7,7 @@ home = os.getenv("HOME")
 sys.path.append(home + "/.lib/pybase")
 
 from rofi import Rofi
+
 import csv
 import yaml
 import os
@@ -28,4 +29,4 @@ with open(config_path, "r") as stream:
     r = Rofi()
     index = r.select('Select bookmark: ', options)[0]
     if index != -1:
-        subprocess.call(['firefox', values[index]])
+        subprocess.call('firefox {}'.format(' '.join(values[index].split("|"))), shell=True)
