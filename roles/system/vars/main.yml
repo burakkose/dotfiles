@@ -41,6 +41,7 @@ packages:
   - pcmanfm
   - powerline
   - powerline-fonts
+  - pavucontrol
   - ranger
   - rbenv
   - redshift
