@@ -34,13 +34,8 @@ packages:
   - neofetch
   - network-manager-applet
   - networkmanager-openvpn
-  - obconf
-  - obkey
   - oblogout
-  - obmenu
 #  - oh-my-zsh-git
-  - openbox
-  - openbox-menu
   - openssh
   - papirus-icon-theme
   - pcmanfm
@@ -60,7 +55,6 @@ packages:
   - thefuck
   - thunderbird
   - tig
-  - tint2
   - tmux
   - tpm
   - transmission-gtk
@@ -77,4 +71,16 @@ packages:
   - xorg
   - xorg-xinit
   - xorg-xclipboard
+
+vm_packages:
+  openbox:
+    - openbox
+    - openbox-menu
+    - obconf
+    - obkey
+    - obmenu
+    - tint2
+  i3:
+    - polybar
+    - i3-wm
 

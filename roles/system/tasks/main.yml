@@ -4,11 +4,17 @@
     update_cache: yes
     upgrade: yes
 
-- name: Install packages
+- name: Install common packages
   command: trizen -S "{{ item }}" --noconfirm --needed
   become: no
   with_items:
       "{{ packages }}"
+
+- name: Install wm packages
+  command: trizen -S "{{ item }}" --noconfirm --needed
+  become: no
+  with_items:
+      "{{ vm_packages[configs.vm] }}"
 
 - name: Link oh my zsh
   ignore_errors: yes
