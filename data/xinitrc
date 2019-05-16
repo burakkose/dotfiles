@@ -1,1 +1,3 @@
-exec openbox-session
+export TERMINAL='urxvt'
+xrdb -merge ~/.Xresources
+exec i3
