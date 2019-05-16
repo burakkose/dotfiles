@@ -43,7 +43,6 @@ URxvt.urgentOnBell:true
 URxvt.geometry:110x40
 URxvt.externalBorder:0
 URxvt.internalBorder:4
-Rxvt.borderLess: true
 URxvt.imLocale:en_US.UTF-8
 modifier:meta
 URxvt.saveLines:2000
