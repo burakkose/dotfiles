@@ -1,0 +1,17 @@
+---
+
+- name: Install Polybar dependencies
+  command: apt install -y "{{ item }}"
+  become: yes
+  with_items:
+      "{{ polybar_deps }}"
+
+- name: Clone polybar project
+  become: no
+  git:
+    repo=https://github.com/jaagr/polybar.git
+    dest=/tmp/polybar
+    update=yes
+
+- name: Build polybar
+  shell: cd /tmp/polybar && ./build.sh --all-features

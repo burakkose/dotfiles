@@ -1,5 +1,11 @@
 ---
 
+- import_tasks: i3.yml
+  when: "{{ configs.vm == 'i3' }}"
+
+- import_tasks: polybar.yml
+  when: "{{ configs.vm == 'i3' }}"
+
 - name: Add PPAs
   apt_repository:
     repo: "{{ item }}"
@@ -33,7 +39,7 @@
   command: apt install -y "{{ item }}"
   become: yes
   with_items:
-      "{{ p }}"
+      "{{ packages }}"
 
 - name: Install Pip packages
   pip:
