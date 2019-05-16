@@ -85,6 +85,8 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+s layout stacking
 bindsym $mod+Shift+w layout tabbed
 bindsym $mod+Shift+e layout toggle split
+bindsym $mod+Shift+h layout splith
+bindsym $mod+Shift+v layout splitv
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
