@@ -127,4 +127,5 @@ polybar_deps:
   - libcurl4-openssl-dev
   - libpulse-dev
   - libxcb-composite0-dev
+  - xutils-dev
 

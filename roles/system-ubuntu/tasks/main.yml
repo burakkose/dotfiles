@@ -1,11 +1,5 @@
 ---
 
-- import_tasks: i3.yml
-  when: "{{ configs.vm == 'i3' }}"
-
-- import_tasks: polybar.yml
-  when: "{{ configs.vm == 'i3' }}"
-
 - name: Add PPAs
   apt_repository:
     repo: "{{ item }}"
@@ -49,6 +43,12 @@
   with_items:
       "{{ packages_pip }}"
 
+- import_tasks: i3.yml
+  when: "{{ configs.vm == 'i3' }}"
+
+- import_tasks: polybar.yml
+  when: "{{ configs.vm == 'i3' }}"
+
 - name: Remove PPAs
   become: yes
   apt_repository:
@@ -65,7 +65,7 @@
   with_items:
       "{{ repo_deb }}"
 
-- name: Add an Apt signing key
+- name: Remove an Apt signing key
   apt_key:
     id: "{{ item }}"
     keyserver: keyserver.ubuntu.com
