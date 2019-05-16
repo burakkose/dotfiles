@@ -42,7 +42,7 @@ font-2 = Siji:size=8;2
 
 modules-left = start_indicator i3 end_indicator active_working_space_indicator title title_end_indicator
 modules-center = 
-modules-right = battery memory cpu temperature wlan seperator eth volume date time
+modules-right = battery memory cpu temperature wlan eth vpn volume date time
 
 [module/i3]
 type = internal/i3
@@ -145,7 +145,7 @@ interval = 1.0
 
 format-connected-background = ${colors.black}
 
-label-connected = Wifi: %{T3}%{T-} %downspeed:7%  %{T3}%{T-} %upspeed:7%
+label-connected = %{A1:nm-connection-editor:} %essid%:%{A} %{T3}%{T-} %downspeed:7%  %{T3}%{T-} %upspeed:7%
 label-connected-foreground = ${colors.foreground}
 label-connected-background = ${colors.black}
 label-connected-padding = 1
@@ -159,12 +159,24 @@ interval = 1.0
 
 format-connected-background = ${colors.black}
 
-label-connected = Eth: %{T3}%{T-} %downspeed:7%  %{T3}%{T-} %upspeed:7%
+label-connected = %{A1:nm-connection-editor:}Eth:%{A} %{T3}%{T-} %downspeed:7%  %{T3}%{T-} %upspeed:7%
 label-connected-foreground = ${colors.foreground}
 label-connected-background = ${colors.black}
 label-connected-padding = 1
 
 format-disconnected =
+
+[module/vpn]
+type = custom/script
+exec = nmcli c | grep "vpn" | grep -v "\-\-" | cut -d " " -f1
+exec-if = pgrep -x openvpn
+interval = 5
+format-underline = #268bd2
+format-prefix = "VPN: "
+format-prefix-foreground = ${colors.foreground}
+format-padding = 1
+format-background = ${colors.black}
+format-foreground = ${colors.foreground}
 
 [module/time]
 type = internal/date
