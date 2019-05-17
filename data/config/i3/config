@@ -42,7 +42,7 @@ bindsym $mod+Ctrl+Right workspace next
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Set background image
-exec --no-startup-id feh -F "$HOME/.config/wallpaper/wallpaper.png" --bg-fill
+exec_always --no-startup-id feh -F "$HOME/.config/wallpaper/wallpaper.png" --bg-fill
 
 # Compton
 exec compton --config ~/.config/compton.conf -b
@@ -161,3 +161,6 @@ mode "move_workspace" {
 }
 
 bindsym $mod+o mode "move_workspace"
+
+bindsym $mod+Control+Shift+Left focus output left
+bindsym $mod+Control+Shift+Right focus output right
