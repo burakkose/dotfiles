@@ -162,5 +162,12 @@ mode "move_workspace" {
 
 bindsym $mod+o mode "move_workspace"
 
+bindsym $mod+Shift+Control+1 [workspace=$ws1] move workspace to output current; workspace --no-auto-back-and-forth $ws1
+bindsym $mod+Shift+Control+2 [workspace=$ws2] move workspace to output current; workspace --no-auto-back-and-forth $ws2
+bindsym $mod+Shift+Control+3 [workspace=$ws3] move workspace to output current; workspace --no-auto-back-and-forth $ws3
+bindsym $mod+Shift+Control+4 [workspace=$ws4] move workspace to output current; workspace --no-auto-back-and-forth $ws4
+bindsym $mod+Shift+Control+5 [workspace=$ws5] move workspace to output current; workspace --no-auto-back-and-forth $ws5
+bindsym $mod+Shift+Control+6 [workspace=$ws6] move workspace to output current; workspace --no-auto-back-and-forth $ws6
+
 bindsym $mod+Control+Shift+Left focus output left
 bindsym $mod+Control+Shift+Right focus output right
