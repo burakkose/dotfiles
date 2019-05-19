@@ -249,7 +249,7 @@
             #Rofi script for changing desktop
             <action name="Execute">
                 <command>
-                    bash ~/.bin/openbox-switch-workspace
+                    bash ~/.bin/show-workspaces
                 </command>
             </action>
         </keybind>

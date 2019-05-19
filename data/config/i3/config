@@ -20,7 +20,7 @@ bindsym $mod+b exec ~/.bin/rofi-bookmarks
 bindsym $mod+r exec "rofi -show run"
 
 # Rofi script that shows workspaces
-bindsym $mod+d exec "bash ~/.bin/openbox-switch-workspace"
+bindsym $mod+d exec "bash ~/.bin/show-workspaces"
 
 # Rofi to show windows
 bindsym $mod+w exec "rofi -show window"
