@@ -2,12 +2,12 @@
 
 # Overview
 
-This repository is my template to track dotfiles via Ansible for Arch and Ubuntu. It contains a lot of personal applications and settings. Before you decide to use it, please check the application list, and remove things you don’t want to have.
+This repository is my template to track dotfiles via Ansible for Arch and Ubuntu 16.04. It contains a lot of personal applications and settings. Before you decide to use it, please check the application list, and remove things you don’t want to have.
 
 ## What's in it?
 
-* Window Manager: Openbox
-* Bar: Tint2
+* Window Manager: Openbox/i3
+* Bar: Tint2/Polybar
 * Launcher: Rofi
 * Wallpaper Manager: feh
 * Compositor: Compton
