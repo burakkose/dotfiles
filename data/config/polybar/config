@@ -46,11 +46,14 @@ modules-right = battery memory cpu temperature wlan eth vpn volume date time
 
 [module/i3]
 type = internal/i3
-format = <label-state>
+format = <label-mode> <label-state>
 index-sort = true
 # wrapping-scroll = true
 strip-wsnumbers = true
 # pin-workspaces = true
+
+label-mode = mode: %mode%
+label-mode-padding = 1
 
 label-focused = %{B#8C9440 F#B5BD68}%{F-B-} %name% %{B#B5BD68 F#8C9440}%{F-B-}
 label-focused-foreground = ${colors.background}
