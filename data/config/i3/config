@@ -181,3 +181,9 @@ bindsym $mod+Shift+Control+6 [workspace=$ws6] move workspace to output current; 
 
 bindsym $mod+Control+Shift+Left focus output left
 bindsym $mod+Control+Shift+Right focus output right
+
+mode "passthrough" {
+        bindsym Escape mode "default" 
+}
+
+bindsym $mod+Escape mode "passthrough"
