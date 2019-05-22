@@ -161,7 +161,7 @@ mode "resize" {
 
 bindsym $mod+Shift+r mode "resize"
 
-mode "move_workspace" {
+mode "move workspace" {
         bindsym Up move workspace to output up
         bindsym Down move workspace to output down
         bindsym Left move workspace to output left
@@ -170,7 +170,7 @@ mode "move_workspace" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod+o mode "move_workspace"
+bindsym $mod+o mode "move workspace"
 
 bindsym $mod+Shift+Control+1 [workspace=$ws1] move workspace to output current; workspace --no-auto-back-and-forth $ws1
 bindsym $mod+Shift+Control+2 [workspace=$ws2] move workspace to output current; workspace --no-auto-back-and-forth $ws2
