@@ -56,6 +56,8 @@ assign [class="Telegram*"] $ws6
 assign [class="Google-chrome" instance="app.chime.aws"] $ws5
 assign [class="Google-chrome" instance="ballard*"] $ws5
 
+# `assign` does not work, so this is the fix
+for_window [class="Spotify"] move to workspace $ws6
 
 ### COLORS
 # class                 border  backgr. text    indicator child_border
