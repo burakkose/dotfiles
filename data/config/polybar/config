@@ -36,7 +36,7 @@ border-left-size = 0
 border-right-size = 0
 border-color = ${colors.transparent}
 
-font-0 = xos4 Terminess Powerline:size=16;2
+font-0 = Terminess Powerline:size=16;2
 font-1 = Font Awesome:size=8;2
 font-2 = Siji:size=8;2
 
@@ -107,7 +107,7 @@ format-foreground = ${colors.foreground}
 format-background = ${colors.black}
 
 label = " %title% "
-label-maxlen = 75
+label-maxlen = 60
 
 format-suffix = 
 format-suffix-foreground = ${colors.black}
@@ -143,7 +143,7 @@ format-suffix-background = ${colors.bblack}
 
 [module/wlan]
 type = internal/network
-interface = wlp4s0
+interface = wlp2s0
 interval = 1.0
 
 format-connected-background = ${colors.black}
@@ -157,7 +157,7 @@ format-disconnected =
 
 [module/eth]
 type = internal/network
-interface = enp3s0f2
+interface = enp0s31f6
 interval = 1.0
 
 format-connected-background = ${colors.black}
