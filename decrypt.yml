@@ -1,4 +1,4 @@
-- name: Encrypt files
+- name: Decrypt files
   become: no
   hosts: target
   gather_facts: false
