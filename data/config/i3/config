@@ -41,6 +41,9 @@ bindsym $mod+Ctrl+Right workspace next
 # Launch polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
+# Launch nm applet
+exec_always --no-startup-id nm-applet
+
 # Set background image
 exec_always --no-startup-id feh -F "$HOME/.config/wallpaper/wallpaper.png" --bg-fill
 
@@ -51,10 +54,10 @@ exec compton --config ~/.config/compton.conf -b
 assign [class="Firefox*"] $ws2
 assign [class="jetbrains-idea"] $ws3
 assign [class="libreoffice*"] $ws4
-assign [class="Spotify"] $ws6
+assign [class="spotify"] $ws6
 assign [class="Telegram*"] $ws6
-assign [class="Google-chrome" instance="app.chime.aws"] $ws5
-assign [class="Google-chrome" instance="ballard*"] $ws5
+assign [class="*chrome" instance="app.chime.aws"] $ws5
+assign [class="*chrome" instance="ballard*"] $ws5
 
 # `assign` does not work, so this is the fix
 for_window [class="Spotify"] move to workspace $ws6
