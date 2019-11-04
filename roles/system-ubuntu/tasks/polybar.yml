@@ -20,9 +20,42 @@
     dest=/tmp/xcb-util-xrm
     update=yes
 
+- name: Clone Siji font
+  become: no
+  git:
+    repo=https://github.com/stark/siji.git
+    dest=/tmp/siji
+    update=yes
+
+- name: Clone Font Awesome
+  become: no
+  git:
+    repo=https://github.com/FortAwesome/Font-Awesome
+    dest=/tmp/font-awesome
+    update=yes
+
+- name: Rename 70-no-bitmaps if exists
+  become: yes
+  shell: mv /etc/fonts/conf.d/70-no-bitmaps.conf /etc/fonts/conf.d/70-no-bitmaps.conf.old
+  ignore_errors: yes
+
+- name: Install Siji font
+  shell: cd /tmp/siji && ./install.sh
+
+- name: Install font awesome (ttf)
+  shell: cp /tmp/font-awesome/webfonts/*.ttf ~/.local/share/fonts/
+
+- name: Install font awesome (otfs)
+  shell: cp /tmp/font-awesome/otfs/*.otf ~/.local/share/fonts/
+
+- name: Refresh font cache
+  become: yes
+  shell: fc-cache
+
 - name: Build xcb-util-xrm project
   become: yes
   shell: cd /tmp/xcb-util-xrm && git submodule update --init && ./autogen.sh --prefix=/usr && make && make install
 
 - name: Build polybar
   shell: cd /tmp/polybar && ./build.sh --all-features
+
