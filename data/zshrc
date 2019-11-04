@@ -16,6 +16,8 @@ export HADOOP_HOME=/usr/lib/hadoop
 export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" 
 
+export DOCKER_HOST=unix:///var/run/docker.sock
+
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="mm/dd/yyyy"
 
@@ -43,7 +45,7 @@ chpwd() ls
 alias c='clear'
 alias e='exit'
 alias df='df -h'
-alias clear='clear && neofetch'
+alias clear='clear && neofetch --off'
 alias ping='ping -c 5'
 alias zshrc='nano ~/.zshrc'
 alias szshrc='source ~/.zshrc'
@@ -181,4 +183,3 @@ function _git_time_since_commit() {
   fi
 }
 
-neofetch
