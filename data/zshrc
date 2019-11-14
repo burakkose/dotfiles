@@ -21,7 +21,7 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="mm/dd/yyyy"
 
-plugins=(git docker jsontools archlinux lein mvn sudo web-search ssh-agent)
+plugins=(git docker jsontools archlinux lein mvn sudo web-search ssh-agent aws)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.work/zshrc
