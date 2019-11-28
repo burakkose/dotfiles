@@ -14,12 +14,19 @@
   with_items:
       "{{ repo_deb }}"
 
-- name: Add an Apt signing key
+- name: Add an Apt signing key from Ubuntu key server
   apt_key:
     id: "{{ item }}"
     keyserver: keyserver.ubuntu.com
   with_items:
-      "{{ keys }}"
+      "{{ apt_key_ids }}"
+
+- name: Add an Apt signing key from URL
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  with_items:
+      "{{ apt_key_urls }}"
 
 - name: Update
   apt:
@@ -65,13 +72,21 @@
   with_items:
       "{{ repo_deb }}"
 
-- name: Remove an Apt signing key
+- name: Remove an Apt signing key from key server
   apt_key:
     id: "{{ item }}"
     keyserver: keyserver.ubuntu.com
     state: absent
   with_items:
-      "{{ keys }}"
+      "{{ apt_key_ids }}"
+
+- name: Remove an Apt signing key from URL
+  apt_key:
+    url: "{{ item }}"
+    state: absent
+  with_items:
+      "{{ apt_key_urls }}"
+  ignore_errors: yes
 
 - name: Cloning oh-my-zsh
   become: no

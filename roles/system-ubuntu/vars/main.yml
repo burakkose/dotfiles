@@ -1,13 +1,12 @@
 ---
 repo_ppa:
-  - ppa:webupd8team/atom
   - ppa:webupd8team/java
   - ppa:dawidd0811/neofetch
   - ppa:ubuntu-mozilla-security/ppa
   - ppa:papirus/papirus
   - ppa:jasonpleau/rofi
   - ppa:atareao/telegram
-  - ppa:mmk2410/intellij-ide
+  - ppa:mmk2410/intellij-idea
   - ppa:alex-p/notesalexp-xenial
   - ppa:fossfreedom/arc-gtk-theme-daily
 #  - ppa:network-manager/ppa
@@ -20,9 +19,11 @@ repo_deb:
   - deb https://dl.bintray.com/sbt/debian /
   - deb http://debian.sur5r.net/i3/ xenial universe
 
-keys:
-  - 2EE0EA64E40A89B84B2DF73499E82A75642AC823
-  - 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+apt_key_urls:
+  - https://download.spotify.com/debian/pubkey.gpg
+
+apt_key_ids:
+  - 2EE0EA64E40A89B84B2DF73499E82A75642AC823 # sbt
 
 packages_pip:
   - thefuck
