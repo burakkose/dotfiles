@@ -38,6 +38,9 @@ for_window [class="^.*"] border pixel 2
 bindsym $mod+Ctrl+Left workspace prev
 bindsym $mod+Ctrl+Right workspace next
 
+# Xresources
+exec_always --no-startup-id xrdb -merge ~/.Xresources
+
 # Launch polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
@@ -72,7 +75,7 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background #ffffff
  
 # start a terminal
-bindsym $mod+Ctrl+t exec urxvt
+bindsym $mod+Ctrl+t exec urxvt -e /bin/zsh
 
 # kill focused window
 bindsym $mod+Shift+q kill
