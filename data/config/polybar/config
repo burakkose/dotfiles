@@ -143,7 +143,7 @@ format-suffix-background = ${colors.bblack}
 
 [module/wlan]
 type = internal/network
-interface = wlp2s0
+interface = wlp1s0
 interval = 1.0
 
 format-connected-background = ${colors.black}
@@ -157,7 +157,7 @@ format-disconnected =
 
 [module/eth]
 type = internal/network
-interface = enp0s31f6
+interface = enxc46516f1d247
 interval = 1.0
 
 format-connected-background = ${colors.black}
