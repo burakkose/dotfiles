@@ -8,7 +8,7 @@ files:
   - data/work/bin/odin-tunnel
   - data/work/bin/amazon-fix
   - data/work/bin/bpull-command
-  - data/config/rofi/bookmarks.csv
+  - data/config/rofi/bookmarks-work.csv
   - data/vpn/personal/amsterdam.ovpn
   - data/vpn/personal/dublin.ovpn
   - data/vpn/personal/los_angeles.ovpn
