@@ -245,6 +245,13 @@
                 </command>
             </action>
         </keybind>
+        <keybind key="A-n">
+            <action name="Execute">
+                <command>
+                    ~/.bin/rofi-networkmanager
+                </command>
+            </action>
+        </keybind>
         <keybind key="A-d">
             #Rofi script for changing desktop
             <action name="Execute">
