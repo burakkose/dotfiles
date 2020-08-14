@@ -25,6 +25,9 @@ bindsym $mod+d exec "bash ~/.bin/show-workspaces"
 # Rofi to show windows
 bindsym $mod+w exec "rofi -show window"
 
+# Rofi for NetworkManager
+bindsym $mod+n exec ~/.bin/rofi-networkmanager
+
 # Lock screen
 bindsym mod4+l exec "bash ~/.bin/lock"
 
