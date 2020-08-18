@@ -54,7 +54,7 @@ exec_always --no-startup-id nm-applet
 exec_always --no-startup-id feh -F "$HOME/.config/wallpaper/wallpaper.png" --bg-fill
 
 # Compton
-exec compton --config ~/.config/compton.conf -b
+# exec compton --config ~/.config/compton.conf -b
 
 # Assign workspaces
 assign [class="Firefox*"] $ws2
