@@ -275,6 +275,13 @@
                 </command>
             </action>
         </keybind>
+        <keybind key="A-m">
+            <action name="Execute">
+                <command>
+                    rofi -show power-menu -modi power-menu:~/.bin/rofi-power-menu
+                </command>
+            </action>
+        </keybind>
         <keybind key="A-t">
             <action name="Execute">
                 <command>

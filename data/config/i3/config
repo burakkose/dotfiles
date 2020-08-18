@@ -28,6 +28,10 @@ bindsym $mod+w exec "rofi -show window"
 # Rofi for NetworkManager
 bindsym $mod+n exec ~/.bin/rofi-networkmanager
 
+# Rofi for power management
+
+bindsym $mod+m exec "rofi -show power-menu -modi power-menu:~/.bin/rofi-power-menu"
+
 # Lock screen
 bindsym mod4+l exec "bash ~/.bin/lock"
 
