@@ -45,7 +45,6 @@ chpwd() ls
 alias c='clear'
 alias e='exit'
 alias df='df -h'
-alias clear='clear && neofetch --off'
 alias ping='ping -c 5'
 alias zshrc='nano ~/.zshrc'
 alias szshrc='source ~/.zshrc'
@@ -65,6 +64,7 @@ json-console-minify() {
 }
 alias enableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0'
 alias disableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1'
+alias gaa-only-modified='git ls-files --modified | xargs git add'
 
 eval "$(thefuck --alias)"
 
