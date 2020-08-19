@@ -12,6 +12,7 @@ directly:
   - wgetrc
   - xinitrc
   - Xresources
+  - Xresources.d
   - zsh
   - zshrc
   - work
