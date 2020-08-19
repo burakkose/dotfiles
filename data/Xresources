@@ -1,5 +1,6 @@
 #include ".Xresources.d/urxvt"
 #include ".Xresources.d/rofi"
 #include ".Xresources.d/xtf"
+#include ".config/color_schemes/default"
 #include ".config/color_schemes/tw"
 
