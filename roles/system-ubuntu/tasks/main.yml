@@ -7,6 +7,13 @@
       "{{ repo_ppa }}"
   ignore_errors: yes
 
+- name: Add an Apt signing key from URL
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  with_items:
+      "{{ apt_key_urls }}"
+
 - name: Add Debs
   apt_repository:
     repo: "{{ item }}"
@@ -14,19 +21,12 @@
   with_items:
       "{{ repo_deb }}"
 
-- name: Add an Apt signing key from Ubuntu key server
-  apt_key:
-    id: "{{ item }}"
-    keyserver: keyserver.ubuntu.com
-  with_items:
-      "{{ apt_key_ids }}"
-
-- name: Add an Apt signing key from URL
-  apt_key:
-    url: "{{ item }}"
-    state: present
-  with_items:
-      "{{ apt_key_urls }}"
+#- name: Add an Apt signing key from Ubuntu key server
+#  apt_key:
+#    id: "{{ item }}"
+#    keyserver: keyserver.ubuntu.com
+#  with_items:
+#      "{{ apt_key_ids }}"
 
 - name: Update
   apt:
@@ -72,13 +72,13 @@
   with_items:
       "{{ repo_deb }}"
 
-- name: Remove an Apt signing key from key server
-  apt_key:
-    id: "{{ item }}"
-    keyserver: keyserver.ubuntu.com
-    state: absent
-  with_items:
-      "{{ apt_key_ids }}"
+#- name: Remove an Apt signing key from key server
+#  apt_key:
+#    id: "{{ item }}"
+#    keyserver: keyserver.ubuntu.com
+#    state: absent
+#  with_items:
+#      "{{ apt_key_ids }}"
 
 - name: Remove an Apt signing key from URL
   apt_key:
@@ -118,6 +118,12 @@
     src: https://github.com/muennich/urxvt-perls/archive/2.2.tar.gz
     dest: /tmp
     remote_src: yes
+
+- name: Create urxvt perl folder if it does not exist
+  file:
+    path: /usr/lib/urxvt/perl/
+    state: directory
+    mode: '0755'
 
 - name: Move Urxvt Perls
   shell: mv /tmp/urxvt-perls-2.2/* /usr/lib/urxvt/perl/
