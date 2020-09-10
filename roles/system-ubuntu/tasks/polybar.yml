@@ -13,13 +13,6 @@
     dest=/tmp/polybar
     update=yes
 
-- name: Clone xcb-util-xrm project
-  become: no
-  git:
-    repo=https://github.com/Airblader/xcb-util-xrm
-    dest=/tmp/xcb-util-xrm
-    update=yes
-
 - name: Clone Siji font
   become: no
   git:
@@ -51,10 +44,6 @@
 - name: Refresh font cache
   become: yes
   shell: fc-cache
-
-- name: Build xcb-util-xrm project
-  become: yes
-  shell: cd /tmp/xcb-util-xrm && git submodule update --init && ./autogen.sh --prefix=/usr && make && make install
 
 - name: Build polybar
   shell: cd /tmp/polybar && ./build.sh --all-features
