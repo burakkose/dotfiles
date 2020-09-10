@@ -54,6 +54,7 @@ alias shutdown='sudo shutdown -h now'
 alias suspend='sudo systemctl suspend'
 alias openboxrc='nano ~/.config/openbox/rc.xml'
 alias weather='curl wttr.in/Dublin'
+alias disk-usage='sudo du -h --max-depth=1 .'
 alias json-file-pretty='jq .'
 alias json-file-minify='jq -c .'
 json-console-pretty() {
