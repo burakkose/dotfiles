@@ -7,6 +7,7 @@ files:
   - data/work/bin/cloud-desktop
   - data/work/bin/odin-tunnel
   - data/work/bin/amazon-fix
+  - data/work/bin/amazon-authenticate
   - data/work/bin/bpull-command
   - data/config/rofi/bookmarks-work.csv
   - data/vpn/personal/amsterdam.ovpn
