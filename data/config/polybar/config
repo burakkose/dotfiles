@@ -42,7 +42,7 @@ font-2 = Siji:size=8;2
 
 modules-left = start_indicator i3 end_indicator active_working_space_indicator title title_end_indicator
 modules-center = 
-modules-right = battery memory cpu temperature wlan eth vpn volume date time
+modules-right = battery memory cpu temperature wlan eth vpn volume backlight date time
 
 [module/i3]
 type = internal/i3
@@ -226,6 +226,20 @@ format-muted-prefix-background = ${colors.black}
 format-muted-suffix = 
 format-muted-suffix-foreground = ${colors.black}
 format-muted-suffix-background = ${colors.red}
+
+[module/backlight]
+type = custom/script
+interval = 0.2
+exec = ~/.bin/show-backlight
+
+scroll-up = exec light -A 5
+scroll-down = exec light -U 5
+
+format-prefix = " "
+
+label = %output%
+label-foreground = ${colors.fg}
+format-padding = 1
 
 [module/battery]
 type = internal/battery
