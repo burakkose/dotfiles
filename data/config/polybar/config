@@ -238,7 +238,7 @@ scroll-down = exec light -U 5
 format-prefix = " "
 
 label = %output%
-label-foreground = ${colors.fg}
+label-foreground = ${colors.foreground}
 format-padding = 1
 
 [module/battery]
