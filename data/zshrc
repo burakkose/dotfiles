@@ -75,7 +75,8 @@ alias enableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0'
 alias disableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1'
 alias gaa-only-modified='git ls-files --modified | xargs git add'
 alias proxy='proxychains4'
-alias monitor-network=`iptraf-ng`
+alias monitor-network='iptraf-ng'
+alias disable-firewall='sudo iptables -P OUTPUT ACCEPT'
 
 eval "$(thefuck --alias)"
 
