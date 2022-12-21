@@ -1,0 +1,44 @@
+{
+    "remote.SSH.remotePlatform": {
+        "dev": "windows"
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "files.autoSaveDelay": 1000,
+    "cmake.configureOnOpen": true,
+    "terminal.integrated.fontFamily": "Inconsolata, monospace",
+    "editor.fontLigatures": false,
+    "editor.fontFamily": "Inconsolata, Consolas, 'Courier New', monospace",
+    "workbench.colorTheme": "Material Theme Ocean",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "zsh"
+        },
+        "tmux": {
+            "path": "tmux",
+            "icon": "terminal-tmux"
+        },
+        "pwsh": {
+            "path": "pwsh",
+            "icon": "terminal-powershell"
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "editor.semanticTokenColorCustomizations": {
+    },
+    "editor.tokenColorCustomizations": {
+        "comments": "#63a33e"
+    },
+    "workbench.colorCustomizations": {
+        "[Material Theme Ocean]": {
+            "editorLineNumber.foreground": "#9c9c9c",
+            "editorLineNumber.activeForeground": "#ffffff",
+            "sideBar.foreground": "#898787"
+        }
+    },
+    "C_Cpp.default.cppStandard": "c++20",
+    "editor.accessibilitySupport": "off"
+}
