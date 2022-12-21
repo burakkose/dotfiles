@@ -13,20 +13,29 @@ import yaml
 import os
 import subprocess
 
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
+
+
 def get_path(path_str):
     return os.path.expanduser(path_str)
+
 
 config_path = get_path("~/.config/rofi/bookmarks-config.yaml")
 
 with open(config_path, "r") as stream:
-    files = yaml.load(stream)
+    files = yaml.load(stream, Loader=Loader)
     attr = []
     for file in files:
         with open(get_path(file), "r") as csv_file:
-            reader = csv.reader(csv_file, delimiter=',')
+            reader = csv.reader(csv_file, delimiter=",")
             attr.extend(list(reader)[1:])
     (options, values) = zip(*attr)
     r = Rofi()
-    index = r.select('Select bookmark: ', options)[0]
+    index = r.select("Select bookmark: ", options)[0]
     if index != -1:
-        subprocess.call('firefox {}'.format(' '.join(values[index].split("|"))), shell=True)
+        subprocess.call(
+            "firefox {}".format(" ".join(values[index].split("|"))), shell=True
+        )
