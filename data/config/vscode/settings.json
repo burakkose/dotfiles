@@ -40,5 +40,22 @@
         }
     },
     "C_Cpp.default.cppStandard": "c++20",
-    "editor.accessibilitySupport": "off"
+    "editor.accessibilitySupport": "off",
+    "remote.SSH.defaultExtensions": [
+        "AiryShift.spaces-inside-braces",
+        "amiralizadeh9480.cpp-helper",
+        "christian-kohler.path-intellisense",
+        "eamodio.gitlens",
+        "hbenl.vscode-test-explorer",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cpptools-themes",
+        "ms-vscode.cpptools",
+        "ms-vscode.test-adapter-converter",
+        "SonarSource.sonarlint-vscode",
+        "tdennis4496.cmantic",
+        "twxs.cmake",
+        "Tyriar.sort-lines",
+        "ZainChen.json",
+    ]
 }
