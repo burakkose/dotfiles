@@ -16,5 +16,5 @@ PKief.material-icon-theme
 )
 
 for i in ${pkglist[@]}; do
-  code --install-extension $i
+  code --install-extension $i --log error --force
 done

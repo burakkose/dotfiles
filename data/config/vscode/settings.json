@@ -57,5 +57,6 @@
         "twxs.cmake",
         "Tyriar.sort-lines",
         "ZainChen.json",
-    ]
+    ],
+    "window.zoomLevel": 2
 }
