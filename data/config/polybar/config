@@ -36,9 +36,9 @@ border-left-size = 0
 border-right-size = 0
 border-color = ${colors.transparent}
 
-font-0 = Terminess Powerline:size=16;2
-font-1 = Font Awesome:size=8;2
-font-2 = Siji:size=8;2
+font-0 = xos4 Terminess Powerline:size=18;2
+font-1 = Font Awesome:size=10;2
+font-2 = Siji:size=10;2
 
 modules-left = start_indicator i3 end_indicator active_working_space_indicator title title_end_indicator
 modules-center = 
@@ -143,7 +143,7 @@ format-suffix-background = ${colors.bblack}
 
 [module/wlan]
 type = internal/network
-interface = wlp1s0
+interface = wlan0
 interval = 1.0
 
 format-connected-background = ${colors.black}
