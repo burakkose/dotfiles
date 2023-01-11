@@ -23,7 +23,6 @@ packages:
   - httpie
   - i3lock-blur
   - imagemagick
-  - intellij-idea-ultimate-edition
   - jdk10-openjdk
   - jq
   - leafpad
@@ -35,7 +34,6 @@ packages:
   - network-manager-applet
   - networkmanager-openvpn
   - oblogout
-#  - oh-my-zsh-git
   - openssh
   - papirus-icon-theme
   - pcmanfm
