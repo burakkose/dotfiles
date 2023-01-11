@@ -6,13 +6,13 @@ packages:
   - brightness-controller-git
   - base
   - base-devel
+  - brave-bin
   - cbatticon
   - compton
   - conky
   - docker
   - evince
   - feh
-  - firefox-developer-edition
   - fpp-git
   - galculator
   - google-chrome
