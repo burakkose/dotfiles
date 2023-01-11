@@ -24,3 +24,10 @@
     state: link
     force: yes
   when: '"oh-my-zsh-git" in packages'
+
+- name: Link browser
+  file:
+    src: '/usr/bin/brave'
+    dest: '/usr/bin/browser'
+    state: link
+    force: yes

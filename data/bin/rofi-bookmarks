@@ -37,5 +37,5 @@ with open(config_path, "r") as stream:
     index = r.select("Select bookmark: ", options)[0]
     if index != -1:
         subprocess.call(
-            "firefox {}".format(" ".join(values[index].split("|"))), shell=True
+            "browser {}".format(" ".join(values[index].split("|"))), shell=True
         )
