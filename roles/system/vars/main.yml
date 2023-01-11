@@ -2,13 +2,11 @@
 packages:
   - arandr
   - arc-gtk-theme
-  - atom-editor-bin
   - brightness-controller-git
   - base
   - base-devel
   - brave-bin
   - cbatticon
-  - compton
   - conky
   - docker
   - evince
@@ -23,7 +21,6 @@ packages:
   - httpie
   - i3lock-blur
   - imagemagick
-  - jdk10-openjdk
   - jq
   - leafpad
   - libreoffice-fresh
@@ -33,7 +30,6 @@ packages:
   - neofetch
   - network-manager-applet
   - networkmanager-openvpn
-  - oblogout
   - openssh
   - papirus-icon-theme
   - pcmanfm
@@ -41,18 +37,14 @@ packages:
   - powerline-fonts
   - pavucontrol
   - ranger
-  - rbenv
   - redshift
   - rofi
   - rxvt-unicode
-  - sbt
-  - scala
   - scrot
   - spotify
   - telegram-desktop
   - the_silver_searcher
   - thefuck
-  - thunderbird
   - tig
   - tmux
   - tpm
