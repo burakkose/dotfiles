@@ -1,15 +1,5 @@
 ---
 files:
-  - data/work/zshrc
-  - data/bin/work-env
-  - data/work/bin/amazon-chime
-  - data/work/bin/amazon-outlook
-  - data/work/bin/cloud-desktop
-  - data/work/bin/odin-tunnel
-  - data/work/bin/amazon-fix
-  - data/work/bin/amazon-authenticate
-  - data/work/bin/bpull-command
-  - data/config/rofi/bookmarks-work.csv
   - data/vpn/personal/amsterdam.ovpn
   - data/vpn/personal/dublin.ovpn
   - data/vpn/personal/los_angeles.ovpn

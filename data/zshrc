@@ -4,7 +4,6 @@ export NVM_DIR="$HOME/.nvm"
 
 export EDITOR=nano
 export GITFOLDER=~/git
-export WORKSPACEFOLDER=~/workspace
 export DOTFILES=~/dotfiles
 export ARCHFLAGS="-arch x86_64"
 export ZSH=~/.oh-my-zsh
@@ -22,15 +21,12 @@ export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"
 
 export DOCKER_HOST=unix:///var/run/docker.sock
 
-# export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libproxychains.so.3
-
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="mm/dd/yyyy"
 
-plugins=(git docker jsontools archlinux lein mvn sudo web-search ssh-agent aws)
+plugins=(git docker sudo ssh-agent aws)
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.work/zshrc
 
 CASE_SENSITIVE="true"
 
@@ -46,7 +42,6 @@ alias odot='nano $DOTFILES'
 alias cde='cd $GITFOLDER/elmar'
 alias cdp='cd $GITFOLDER/personal'
 alias cdt='cd $GITFOLDER/third-party'
-alias ws='cd $WORKSPACEFOLDER'
 # Helpers
 chpwd() ls
 
