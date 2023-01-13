@@ -171,7 +171,7 @@ format-disconnected =
 
 [module/vpn]
 type = custom/script
-exec = nmcli c | grep "vpn" | grep -v "\-\-" | cut -d " " -f1
+exec = nmcli c | grep "vpn" | sed 's/ .*//'
 exec-if = pgrep -x openvpn
 interval = 5
 format-underline = #268bd2
