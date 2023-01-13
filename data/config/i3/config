@@ -62,7 +62,9 @@ exec_always --no-startup-id feh -F "$HOME/.config/wallpaper/wallpaper.png" --bg-
 
 # Assign workspaces
 assign [class="Firefox*"] $ws2
+assign [class="Brave*"] $ws2
 assign [class="jetbrains-idea"] $ws3
+assign [class="Code"] $ws3
 assign [class="libreoffice*"] $ws4
 assign [class="spotify"] $ws6
 assign [class="Telegram*"] $ws6
