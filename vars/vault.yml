@@ -1,5 +1,9 @@
 ---
 files:
-  - data/vpn/personal/amsterdam.ovpn
   - data/vpn/personal/dublin.ovpn
-  - data/vpn/personal/los_angeles.ovpn
+  - data/vpn/personal/los-angeles.ovpn
+  - data/vpn/personal/athens.ovpn
+  - data/vpn/personal/frankfurt.ovpn
+  - data/vpn/personal/istanbul.ovpn
+  - data/vpn/personal/mexico.ovpn
+  - data/vpn/personal/panama.ovpn
