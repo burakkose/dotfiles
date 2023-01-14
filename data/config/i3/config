@@ -84,7 +84,7 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background #ffffff
  
 # start a terminal
-bindsym $mod+Ctrl+t exec urxvt -e /bin/zsh
+bindsym $mod+Ctrl+t exec ~/.bin/urxvtq -e /bin/zsh
 
 # kill focused window
 bindsym $mod+Shift+q kill
