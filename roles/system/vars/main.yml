@@ -19,7 +19,6 @@ packages:
   - gtk3
   - htop
   - httpie
-  - i3lock-blur
   - imagemagick
   - jq
   - leafpad
@@ -41,7 +40,7 @@ packages:
   - rofi
   - rxvt-unicode
   - scrot
-  - spotify
+  - spotify-launcher
   - telegram-desktop
   - the_silver_searcher
   - thefuck
