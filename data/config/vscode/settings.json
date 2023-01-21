@@ -58,5 +58,6 @@
         "Tyriar.sort-lines",
         "ZainChen.json",
     ],
-    "window.zoomLevel": 2
+    "window.zoomLevel": 2,
+    "redhat.telemetry.enabled": false
 }
