@@ -10,7 +10,7 @@ packages:
   - evince
   - fpp-git
   - galculator
-  - google-chrome-bin
+  - google-chrome
   - gsimplecal
   - gtk3
   - htop
