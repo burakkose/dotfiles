@@ -24,22 +24,22 @@ Encrypted files may appear post-installation. These are protected using Ansible 
 
 ### Arch Installation
 ```bash
-git  clone  https://github.com/burakkose/dotfiles.git
-cd  dotfiles
-make  install-deps-arch  &&  make  arch
+git clone https://github.com/burakkose/dotfiles.git
+cd dotfiles
+make install-deps-arch && make arch
 ```
 
 ### Ubuntu Installation
 As I primarily use Arch and not Ubuntu much these days, the Ubuntu setup will always lag behind.
 ```bash
-git  clone  https://github.com/burakkose/dotfiles.git
-cd  dotfiles
-make  install-deps-ubuntu  &&  make  ubuntu
+git clone https://github.com/burakkose/dotfiles.git
+cd dotfiles
+make install-deps-ubuntu && make ubuntu
 ```
 
 ### To provision dotfiles only:
 ```bash
-make  dotfiles
+make dotfiles
 ```
 
 ## Encryption & Decryption
@@ -47,7 +47,7 @@ Sensitive data is encrypted using Ansible Vault. The list of encrypted files can
 
 Use the following commands to encrypt or decrypt:
 ```bash
-make  encrypt
-make  decrypt
+make encrypt
+make decrypt
 ```
 *Note*: Ensure the username in `vars/config.yml` matches your system's username.
