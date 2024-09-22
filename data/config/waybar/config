@@ -1,6 +1,5 @@
 {
     "height": 24, // Waybar height (to be removed for auto height)
-    // Choose the order of the modules
     "modules-left": [
         "sway/workspaces"
     ],
@@ -18,11 +17,27 @@
         "pulseaudio",
         "tray",
         "bluetooth",
+        "custom/sunset",
         "clock"
     ],
     "tray": {
         // "icon-size": 21,
         "spacing": 10
+    },
+    "custom/sunset": {
+        "interval": "once",
+        "tooltip": true,
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "on": " on",
+            "off": " off"
+        },
+        "exec": "~/.bin/sunset",
+        "on-click": "exec ~/.bin/sunset toggle; pkill -RTMIN+11 waybar",
+        "exec-if": "~/.bin/sunset check",
+        "exec-on-event": true,
+        "signal": 11
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
@@ -44,7 +59,8 @@
         "format-calendar-weekdays": "<span color='#A7C080'><b>{}</b></span>",
         "on-scroll": {
             "calendar": 1
-        }
+        },
+        "on-click": "exec gsimplecal"
     },
     "cpu": {
         "format": "{usage}% ",

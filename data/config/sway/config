@@ -36,7 +36,10 @@ bindsym $mod+Ctrl+Left workspace prev
 bindsym $mod+Ctrl+Right workspace next
 
 # Launch Waybar
-exec_always --no-startup-id ~/.bin/waybar-relaunch
+bar { 
+  swaybar_command waybar
+}
+# exec_always --no-startup-id ~/.bin/waybar-relaunch
 
 # Launch NetworkManager applet (consider Wayland alternatives)
 exec_always --no-startup-id nm-applet

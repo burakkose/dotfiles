@@ -67,6 +67,8 @@ alias proxy='proxychains4'
 alias monitor-network='iptraf-ng'
 alias disable-firewall='sudo iptables -P OUTPUT ACCEPT'
 
+alias monitors='nwg-displays'
+
 # JSON Helpers
 json-console-pretty() {
   echo "$1" | jq .

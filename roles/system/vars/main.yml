@@ -1,11 +1,9 @@
 ---
 packages:
-  - arandr
   - arc-gtk-theme
   - base
   - base-devel
   - brave-bin
-  - cbatticon
   - docker
   - evince
   - fpp-git
@@ -26,12 +24,11 @@ packages:
   - networkmanager-openvpn
   - openssh
   - papirus-icon-theme
+  - pavucontrol
   - pcmanfm-gtk3
   - powerline
   - powerline-fonts
-  - pavucontrol
   - ranger
-  - scrot
   - the_silver_searcher
   - thefuck
   - tig
@@ -41,9 +38,7 @@ packages:
   - ttf-inconsolata
   - ttf-ms-fonts
   - unrar
-  - vlc
   - wget
-  - wmctrl
   - xarchiver
 
 vm_packages:
@@ -56,38 +51,51 @@ vm_packages:
     - tint2
     - conky
     # duplicates with i3, find better way to handle common packages
+    - arandr
     - brightness-controller-git
+    - cbatticon
     - feh
     - redshift
     - rofi
     - rxvt-unicode
+    - scrot
     - urxvt-perls
+    - vlc
     - volumeicon
+    - wmctrl
     - xclip
     - xorg
-    - xorg-xinit
     - xorg-xclipboard
+    - xorg-xinit
   i3:
     - polybar
     - i3-wm
+    - arandr
     - brightness-controller-git
+    - cbatticon
     - feh
     - redshift
     - rofi
     - rxvt-unicode
+    - scrot
     - urxvt-perls
+    - vlc
     - volumeicon
+    - wmctrl
     - xclip
     - xorg
-    - xorg-xinit
     - xorg-xclipboard
+    - xorg-xinit
   sway:
     - sway
-    - foot
-    - swaybg
-    - grim
-    - wofi
     - brightnessctl
+    - foot
+    - grim
+    - gwenview
+    - mpv
+    - nwg-displays
+    - swaybg
     - swaylock-effects
     - waybar
     - wlsunset
+    - wofi

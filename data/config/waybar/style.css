@@ -164,10 +164,23 @@ window#waybar.empty #window {
     background-color: @bg0;
 }
 
-
 #clock {
     padding: 0px 5px;
     border-radius: 5px;
     margin: 0px 5px;
+    background-color: @bg0;
+}
+
+#custom-sunset {
+    padding: 0px 5px;
+    border-radius: 5px;
+    margin: 0px 5px;
+    color: #a9b1d6;
+    background-color: @bg0;
+}
+
+#bluetooth {
+    border-radius: 5px;
+    color: #a9b1d6;
     background-color: @bg0;
 }
