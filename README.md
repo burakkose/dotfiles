@@ -1,54 +1,53 @@
-
 # Overview
+This repository provides a template for managing dotfiles using Ansible on Arch Linux and Ubuntu. It includes a curated selection of personal applications and configurations, with sway as the default window manager. Review the list of included applications before using this template and remove any that are unnecessary for your setup.
 
-This repository provides a template for managing dotfiles using Ansible on Arch Linux and Ubuntu. It includes a selection of personal applications and configurations, with i3 as the default window manager. Review the list of included applications before using this template and remove any you do not want.
-
-## What's in it?
-
-* Window Manager: i3 (default), Openbox
-* Bar: Polybar (default), Tint2
-* Launcher: Rofi
-* Wallpaper Manager: feh (only in i3)
-* Compositor: Compton (only in Openbox)
-* System monitor: Conky (only in Openbox)
-* Terminal: urxvt
+## What's Included?
+* Window Manager: sway (default), i3, Openbox
+* Window System: Wayland (default), X11 (i3 and Openbox)
+* Bar: Waybar (default), Polybar, Tint2
+* Launcher: Wofi (default), Rofi
+* Wallpaper Manager: swaybg (sway only), feh (i3 only)
+* Compositor: Compton (Openbox only)
+* System Monitor: Conky (Openbox only)
+* Terminal: foot, urxvt (i3 and Openbox)
 * Shell: zsh
-* AUR Helper for Arch: trizen
+* AUR Helper (Arch): trizen
 
-After installation, you will have the following packages.
-#### Arch Linux
-> See roles/system/vars/main.yml for the full package list.
-
-#### Ubuntu
-> See oles/system-ubuntu/vars/main.yml for the full package list.
+### Package List
+*  **Arch Linux**: Refer to `roles/system/vars/main.yml` for the full list.
+*  **Ubuntu**: Refer to `roles/system-ubuntu/vars/main.yml` for the full list.
 
 ## Installation
+Before installation, review `vars/config.yml` for essential configurations such as the username and the location of the dotfiles repository.
 
-Before proceeding with the installation, review the configuration in ```vars/config.yml```. This file contains important variables such as the user name and the location of the dotfiles repository.
+Encrypted files may appear post-installation. These are protected using Ansible Vault and can be safely removed if not needed. Remember, do not store sensitive information in GitHub; encryption here is used primarily for obfuscation, not security.
 
-After provisioning the dotfiles, you may notice some encrypted files. These files are protected using ansible vault and should be removed if they are not needed. Remember, do not keep sensitive info in Github, I only use this for hiding content in Github, not for protecting to encrypt.
-
-#### Arch
-```
-git clone https://github.com/burakkose/dotfiles.git 
-cd dotfiles
-make install-deps-arch && make arch
-```
-
-#### Ubuntu
-```
-git clone https://github.com/burakkose/dotfiles.git 
-cd dotfiles
-make install-deps-ubuntu && make ubuntu
+### Arch Installation
+```bash
+git  clone  https://github.com/burakkose/dotfiles.git
+cd  dotfiles
+make  install-deps-arch  &&  make  arch
 ```
 
-If you only prefer to provision dotfiles
+### Ubuntu Installation
+As I primarily use Arch and not Ubuntu much these days, the Ubuntu setup will always lag behind.
+```bash
+git  clone  https://github.com/burakkose/dotfiles.git
+cd  dotfiles
+make  install-deps-ubuntu  &&  make  ubuntu
+```
 
-```make dotfiles```
+### To provision dotfiles only:
+```bash
+make  dotfiles
+```
 
-#### Encryption & Decryption
-Ansible vault is used to encrypt or decrypt sensitive data. The current list of encrypted files can be found in ```vars/vault.yml```
+## Encryption & Decryption
+Sensitive data is encrypted using Ansible Vault. The list of encrypted files can be found in `vars/vault.yml`. As mentioned above, do not store sensitive information here; encryption here is used primarily for obfuscation, not security.
 
-```make encrypt``` or ```make decrypt```
-
-Note: Update the user name in ```vars/config.yml``` to match the user on your system.
+Use the following commands to encrypt or decrypt:
+```bash
+make  encrypt
+make  decrypt
+```
+*Note*: Ensure the username in `vars/config.yml` matches your system's username.
