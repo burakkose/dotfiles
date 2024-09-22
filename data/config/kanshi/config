@@ -1,0 +1,8 @@
+profile home {
+    output DP-2 mode 3440x1440@120Hz position 0,0 scale 1 transform normal enable
+    output eDP-1 disable
+}
+
+profile default {
+    output eDP-1 mode 1920x1080@59.999Hz position 3440,0 scale 1 transform normal enable
+}
