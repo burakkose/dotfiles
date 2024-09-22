@@ -1,0 +1,83 @@
+/* Define color variables */
+@define-color normal_text   #000000;   /* Black */
+@define-color normal_bg     #e0e0e0;   /* Light Gray */
+@define-color selected_text #ffffff;   /* White */
+@define-color selected_bg   #00897b;   /* Teal */
+@define-color urgent_bg     #dc322f;   /* Red */
+@define-color active_bg     #c2cad0;   /* Light Gray */
+@define-color window_bg     #f5f5f5;   /* Very Light Gray */
+@define-color window_border #ffffff;   /* White */
+
+/* General window styling */
+window {
+    opacity: 0.9;
+    border: 0px;
+    border-radius: 10px;
+    font-family: sans-serif;
+    font-size: 16px;
+    background-color: @window_border;
+}
+
+/* Input box styling */
+#input {
+    border-radius: 10px 10px 0px 0px;
+    border: 0px;
+    padding: 8px 12px;
+    margin: 0px;
+    font-size: 20px;
+    color: @normal_text;
+    background-color: @window_bg;
+}
+
+/* Inner container styling */
+#inner-box {
+    margin: 0px;
+    color: @normal_text;
+    background-color: @window_bg;
+}
+
+/* Outer container styling */
+#outer-box {
+    margin: 0px;
+    background-color: @window_border;
+    border-radius: 10px;
+}
+
+/* Selected item styling */
+#selected {
+    background-color: @selected_bg;
+    color: @selected_text;
+}
+
+/* Entry (unselected row) styling */
+#entry {
+    padding: 6px 12px;
+    margin: 0px;
+    background-color: @window_bg;
+    color: @normal_text;
+}
+
+/* Urgent row styling */
+#entry.urgent {
+    background-color: @urgent_bg;
+    color: @normal_text;
+}
+
+/* Active row styling */
+#entry.active {
+    background-color: @active_bg;
+    color: @normal_text;
+}
+
+/* Scroll styling */
+#scroll {
+    margin: 5px;
+    background-color: @window_bg;
+}
+
+/* Text styling inside entries */
+#text {
+    margin: 0px;
+    padding: 2px 0px;
+    color: @normal_text;
+}

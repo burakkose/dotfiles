@@ -1,0 +1,176 @@
+# Set mod key to Mod1 (Alt)
+set $mod Mod1
+
+# Disable focus follows mouse
+focus_follows_mouse no
+
+# Set font for window titles and the bar
+font pango:monospace 8
+
+# Use Mod1 + Mouse to drag floating windows
+floating_modifier $mod
+
+# Wofi keybindings
+bindsym $mod+b exec ~/.bin/wofi-bookmarks
+
+# Wofi run application
+bindsym $mod+r exec "wofi --show=run"
+
+# Wofi window switcher
+bindsym $mod+w exec "bash ~/.bin/wofi-window-selector""
+
+# Wofi for power management
+bindsym $mod+m exec "~/.bin/wofi-power-menu"
+
+# Lock screen using swaylock
+bindsym Mod4+l exec "~/.bin/sway-lock"
+
+# Open file manager
+bindsym $mod+t exec pcmanfm
+
+# Set window borders
+for_window [app_id="^.*"] border pixel 2
+
+# Navigate through workspaces
+bindsym $mod+Ctrl+Left workspace prev
+bindsym $mod+Ctrl+Right workspace next
+
+# Launch Waybar
+exec_always --no-startup-id ~/.bin/waybar-relaunch
+
+# Launch NetworkManager applet (consider Wayland alternatives)
+exec_always --no-startup-id nm-applet
+
+# Set background image using swaybg
+exec_always --no-startup-id swaybg -i "$HOME/.config/wallpaper/wallpaper.png" -m fill
+
+# Start PulseAudio
+exec --no-startup-id pulseaudio --start
+
+# Assign applications to workspaces
+assign [instance="brave-browser"] workspace 2:Internet
+assign [instance="code"] workspace 3:Code
+assign [app_id="libreoffice"] workspace 4:Doc
+
+### COLORS
+client.focused          #ffcdd2 #267fb5 #ffffff #d50000   #d50000
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #333333
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.background       #ffffff
+
+# Start a terminal using Foot
+bindsym $mod+Ctrl+t exec foot -e /bin/zsh
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split orientation
+bindsym $mod+h split h
+bindsym $mod+v split v
+
+# Toggle fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Change container layout
+bindsym $mod+Shift+s layout stacking
+bindsym $mod+Shift+w layout tabbed
+bindsym $mod+Shift+e layout toggle split
+bindsym $mod+Shift+h layout splith
+bindsym $mod+Shift+v layout splitv
+
+# Toggle floating mode
+bindsym $mod+Shift+space floating toggle
+
+# Focus mode toggle
+bindsym $mod+space focus mode_toggle
+
+# Focus parent container
+bindsym $mod+p focus parent
+
+# Define workspace names
+set $ws1 "1:Main"
+set $ws2 "2:Internet"
+set $ws3 "3:Code"
+set $ws4 "4:Doc"
+set $ws5 "5:Work"
+set $ws6 "6:Other"
+
+# Switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+
+# Move container to workspace and switch
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+
+# Reload configuration
+bindsym $mod+Ctrl+Shift+c reload
+
+# Restart Sway
+bindsym $mod+Ctrl+Shift+r restart
+
+# Resize mode
+mode "resize" {
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Up resize grow height 10 px or 10 ppt
+    bindsym Down resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+r mode "resize"
+
+# Move workspace mode
+mode "move workspace" {
+    bindsym Up move workspace to output up
+    bindsym Down move workspace to output down
+    bindsym Left move workspace to output left
+    bindsym Right move workspace to output right
+
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+o mode "move workspace"
+
+# Move workspace to current output
+bindsym $mod+Shift+Control+1 [workspace=$ws1] move workspace to output current; workspace --no-auto-back-and-forth $ws1
+bindsym $mod+Shift+Control+2 [workspace=$ws2] move workspace to output current; workspace --no-auto-back-and-forth $ws2
+bindsym $mod+Shift+Control+3 [workspace=$ws3] move workspace to output current; workspace --no-auto-back-and-forth $ws3
+bindsym $mod+Shift+Control+4 [workspace=$ws4] move workspace to output current; workspace --no-auto-back-and-forth $ws4
+bindsym $mod+Shift+Control+5 [workspace=$ws5] move workspace to output current; workspace --no-auto-back-and-forth $ws5
+bindsym $mod+Shift+Control+6 [workspace=$ws6] move workspace to output current; workspace --no-auto-back-and-forth $ws6
+
+# Focus output
+bindsym $mod+Control+Shift+Left focus output left
+bindsym $mod+Control+Shift+Right focus output right
+
+# Passthrough mode
+mode "passthrough" {
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Escape mode "passthrough"
