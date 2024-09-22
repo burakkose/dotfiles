@@ -13,13 +13,13 @@
     state: directory
 
 - name: Copy existing dotfiles to backup directory (Directly)
-  ignore_errors: yes
+  ignore_errors: true
   command: cp -Lr ~/.{{ item }} {{ backup_dir }}/{{ item }}
   with_items:
     "{{ directly }}"
 
 - name: Copy existing dotfiles to backup directory (Partially)
-  ignore_errors: yes
+  ignore_errors: true
   include_role:
     name: dotfile
     tasks_from: backup-partially
@@ -52,7 +52,7 @@
     clone: yes
 
 - name: Apply obtheme
-  become: yes
+  become: true
   copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"

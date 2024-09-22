@@ -2,20 +2,16 @@
 packages:
   - arandr
   - arc-gtk-theme
-  - brightness-controller-git
   - base
   - base-devel
   - brave-bin
   - cbatticon
-  - conky
   - docker
   - evince
-  - feh
   - fpp-git
   - galculator
-  - google-chrome
+  - google-chrome-bin
   - gsimplecal
-  - gtk2
   - gtk3
   - htop
   - httpie
@@ -24,24 +20,18 @@ packages:
   - leafpad
   - libreoffice-fresh
   - lxappearance
-  - lxinput
-  - lxmenu-data
+  - lxinput-gtk3
   - neofetch
   - network-manager-applet
   - networkmanager-openvpn
   - openssh
   - papirus-icon-theme
-  - pcmanfm
+  - pcmanfm-gtk3
   - powerline
   - powerline-fonts
   - pavucontrol
   - ranger
-  - redshift
-  - rofi
-  - rxvt-unicode
   - scrot
-  - spotify-launcher
-  - telegram-desktop
   - the_silver_searcher
   - thefuck
   - tig
@@ -51,16 +41,10 @@ packages:
   - ttf-inconsolata
   - ttf-ms-fonts
   - unrar
-  - urxvt-perls
   - vlc
-  - volumeicon
   - wget
   - wmctrl
   - xarchiver
-  - xclip
-  - xorg
-  - xorg-xinit
-  - xorg-xclipboard
 
 vm_packages:
   openbox:
@@ -70,7 +54,41 @@ vm_packages:
     - obkey
     - obmenu
     - tint2
+    - conky
+    # duplicates with i3, find better way to handle common packages
+    - brightness-controller-git
+    - feh
+    - lxmenu-data
+    - redshift
+    - rofi
+    - rxvt-unicode
+    - urxvt-perls
+    - volumeicon
+    - xclip
+    - xorg
+    - xorg-xinit
+    - xorg-xclipboard
   i3:
     - polybar
     - i3-wm
-
+    - brightness-controller-git
+    - feh
+    - lxmenu-data
+    - redshift
+    - rofi
+    - rxvt-unicode
+    - urxvt-perls
+    - volumeicon
+    - xclip
+    - xorg
+    - xorg-xinit
+    - xorg-xclipboard
+  sway:
+    - sway
+    - foot
+    - swaybg
+    - grim
+    - wofi
+    - brightnessctl
+    - swaylock-effects
+    - waybar

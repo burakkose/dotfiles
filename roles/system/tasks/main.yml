@@ -31,10 +31,3 @@
     dest: '/usr/bin/browser'
     state: link
     force: yes
-
-- name: Link spotify
-  file:
-    src: '/usr/bin/spotify-launcher'
-    dest: '/usr/bin/spotify'
-    state: link
-    force: yes
