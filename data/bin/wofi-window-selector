@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Fetch the tree structure of Sway and process it with jq
+swaymsg -t get_tree | jq -r '
+    .nodes[].nodes[]
+    | {"workspace": .name} + (
+        # If the node has children, recurse through its nodes (workspace windows)
+        if (.nodes | length) > 0 then
+            [.nodes[] | recurse(.nodes[])]
+        else
+            []
+        end
+        + .floating_nodes
+        | .[]
+        # Select only the nodes that represent windows (no further children)
+        | select(.nodes == null or .nodes == [])
+    )
+    # Format the output: window ID, workspace name, application name, and window title
+    | (.id | tostring) + "\t " 
+    + (.workspace | gsub("^[^:]*:|<[^>]*>"; "") | sub("__i3_scratch"; "[S]"))
+    + "\t " + (.app_id // .window_properties.class // "Unknown App")
+    + "\t " + .name
+' | wofi --show dmenu --prompt='Focus a window' | {
+    # Read the selected window's ID, application, and name
+    read -r window_id window_name
+    # Focus on the selected window by its ID
+    swaymsg "[con_id=$window_id]" focus
+}

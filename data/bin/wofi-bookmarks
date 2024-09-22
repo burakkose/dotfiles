@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+import csv
+import yaml
+import subprocess
+
+# Get the user's home directory
+home = os.getenv("HOME")
+sys.path.append(home + "/.lib/pybase")
+
+# Try to load YAML with the faster CLoader if available
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
+
+
+def get_path(path_str):
+    """Expand the user's home directory in the path."""
+    return os.path.expanduser(path_str)
+
+
+# Path to the bookmarks config YAML file
+config_path = get_path("~/.config/rofi/bookmarks-config.yaml")
+
+# Read the bookmarks from YAML and CSV files
+with open(config_path, "r") as stream:
+    files = yaml.load(stream, Loader=Loader)
+    attr = []
+    for file in files:
+        with open(get_path(file), "r") as csv_file:
+            reader = csv.reader(csv_file, delimiter=",")
+            # Skip the first line (headers) and extend the attributes
+            attr.extend(list(reader)[1:])
+
+# Separate options (names) and values (URLs or commands)
+(options, values) = zip(*attr)
+
+# Prepare the options for wofi
+wofi_input = "\n".join(options)
+
+# Call wofi in dmenu mode and capture the selected option
+result = subprocess.run(
+    ['wofi', '--show', 'dmenu', '--prompt', 'Select bookmark:'],
+    input=wofi_input,
+    text=True,
+    stdout=subprocess.PIPE
+)
+
+# Get the index of the selected option
+selected_option = result.stdout.strip()
+if selected_option in options:
+    index = options.index(selected_option)
+    
+    # Call the browser or another command with the selected value
+    subprocess.call(f"browser {' '.join(values[index].split('|'))}", shell=True)
