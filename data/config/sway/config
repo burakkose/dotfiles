@@ -35,6 +35,9 @@ for_window [app_id="^.*"] border pixel 2
 bindsym $mod+Ctrl+Left workspace prev
 bindsym $mod+Ctrl+Right workspace next
 
+# Automatic display management
+exec_always pkill kanshi; exec kanshi &> /tmp/kanshi.log
+
 # Launch Waybar
 bar { 
   swaybar_command waybar

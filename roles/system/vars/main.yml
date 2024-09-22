@@ -92,6 +92,7 @@ vm_packages:
     - foot
     - grim
     - gwenview
+    - kanshi
     - mpv
     - nwg-displays
     - swaybg
