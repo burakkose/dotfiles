@@ -58,7 +58,6 @@ vm_packages:
     # duplicates with i3, find better way to handle common packages
     - brightness-controller-git
     - feh
-    - lxmenu-data
     - redshift
     - rofi
     - rxvt-unicode
@@ -73,7 +72,6 @@ vm_packages:
     - i3-wm
     - brightness-controller-git
     - feh
-    - lxmenu-data
     - redshift
     - rofi
     - rxvt-unicode
@@ -92,3 +90,4 @@ vm_packages:
     - brightnessctl
     - swaylock-effects
     - waybar
+    - wlsunset
