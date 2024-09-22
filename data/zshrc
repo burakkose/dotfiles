@@ -1,36 +1,37 @@
+# NVM Setup
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Cargo environment
+#. "$HOME/.cargo/env"
+
+# General environment variables
 export EDITOR=nano
 export GITFOLDER=~/git
 export DOTFILES=~/dotfiles
 export ARCHFLAGS="-arch x86_64"
 export ZSH=~/.oh-my-zsh
-export PATH="$HOME/.rbenv/bin:$PATH"
-export JAVA_HOME=/usr/lib/jvm/default 
-export PATH=$HOME/bin:/usr/local/bin:$PATH:$HOME/.bin:$HOME/.toolbox/bin:$PATH
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-
+export JAVA_HOME=/usr/lib/jvm/default
 export SPARK_HOME=/opt/apache-spark
-export PATH=$SPARK_HOME/bin:$PATH
-
 export HADOOP_HOME=/usr/lib/hadoop
 export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
-export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR" 
-
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"
 export DOCKER_HOST=unix:///var/run/docker.sock
 
+# Combined PATH to avoid duplicates
+export PATH="$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:$HOME/.bin:$HOME/.toolbox/bin:$HOME/.rbenv/plugins/ruby-build/bin:$SPARK_HOME/bin:$PATH"
+
+# Zsh Configuration
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="mm/dd/yyyy"
-
-plugins=(git docker sudo ssh-agent aws)
-
-source $ZSH/oh-my-zsh.sh
-
 CASE_SENSITIVE="true"
 
-# Filesystem
+# Plugins
+plugins=(git docker sudo ssh-agent aws)
+source $ZSH/oh-my-zsh.sh
+
+# Filesystem Aliases
 alias .='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -42,9 +43,8 @@ alias odot='nano $DOTFILES'
 alias cde='cd $GITFOLDER/elmar'
 alias cdp='cd $GITFOLDER/personal'
 alias cdt='cd $GITFOLDER/third-party'
-# Helpers
-chpwd() ls
 
+# Other Useful Aliases
 alias c='clear'
 alias e='exit'
 alias df='df -h'
@@ -60,12 +60,6 @@ alias weather='curl wttr.in/Dublin'
 alias disk-usage='sudo du -h --max-depth=1 .'
 alias json-file-pretty='jq .'
 alias json-file-minify='jq -c .'
-json-console-pretty() {
- echo "$1" | jq .
-}
-json-console-minify() {
- echo "$1" | jq -c .
-}
 alias enableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0'
 alias disableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1'
 alias gaa-only-modified='git ls-files --modified | xargs git add'
@@ -73,40 +67,45 @@ alias proxy='proxychains4'
 alias monitor-network='iptraf-ng'
 alias disable-firewall='sudo iptables -P OUTPUT ACCEPT'
 
+# JSON Helpers
+json-console-pretty() {
+  echo "$1" | jq .
+}
+json-console-minify() {
+  echo "$1" | jq -c .
+}
+
+# TheFuck Command Alias
 eval "$(thefuck --alias)"
 
-# ssh agent
+# SSH Agent Configuration
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 
-# auto complete for alias
+# Auto-complete for Aliases
 setopt complete_aliases
 
-# zsh-bd
+# Zsh Plugins
 source $HOME/.zsh/plugins/bd/bd.zsh
-
-# git-flow-auto
 source $HOME/.zsh/plugins/git-flow-auto/git-flow-completion.zsh
-
-#alias-tip
 source $HOME/.zsh/plugins/alias-tips/alias-tips.plugin.zsh
 
-# TMUX
+# TMUX Auto Start
 if which tmux >/dev/null 2>&1; then
-    # if no session is started, start a new session
+    # If no session is started, start a new session
     test -z ${TMUX} && tmux
 
-    # when quitting tmux, try to attach
+    # When quitting tmux, try to attach
     while test -z ${TMUX}; do
         tmux attach || break
     done
 fi
 
+# Python Virtual Environment Info
 function virtualenv_info {
     [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
 }
 
-# Theme, modified version of https://github.com/tylerreckart/hyperzsh
-# The prompt
+# Custom Prompt Setup
 PROMPT='$(_user_host)%{$fg[cyan]%}%~ $(git_prompt_info)%{$reset_color%}$(_git_time_since_commit)$(git_prompt_status)${_return_status}
 $(_python_venv)%B%F{yellow}λ%f%b '
 RPROMPT='%{$fg[green]%}[%*]%{$reset_color%}'
@@ -118,17 +117,16 @@ function _user_host() {
   echo "%{$fg[yellow]%}%n%{$reset_color%} in "
 }
 
-# Determine if there is an active Python virtual environment
+# Python Virtual Environment in Prompt
 function _python_venv() {
   if [[ $VIRTUAL_ENV != "" ]]; then
     echo "%{$fg[blue]%}(${VIRTUAL_ENV##*/})%{$reset_color%} "
   fi
 }
 
-# Format for git_prompt_long_sha() and git_prompt_short_sha()
+# Git Time Since Commit Setup
 ZSH_THEME_GIT_PROMPT_SHA_BEFORE="%{$fg[yellow]%}"
 ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$reset_color%} "
-
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗%{$reset_color%} "
@@ -146,22 +144,15 @@ ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM="%{$fg[yellow]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[white]%}"
 
-#
-# Determine the time since last commit. If branch is clean,
-# use a neutral color, otherwise colors will vary according to time.
+# Time Since Last Commit Calculation
 function _git_time_since_commit() {
-# Only proceed if there is actually a commit.
   if git log -1 > /dev/null 2>&1; then
-    # Get the last commit.
     last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
     now=$(date +%s)
     seconds_since_last_commit=$((now-last_commit))
 
-    # Totals
     minutes=$((seconds_since_last_commit / 60))
     hours=$((seconds_since_last_commit/3600))
-
-    # Sub-hours and sub-minutes
     days=$((seconds_since_last_commit / 86400))
     sub_hours=$((hours % 24))
     sub_minutes=$((minutes % 60))
@@ -173,6 +164,7 @@ function _git_time_since_commit() {
     else
       commit_age="${minutes}m "
     fi
+
     if [[ -n $(git status -s 2> /dev/null) ]]; then
         if [ "$hours" -gt 4 ]; then
             COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG"
@@ -185,8 +177,6 @@ function _git_time_since_commit() {
         COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL"
     fi
 
-
     echo "$COLOR$commit_age%{$reset_color%}"
   fi
 }
-
