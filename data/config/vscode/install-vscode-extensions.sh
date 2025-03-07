@@ -6,8 +6,6 @@ alphabotsec.vscode-eclipse-keybindings
 christian-kohler.path-intellisense
 eamodio.gitlens
 ecmel.vscode-html-css
-equinusocio.vsc-material-theme
-equinusocio.vsc-material-theme-icons
 ms-python.debugpy
 ms-python.isort
 ms-python.python
@@ -25,6 +23,7 @@ ms-vscode.remote-server
 pkief.material-icon-theme
 redhat.ansible
 redhat.vscode-yaml
+teabyii.ayu
 twxs.cmake
 zainchen.json
 )
