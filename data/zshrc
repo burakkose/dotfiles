@@ -1,37 +1,38 @@
-# NVM Setup
+###############################################################################
+# Environment Setup
+###############################################################################
+
+# --- NVM Setup ---
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"       # Load nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # Load nvm bash_completion
 
-# Cargo environment
-#. "$HOME/.cargo/env"
+# --- Cargo Environment ---
+# Uncomment the following line if you use Cargo:
+# . "$HOME/.cargo/env"
 
-# General environment variables
+# --- General Environment Variables ---
 export EDITOR=nano
 export GITFOLDER=~/git
 export DOTFILES=~/dotfiles
 export ARCHFLAGS="-arch x86_64"
-export ZSH=~/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 export JAVA_HOME=/usr/lib/jvm/default
 export SPARK_HOME=/opt/apache-spark
 export HADOOP_HOME=/usr/lib/hadoop
-export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+export HADOOP_COMMON_LIB_NATIVE_DIR="$HADOOP_HOME/lib/native"
 export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"
 export DOCKER_HOST=unix:///var/run/docker.sock
+export ELECTRON_OZONE_PLATFORM_HINT=wayland
 
-# Combined PATH to avoid duplicates
+# --- PATH Configuration (combined to avoid duplicates) ---
 export PATH="$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:$HOME/.bin:$HOME/.toolbox/bin:$HOME/.rbenv/plugins/ruby-build/bin:$SPARK_HOME/bin:$PATH"
 
-# Zsh Configuration
-DISABLE_AUTO_UPDATE="true"
-HIST_STAMPS="mm/dd/yyyy"
-CASE_SENSITIVE="true"
+###############################################################################
+# Aliases and Helper Functions
+###############################################################################
 
-# Plugins
-plugins=(git docker sudo ssh-agent aws)
-source $ZSH/oh-my-zsh.sh
-
-# Filesystem Aliases
+# --- Filesystem Navigation Aliases ---
 alias .='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -44,7 +45,7 @@ alias cde='cd $GITFOLDER/elmar'
 alias cdp='cd $GITFOLDER/personal'
 alias cdt='cd $GITFOLDER/third-party'
 
-# Other Useful Aliases
+# --- General Useful Aliases ---
 alias c='clear'
 alias e='exit'
 alias df='df -h'
@@ -66,67 +67,102 @@ alias gaa-only-modified='git ls-files --modified | xargs git add'
 alias proxy='proxychains4'
 alias monitor-network='iptraf-ng'
 alias disable-firewall='sudo iptables -P OUTPUT ACCEPT'
-
 alias monitors='nwg-displays'
 
-# JSON Helpers
-json-console-pretty() {
-  echo "$1" | jq .
-}
-json-console-minify() {
-  echo "$1" | jq -c .
-}
+# --- JSON Helpers (Functions) ---
+json-console-pretty() { echo "$1" | jq .; }
+json-console-minify() { echo "$1" | jq -c .; }
 
-# TheFuck Command Alias
+# --- TheFuck Alias (if installed) ---
 eval "$(thefuck --alias)"
 
-# SSH Agent Configuration
+# --- SSH Agent Configuration for oh-my-zsh ---
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 
-# Auto-complete for Aliases
+# --- Enable Auto-completion for Aliases ---
 setopt complete_aliases
 
-# Zsh Plugins
-source $HOME/.zsh/plugins/bd/bd.zsh
-source $HOME/.zsh/plugins/git-flow-auto/git-flow-completion.zsh
-source $HOME/.zsh/plugins/alias-tips/alias-tips.plugin.zsh
+###############################################################################
+# Plugin Loading (Oh-My-Zsh and Custom Plugins)
+###############################################################################
 
-# TMUX Auto Start
-if which tmux >/dev/null 2>&1; then
-    # If no session is started, start a new session
-    test -z ${TMUX} && tmux
+source "$ZSH/oh-my-zsh.sh"
+source "$HOME/.zsh/plugins/bd/bd.zsh"
+source "$HOME/.zsh/plugins/git-flow-auto/git-flow-completion.zsh"
+source "$HOME/.zsh/plugins/alias-tips/alias-tips.plugin.zsh"
 
-    # When quitting tmux, try to attach
-    while test -z ${TMUX}; do
-        tmux attach || break
-    done
+###############################################################################
+# TMUX Auto Start (Modern Simplified Approach)
+###############################################################################
+if command -v tmux >/dev/null 2>&1; then
+  # If not inside a tmux session, attach to an existing session or create one
+  [ -z "$TMUX" ] && tmux new-session -A -s default
 fi
 
-# Python Virtual Environment Info
-function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+###############################################################################
+# Prompt Customization
+###############################################################################
+
+# --- Python Virtual Environment Prompt Helper ---
+_python_venv() {
+  [[ -n $VIRTUAL_ENV ]] && echo "%{$fg[blue]%}(${VIRTUAL_ENV##*/})%{$reset_color%} "
 }
 
-# Custom Prompt Setup
-PROMPT='$(_user_host)%{$fg[cyan]%}%~ $(git_prompt_info)%{$reset_color%}$(_git_time_since_commit)$(git_prompt_status)${_return_status}
-$(_python_venv)%B%F{yellow}λ%f%b '
-RPROMPT='%{$fg[green]%}[%*]%{$reset_color%}'
+# --- Git Time Since Last Commit ---
+_git_time_since_commit() {
+  if git rev-parse --git-dir > /dev/null 2>&1; then
+    local last_commit now seconds_since_last_commit minutes hours days commit_age COLOR
+    last_commit=$(git log --pretty=format:'%at' -1 2>/dev/null)
+    now=$(date +%s)
+    seconds_since_last_commit=$((now - last_commit))
+    minutes=$((seconds_since_last_commit / 60))
+    hours=$((seconds_since_last_commit / 3600))
+    days=$((seconds_since_last_commit / 86400))
+    
+    if [ $hours -ge 24 ]; then
+      commit_age="${days}d "
+    elif [ $minutes -ge 60 ]; then
+      local sub_hours=$((hours % 24))
+      local sub_minutes=$((minutes % 60))
+      commit_age="${sub_hours}h${sub_minutes}m "
+    else
+      commit_age="${minutes}m "
+    fi
 
-local _return_status="%{$fg[red]%}%(?..⍉ )%{$reset_color%}"
+    # Determine color based on commit age and working tree status
+    if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
+      if [ "$hours" -gt 4 ]; then
+        COLOR="%{$fg[red]%}"
+      elif [ "$minutes" -gt 30 ]; then
+        COLOR="%{$fg[yellow]%}"
+      else
+        COLOR="%{$fg[white]%}"
+      fi
+    else
+      COLOR="%{$fg[white]%}"
+    fi
 
-# Just show user name
-function _user_host() {
-  echo "%{$fg[yellow]%}%n%{$reset_color%} in "
-}
-
-# Python Virtual Environment in Prompt
-function _python_venv() {
-  if [[ $VIRTUAL_ENV != "" ]]; then
-    echo "%{$fg[blue]%}(${VIRTUAL_ENV##*/})%{$reset_color%} "
+    echo "$COLOR$commit_age%{$reset_color%}"
   fi
 }
 
-# Git Time Since Commit Setup
+# --- User and Host Display Helper ---
+_user_host() {
+  echo "%{$fg[yellow]%}%n%{$reset_color%} in "
+}
+
+# --- Global Return Status Indicator ---
+_return_status="%{$fg[red]%}%(?..⍉ )%{$reset_color%}"
+
+# --- Custom Prompt Definition ---
+PROMPT='$(_user_host)%{$fg[cyan]%}%~ $(git_prompt_info)%{$reset_color%}$(_git_time_since_commit)$(git_prompt_status)${_return_status}
+$(_python_venv)%B%F{yellow}λ%f%b '
+RPROMPT='%F{green}[%*]%f'
+
+###############################################################################
+# Git Prompt Customization (Theme Settings)
+###############################################################################
+
 ZSH_THEME_GIT_PROMPT_SHA_BEFORE="%{$fg[yellow]%}"
 ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
@@ -145,40 +181,3 @@ ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[white]%}"
 ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM="%{$fg[yellow]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[white]%}"
-
-# Time Since Last Commit Calculation
-function _git_time_since_commit() {
-  if git log -1 > /dev/null 2>&1; then
-    last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
-    now=$(date +%s)
-    seconds_since_last_commit=$((now-last_commit))
-
-    minutes=$((seconds_since_last_commit / 60))
-    hours=$((seconds_since_last_commit/3600))
-    days=$((seconds_since_last_commit / 86400))
-    sub_hours=$((hours % 24))
-    sub_minutes=$((minutes % 60))
-
-    if [ $hours -gt 24 ]; then
-      commit_age="${days}d "
-    elif [ $minutes -gt 60 ]; then
-      commit_age="${sub_hours}h${sub_minutes}m "
-    else
-      commit_age="${minutes}m "
-    fi
-
-    if [[ -n $(git status -s 2> /dev/null) ]]; then
-        if [ "$hours" -gt 4 ]; then
-            COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG"
-        elif [ "$minutes" -gt 30 ]; then
-            COLOR="$ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM"
-        else
-            COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT"
-        fi
-    else
-        COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL"
-    fi
-
-    echo "$COLOR$commit_age%{$reset_color%}"
-  fi
-}
