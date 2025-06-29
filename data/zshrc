@@ -4,9 +4,20 @@
 
 # Automatically jump into (or create) a tmux session called “workspace”
 # after the prompt preload is finished.
-if command -v tmux >/dev/null 2>&1 && [[ -z "$TMUX" ]]; then
-  exec tmux new-session -A -s workspace
+# TMUX
+if which tmux >/dev/null 2>&1; then
+    # Use a unique session name if none is running
+    if [ -z "$TMUX" ]; then
+        SESSION_NAME="term-$(date +%Y%m%d-%H%M%S)"
+        tmux new-session -s "$SESSION_NAME"
+    fi
+
+    # After tmux exits, try to reattach to the last session
+    while [ -z "$TMUX" ]; do
+        tmux attach || break
+    done
 fi
+
 
 # Powerlevel10k Instant Prompt. Keep this as close to the top as possible.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
