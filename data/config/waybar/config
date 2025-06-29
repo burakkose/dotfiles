@@ -10,6 +10,8 @@
         "cpu",
         "memory",
         "temperature",
+        "custom/gpu-temp",
+        "disk#home",
         "disk",
         "battery",
         "battery#bat2",
@@ -30,14 +32,21 @@
         "return-type": "json",
         "format": "{icon}",
         "format-icons": {
-            "on": " on",
-            "off": " off"
+            "off": "",
+            "on": ""
         },
         "exec": "~/.bin/sunset",
         "on-click": "exec ~/.bin/sunset toggle; pkill -RTMIN+11 waybar",
         "exec-if": "~/.bin/sunset check",
         "exec-on-event": true,
         "signal": 11
+    },
+    "custom/gpu-temp": 
+    {
+        "exec": "sensors | grep -A 5 'amdgpu-pci-0300' | grep 'edge' | awk '{print $2}' | sed 's/+//; s/°C//'",
+        "format": "GPU: {}°C",
+        "return-type": "",
+        "interval": 4
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
@@ -71,12 +80,18 @@
         "format": "{free} ",
         "path": "/"
     },
+    "disk#home": {
+        "interval": 30,
+        "format": "{free} ",
+        "path": "/home"
+    },
     "memory": {
         "format": "{}% "
     },
     "temperature": {
-        "thermal-zone": 2,
-        "format": "{temperatureC}°C ",
+        "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+        "input-filename": "temp1_input",
+        "format": "CPU: {temperatureC}°C",
     },
     "backlight": {
         "format": "{percent}% ",
