@@ -1,3 +1,5 @@
+include /etc/sway/config.d/*
+
 # Set mod key to Mod1 (Alt)
 set $mod Mod1
 
@@ -39,7 +41,7 @@ bindsym $mod+Ctrl+Right workspace next
 exec_always pkill kanshi; exec kanshi &> /tmp/kanshi.log
 
 # Launch Waybar
-bar { 
+bar {
   swaybar_command waybar
 }
 # exec_always --no-startup-id ~/.bin/waybar-relaunch
@@ -180,3 +182,14 @@ mode "passthrough" {
 }
 
 bindsym $mod+Escape mode "passthrough"
+
+output "DP-1" {
+    mode  3440x1440@144.001Hz
+    pos 0 0
+    transform normal
+    subpixel rgb
+    scale 1.25
+    scale_filter smart
+    adaptive_sync off
+    dpms on
+}

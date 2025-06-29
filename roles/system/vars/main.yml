@@ -3,7 +3,6 @@ packages:
   - arc-gtk-theme
   - base
   - base-devel
-  - brave-bin
   - docker
   - evince
   - featherpad

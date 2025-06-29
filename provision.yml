@@ -1,2 +1,2 @@
-- include: provision-system.yml
-- include: provision-dotfiles.yml
+- import_playbook: provision-system.yml
+- import_playbook: provision-dotfiles.yml
