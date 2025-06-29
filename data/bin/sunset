@@ -2,13 +2,13 @@
 
 #Startup function
 function start(){
-	wlsunset -t 3500 -T 3600 &
+	gammastep -PO 3400 -b 1.0
 }
 
-#Accepts managing parameter 
+#Accepts managing parameter
 case $1'' in
 	'off')
-   	pkill wlsunset
+   	pkill gammastep
 	;;
 
 	'on')
@@ -16,25 +16,25 @@ case $1'' in
 	;;
 
 	'toggle')
-   	if pkill -0 wlsunset
+   	if pkill -0 gammastep
 	then
-		pkill wlsunset
+		pkill gammastep
 	else
 		start
 	fi
     ;;
     'check')
-    command -v wlsunset
+    command -v gammastep
     exit $?
     ;;
 esac
 
-#Returns a string for Waybar 
-if pkill -0 wlsunset
+#Returns a string for Waybar
+if pkill -0 gammastep
 then
 	class="off"
 else
 	class="on"
-fi	
+fi
 
 printf '{"alt":"%s"}\n' "$class"
