@@ -15,6 +15,7 @@ directly:
   - Xresources.d
   - zsh
   - zshrc
+  - p10k.zsh
   - work
   - vpn
 
