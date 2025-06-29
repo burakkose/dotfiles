@@ -83,10 +83,21 @@ window#waybar.empty #window {
     background-color: @red;
 }
 
+#custom-gpu-temp {
+    padding: 0px 5px;
+    background-color: @yellow;
+    color: @bg_yellow;
+}
+
 #disk {
     border-radius: 0px 5px 5px 0px;
     padding: 0px 5px;
-    margin-right: 5px;
+    background-color: @yellow;
+    color: @bg_yellow;
+}
+
+#disk.home {
+    padding: 0px 5px;
     background-color: @yellow;
     color: @bg_yellow;
 }
