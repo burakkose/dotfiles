@@ -6,16 +6,15 @@ packages:
   - brave-bin
   - docker
   - evince
+  - featherpad
   - fpp-git
   - galculator
-  - google-chrome
   - gsimplecal
   - gtk3
   - htop
   - httpie
   - imagemagick
   - jq
-  - leafpad
   - libreoffice-fresh
   - lxappearance
   - lxinput-gtk3
@@ -40,6 +39,7 @@ packages:
   - unrar
   - wget
   - xarchiver
+  - zinit
 
 vm_packages:
   openbox:
@@ -98,5 +98,6 @@ vm_packages:
     - swaybg
     - swaylock-effects
     - waybar
-    - wlsunset
     - wofi
+    - wl-clipboard
+    - gammastep
