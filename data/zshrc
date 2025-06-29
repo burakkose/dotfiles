@@ -1,51 +1,136 @@
 ###############################################################################
-# Environment Setup
+# 0. Prompt bootstrap & tmux attach                                           #
 ###############################################################################
 
-# --- NVM Setup ---
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"       # Load nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # Load nvm bash_completion
+# Automatically jump into (or create) a tmux session called “workspace”
+# after the prompt preload is finished.
+if command -v tmux >/dev/null 2>&1 && [[ -z "$TMUX" ]]; then
+  exec tmux new-session -A -s workspace
+fi
 
-# --- Cargo Environment ---
-# Uncomment the following line if you use Cargo:
-# . "$HOME/.cargo/env"
+# Powerlevel10k Instant Prompt. Keep this as close to the top as possible.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# --- General Environment Variables ---
+# Suppress warning if *any* plugin prints during init (recommended by P10k).
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+###############################################################################
+# 1. Core shell behaviour & history                                           #
+###############################################################################
+
+# General options
+setopt HIST_IGNORE_DUPS  \
+       SHARE_HISTORY     \
+       APPEND_HISTORY    \
+       INC_APPEND_HISTORY \
+       EXTENDED_HISTORY  \
+       HIST_REDUCE_BLANKS \
+       HIST_SAVE_NO_DUPS \
+       COMPLETE_ALIASES
+
+# History file & size
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=10000
+export SAVEHIST=10000
+
+# Flush history on every command (useful inside multiple tmux panes)
+autoload -Uz add-zsh-hook
+sync-history() { fc -AI; }
+add-zsh-hook precmd  sync-history
+add-zsh-hook preexec sync-history
+
+###############################################################################
+# 2. Key‑bindings                                                             #
+###############################################################################
+
+# Word‑wise movement with Ctrl+←/→
+bindkey '^[[1;5C' forward-word   # Ctrl+Right
+bindkey '^[[1;5D' backward-word  # Ctrl+Left
+
+# Edit the current command in the editor with Ctrl‑X Ctrl‑E
+autoload -Uz edit-command-line
+zle -N   edit-command-line
+bindkey '^X^E' edit-command-line
+
+###############################################################################
+# 3. Environment variables                                                    #
+###############################################################################
+
 export EDITOR=nano
-export GITFOLDER=~/git
-export DOTFILES=~/dotfiles
+export DOTFILES="$HOME/dotfiles"
 export ARCHFLAGS="-arch x86_64"
-export ZSH="$HOME/.oh-my-zsh"
-export JAVA_HOME=/usr/lib/jvm/default
-export SPARK_HOME=/opt/apache-spark
-export HADOOP_HOME=/usr/lib/hadoop
+export JAVA_HOME="/usr/lib/jvm/default"
+export SPARK_HOME="/opt/apache-spark"
+export HADOOP_HOME="/usr/lib/hadoop"
 export HADOOP_COMMON_LIB_NATIVE_DIR="$HADOOP_HOME/lib/native"
 export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"
-export DOCKER_HOST=unix:///var/run/docker.sock
-export ELECTRON_OZONE_PLATFORM_HINT=wayland
+export DOCKER_HOST="unix:///var/run/docker.sock"
+export ELECTRON_OZONE_PLATFORM_HINT="wayland"
 
-# --- PATH Configuration (combined to avoid duplicates) ---
+# PATH – prepend dev/tooling directories but keep $PATH fallback last
 export PATH="$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:$HOME/.bin:$HOME/.toolbox/bin:$HOME/.rbenv/plugins/ruby-build/bin:$SPARK_HOME/bin:$PATH"
 
 ###############################################################################
-# Aliases and Helper Functions
+# 4. Plugin manager & plugins                                                 #
 ###############################################################################
 
-# --- Filesystem Navigation Aliases ---
+# zinit bootstrap (must exist system‑wide at /usr/share/zinit)
+source /usr/share/zinit/zinit.zsh
+
+# Prompt theme
+zinit light romkatv/powerlevel10k
+
+# --- Core UX plugins --------------------------------------------------------
+zinit ice wait'1' atload'_zsh_autosuggest_start'
+zinit light zsh-users/zsh-autosuggestions
+
+zinit ice wait'1'
+zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
+zinit snippet OMZ::plugins/git/git.plugin.zsh
+
+# --- Productivity helpers (silent / no prompts) ----------------------------
+zinit light hcgraf/zsh-sudo
+zinit light MichaelAquilina/zsh-you-should-use  # “Use your aliases!”
+zinit light rupa/z                              # Directory jumping
+zinit light djui/alias-tips                     # Alias suggestions
+zinit light zdharma-continuum/history-search-multi-word
+
+###############################################################################
+# 5. Completions, colours, aliases, helpers                                   #
+###############################################################################
+
+# Completion system
+autoload -Uz compinit && compinit -u
+
+# Colour definitions for scripts
+autoload -U colors && colors
+
+# --- Aliases ----------------------------------------------------------------
+# Navigation
 alias .='cd'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+
+# Git / dotfiles quick access
 alias ogit='nano $GITFOLDER'
-alias cgit='cd $GITFOLDER'
-alias cdot='cd $DOTFILES'
+alias cgit='cd   $GITFOLDER'
+alias cdot='cd   $DOTFILES'
 alias odot='nano $DOTFILES'
-alias cde='cd $GITFOLDER/elmar'
 alias cdp='cd $GITFOLDER/personal'
 alias cdt='cd $GITFOLDER/third-party'
 
-# --- General Useful Aliases ---
+# ls shortcuts
+alias ls='ls --color=auto'
+alias l='ls -lAhF --color=auto'
+alias ll='ls -lh --color=auto'
+alias la='ls -lah --color=auto'
+
+# Convenience
 alias c='clear'
 alias e='exit'
 alias df='df -h'
@@ -53,131 +138,51 @@ alias ping='ping -c 5'
 alias zshrc='nano ~/.zshrc'
 alias szshrc='source ~/.zshrc'
 alias grep='grep --color=auto'
+
+# System power
 alias reboot='sudo shutdown -r now'
 alias shutdown='sudo shutdown -h now'
 alias suspend='sudo systemctl suspend'
+
+# Misc tooling
 alias openboxrc='nano ~/.config/openbox/rc.xml'
 alias weather='curl wttr.in/Dublin'
 alias disk-usage='sudo du -h --max-depth=1 .'
+
+# JSON helpers
 alias json-file-pretty='jq .'
 alias json-file-minify='jq -c .'
+json-console-pretty() { echo "$1" | jq .; }
+json-console-minify() { echo "$1" | jq -c .; }
+
+# Network tweaks
 alias enableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0'
 alias disableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1'
+
+# Git helpers
 alias gaa-only-modified='git ls-files --modified | xargs git add'
+
+# Other utilities
 alias proxy='proxychains4'
 alias monitor-network='iptraf-ng'
 alias disable-firewall='sudo iptables -P OUTPUT ACCEPT'
 alias monitors='nwg-displays'
 
-# --- JSON Helpers (Functions) ---
-json-console-pretty() { echo "$1" | jq .; }
-json-console-minify() { echo "$1" | jq -c .; }
-
-# --- TheFuck Alias (if installed) ---
-eval "$(thefuck --alias)"
-
-# --- SSH Agent Configuration for oh-my-zsh ---
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-
-# --- Enable Auto-completion for Aliases ---
-setopt complete_aliases
-
 ###############################################################################
-# Plugin Loading (Oh-My-Zsh and Custom Plugins)
+# 6. External helpers & services                                             #
 ###############################################################################
 
-source "$ZSH/oh-my-zsh.sh"
-source "$HOME/.zsh/plugins/bd/bd.zsh"
-source "$HOME/.zsh/plugins/git-flow-auto/git-flow-completion.zsh"
-source "$HOME/.zsh/plugins/alias-tips/alias-tips.plugin.zsh"
+# TheFuck (command correction) – only load if installed
+command -v thefuck >/dev/null && eval "$(thefuck --alias)"
 
-###############################################################################
-# TMUX Auto Start (Modern Simplified Approach)
-###############################################################################
-if command -v tmux >/dev/null 2>&1; then
-  # If not inside a tmux session, attach to an existing session or create one
-  [ -z "$TMUX" ] && tmux new-session -A -s default
+# ssh‑agent autostart (if no agent yet running)
+if [[ -z "$SSH_AUTH_SOCK" ]] && command -v ssh-agent >/dev/null; then
+  eval "$(ssh-agent -s)" >/dev/null
 fi
 
 ###############################################################################
-# Prompt Customization
+# End of file                                                                #
 ###############################################################################
 
-# --- Python Virtual Environment Prompt Helper ---
-_python_venv() {
-  [[ -n $VIRTUAL_ENV ]] && echo "%{$fg[blue]%}(${VIRTUAL_ENV##*/})%{$reset_color%} "
-}
-
-# --- Git Time Since Last Commit ---
-_git_time_since_commit() {
-  if git rev-parse --git-dir > /dev/null 2>&1; then
-    local last_commit now seconds_since_last_commit minutes hours days commit_age COLOR
-    last_commit=$(git log --pretty=format:'%at' -1 2>/dev/null)
-    now=$(date +%s)
-    seconds_since_last_commit=$((now - last_commit))
-    minutes=$((seconds_since_last_commit / 60))
-    hours=$((seconds_since_last_commit / 3600))
-    days=$((seconds_since_last_commit / 86400))
-    
-    if [ $hours -ge 24 ]; then
-      commit_age="${days}d "
-    elif [ $minutes -ge 60 ]; then
-      local sub_hours=$((hours % 24))
-      local sub_minutes=$((minutes % 60))
-      commit_age="${sub_hours}h${sub_minutes}m "
-    else
-      commit_age="${minutes}m "
-    fi
-
-    # Determine color based on commit age and working tree status
-    if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
-      if [ "$hours" -gt 4 ]; then
-        COLOR="%{$fg[red]%}"
-      elif [ "$minutes" -gt 30 ]; then
-        COLOR="%{$fg[yellow]%}"
-      else
-        COLOR="%{$fg[white]%}"
-      fi
-    else
-      COLOR="%{$fg[white]%}"
-    fi
-
-    echo "$COLOR$commit_age%{$reset_color%}"
-  fi
-}
-
-# --- User and Host Display Helper ---
-_user_host() {
-  echo "%{$fg[yellow]%}%n%{$reset_color%} in "
-}
-
-# --- Global Return Status Indicator ---
-_return_status="%{$fg[red]%}%(?..⍉ )%{$reset_color%}"
-
-# --- Custom Prompt Definition ---
-PROMPT='$(_user_host)%{$fg[cyan]%}%~ $(git_prompt_info)%{$reset_color%}$(_git_time_since_commit)$(git_prompt_status)${_return_status}
-$(_python_venv)%B%F{yellow}λ%f%b '
-RPROMPT='%F{green}[%*]%f'
-
-###############################################################################
-# Git Prompt Customization (Theme Settings)
-###############################################################################
-
-ZSH_THEME_GIT_PROMPT_SHA_BEFORE="%{$fg[yellow]%}"
-ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[white]%}◒ "
-ZSH_THEME_GIT_PROMPT_CLEAN=" "
-ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[cyan]%}✓ "
-ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[yellow]%}△ "
-ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}✖ "
-ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[blue]%}➜ "
-ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[cyan]%}§ "
-ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[blue]%}▲ "
-
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[white]%}"
-ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM="%{$fg[yellow]%}"
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[white]%}"
+# Powerlevel10k user configuration
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
