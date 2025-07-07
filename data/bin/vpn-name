@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# Emit {"text":"VPN: <vpn names>"} or {"text":""} to hide Waybar module
+
+## 1. NetworkManager VPNs
+nm_vpns=$(nmcli -t -f NAME,TYPE connection show --active \
+          | awk -F: '$2=="vpn"{print $1}')
+if [[ -n "$nm_vpns" ]]; then
+    printf '{"text":"VPN: %s"}\n' "$nm_vpns" | tr '\n' ',' | sed 's/,$//'
+    exit 0
+fi
+
+## 2. OpenVPN CLI / systemd units
+declare -a names
+while IFS= read -r line; do
+    # Replace NULs with spaces
+    cmd=$(tr '\0' ' ' < "/proc/${line%% *}/cmdline")
+
+    if [[ $cmd =~ --config[[:space:]]+([^[:space:]]+) ]]; then
+        file="${BASH_REMATCH[1]}"
+        names+=("$(basename "${file%.*}")")
+        continue
+    fi
+
+    for word in $cmd; do
+        if [[ $word == *.ovpn || $word == *.conf ]]; then
+            names+=("$(basename "${word%.*}")")
+            break
+        fi
+    done && continue
+
+    if [[ $cmd =~ --remote[[:space:]]+([^[:space:]]+) ]]; then
+        host="${BASH_REMATCH[1]}"
+        names+=("$host")
+        continue
+    fi
+
+    names+=("OpenVPN")
+done < <(pgrep -ax openvpn)
+
+## 3. WireGuard (any implementation)
+if command -v ip >/dev/null 2>&1; then
+    # list *running* WireGuard links (state UP)
+    wg_ifaces=$(ip -brief link show up type wireguard 2>/dev/null | awk '{print $1}')
+    if [[ -n "$wg_ifaces" ]]; then
+        # collect a friendly label for each interface
+        names=()
+        for iface in $wg_ifaces; do
+            # try first peer's endpoint → "host" part; else fall back to interface name
+            if endpoint=$(wg show "$iface" endpoints 2>/dev/null \
+                            | awk 'NR==1 {print $2}'); then
+                endpoint=${endpoint%%:*}      # strip :port
+                [[ -n "$endpoint" ]] && names+=("$endpoint") || names+=("$iface")
+            else
+                names+=("$iface")
+            fi
+        done
+        printf '{"text":"VPN: %s"}\n' "$(IFS=','; echo "${names[*]}")"
+        exit 0
+    fi
+fi
+
+if (( ${#names[@]} )); then
+    printf '{"text":"VPN: %s"}\n' "$(IFS=','; echo "${names[*]}")"
+    exit 0
+fi
+
+# 3. No VPN
+echo '{"text":""}'

@@ -195,3 +195,13 @@ window#waybar.empty #window {
     color: #a9b1d6;
     background-color: @bg0;
 }
+
+#custom-vpn-name {
+    padding: 0px 6px;
+    margin-right: 5px;
+    background-color: @bg0;
+    color: @fg;
+    border-radius: 5px;
+    font-weight: normal;
+    font-size: 14px;
+}
