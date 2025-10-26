@@ -2,14 +2,12 @@
 This repository provides a template for managing dotfiles using Ansible on Arch Linux and Ubuntu. It includes a curated selection of personal applications and configurations, with sway as the default window manager. Review the list of included applications before using this template and remove any that are unnecessary for your setup.
 
 ## What's Included?
-* Window Manager: sway (default), i3, Openbox
-* Window System: Wayland (default), X11 (i3 and Openbox)
-* Bar: Waybar (default), Polybar, Tint2
+* Window Manager: sway (default), i3
+* Window System: Wayland (default), X11 (i3)
+* Bar: Waybar (default), Polybar
 * Launcher: Wofi (default), Rofi
 * Wallpaper Manager: swaybg (sway only), feh (i3 only)
-* Compositor: Compton (Openbox only)
-* System Monitor: Conky (Openbox only)
-* Terminal: foot, urxvt (i3 and Openbox)
+* Terminal: foot, urxvt (i3)
 * Shell: zsh
 * AUR Helper (Arch): trizen
 

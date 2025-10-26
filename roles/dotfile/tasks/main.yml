@@ -1,63 +1,150 @@
 ---
-- name: Define timestamp
-  set_fact:
-    current: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
+- name: Normalize dotfile paths
+  ansible.builtin.set_fact:
+    dotfile_repo_path: "{{ configs.dotfile_repo_path | expanduser }}"
+    dotfile_backup_root: "{{ configs.dotfile_backup_path | expanduser }}"
+    dotfile_home: "{{ ansible_env.HOME | default(ansible_user_dir, true) }}"
 
-- name: Define variables
-  set_fact:
-    backup_dir: "{{ configs.dotfile_backup_path }}/{{ current }}"
+- name: Define backup directory
+  ansible.builtin.set_fact:
+    dotfiles_backup_dir: "{{ dotfile_backup_root }}/{{ backup_timestamp }}"
+  vars:
+    backup_timestamp: "{{ (ansible_date_time.iso8601_basic if ansible_date_time is defined else lookup('pipe', 'date +%Y%m%d%H%M%SZ')) | regex_replace('T', '') }}"
 
-- name: Create backup directory
-  file:
-    path: "{{ backup_dir }}"
+- name: Ensure backup directory exists
+  ansible.builtin.file:
+    path: "{{ dotfiles_backup_dir }}"
     state: directory
 
-- name: Copy existing dotfiles to backup directory (Directly)
-  ignore_errors: true
-  command: cp -Lr ~/.{{ item }} {{ backup_dir }}/{{ item }}
-  with_items:
-    "{{ directly }}"
-
-- name: Copy existing dotfiles to backup directory (Partially)
-  ignore_errors: true
-  include_role:
-    name: dotfile
-    tasks_from: backup-partially
-  with_items:
-    "{{ partially }}"
+- name: Gather existing direct dotfiles
+  ansible.builtin.stat:
+    path: "{{ dotfile_home }}/.{{ item }}"
+    follow: true
+  loop: "{{ directly | default([]) }}"
   loop_control:
-    loop_var: dir
+    label: ".{{ item }}"
+  register: dotfile_direct_stats
 
-- name: Apply files directly (Directly)
-  file:
-    src: '{{ configs.dotfile_repo_path }}/data/{{ item }}'
-    dest: '~/.{{ item }}'
+- name: Backup existing direct dotfiles
+  ansible.builtin.copy:
+    src: "{{ item.stat.path }}"
+    dest: "{{ dotfiles_backup_dir }}/{{ item.item }}"
+    remote_src: true
+    follow: true
+    mode: preserve
+  loop: "{{ dotfile_direct_stats.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+  when: item.stat.exists
+
+- name: Symlink direct dotfiles into place
+  ansible.builtin.file:
+    src: "{{ dotfile_repo_path }}/data/{{ item }}"
+    dest: "{{ dotfile_home }}/.{{ item }}"
     state: link
-    force: yes
-  with_items:
-    "{{ directly }}"
-
-- name: Apply files partially (Partially)
-  include_role:
-    name: dotfile
-    tasks_from: apply-partially
-  with_items:
-    "{{ partially }}"
+    force: true
+  loop: "{{ directly | default([]) }}"
   loop_control:
-    loop_var: dir
+    label: ".{{ item }}"
 
-- git:
-    repo: 'https://github.com/tmux-plugins/tpm.git'
-    dest: ~/.tmux/plugins/tpm
-    clone: yes
+- name: Inspect repository directories for partial dotfiles
+  ansible.builtin.stat:
+    path: "{{ dotfile_repo_path }}/data/{{ item }}"
+  loop: "{{ partially | default([]) }}"
+  loop_control:
+    label: "{{ item }}"
+  register: dotfile_partial_repo_stats
 
-- name: Apply obtheme
-  become: true
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: root
-    group: root
-  with_items:
-    - {src: '{{ configs.dotfile_repo_path }}/data/themes/obtheme', dest: '/usr/share/themes/'}
-    - {src: '{{ configs.dotfile_repo_path }}/data/oblogout.conf', dest: '/etc/oblogout.conf'}
+- name: Collect existing partial dotfile repositories
+  ansible.builtin.set_fact:
+    dotfile_partial_repos: "{{ dotfile_partial_repo_stats.results | selectattr('stat.exists') | list }}"
+
+- name: Reset partial dotfile entry list
+  ansible.builtin.set_fact:
+    dotfile_partial_entries: []
+
+- name: Initialize partial repository discovery results
+  ansible.builtin.set_fact:
+    dotfile_partial_repo_results: []
+
+- name: Discover repository entries for partial dotfiles
+  ansible.builtin.find:
+    paths: "{{ item.stat.path }}"
+    file_type: any
+    recurse: false
+  loop: "{{ dotfile_partial_repos | default([]) }}"
+  loop_control:
+    label: "{{ item.item }}"
+  register: dotfile_partial_repo
+  when: (dotfile_partial_repos | default([])) | length > 0
+
+- name: Store partial repository discovery results
+  ansible.builtin.set_fact:
+    dotfile_partial_repo_results: "{{ dotfile_partial_repo.results | default([]) }}"
+  when: dotfile_partial_repo is defined
+
+- name: Ensure backup directories exist for partial dotfiles
+  ansible.builtin.file:
+    path: "{{ dotfiles_backup_dir }}/{{ item.item.item }}"
+    state: directory
+  loop: "{{ dotfile_partial_repo_results }}"
+  loop_control:
+    label: "{{ item.item.item }}"
+
+- name: Ensure partial dotfile directories exist
+  ansible.builtin.file:
+    path: "{{ dotfile_home }}/.{{ item.item.item }}"
+    state: directory
+  loop: "{{ dotfile_partial_repo_results }}"
+  loop_control:
+    label: ".{{ item.item.item }}"
+
+- name: Build list of partial dotfile entries
+  ansible.builtin.set_fact:
+    dotfile_partial_entries: "{{ (dotfile_partial_entries | default([])) + [entry] }}"
+  vars:
+    entry:
+      dir: "{{ item.0.item.item }}"
+      name: "{{ item.1.path | basename }}"
+      source: "{{ item.1.path }}"
+  loop: "{{ dotfile_partial_repo_results | subelements('files', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.item.item }}/{{ item.1.path | basename }}"
+
+- name: Gather existing partial dotfiles
+  ansible.builtin.stat:
+    path: "{{ dotfile_home }}/.{{ item.dir }}/{{ item.name }}"
+    follow: true
+  loop: "{{ dotfile_partial_entries | default([]) }}"
+  loop_control:
+    label: ".{{ item.dir }}/{{ item.name }}"
+  register: dotfile_partial_stats
+
+- name: Backup existing partial dotfiles
+  ansible.builtin.copy:
+    src: "{{ dotfile_home }}/.{{ item.item.dir }}/{{ item.item.name }}"
+    dest: "{{ dotfiles_backup_dir }}/{{ item.item.dir }}/{{ item.item.name }}"
+    remote_src: true
+    follow: true
+    mode: preserve
+  loop: "{{ dotfile_partial_stats.results }}"
+  loop_control:
+    label: "{{ item.item.dir }}/{{ item.item.name }}"
+  when: item.stat.exists
+
+- name: Symlink partial dotfiles into place
+  ansible.builtin.file:
+    src: "{{ item.source }}"
+    dest: "{{ dotfile_home }}/.{{ item.dir }}/{{ item.name }}"
+    state: link
+    force: true
+  loop: "{{ dotfile_partial_entries | default([]) }}"
+  loop_control:
+    label: ".{{ item.dir }}/{{ item.name }}"
+
+- name: Clone tmux plugin manager
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm.git
+    dest: "{{ dotfile_home }}/.tmux/plugins/tpm"
+    version: master
+    update: true

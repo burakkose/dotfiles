@@ -9,7 +9,6 @@ directly:
   - themes
   - tmux.conf
   - wgetrc
-  - wgetrc
   - xinitrc
   - Xresources
   - Xresources.d

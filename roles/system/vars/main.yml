@@ -41,31 +41,6 @@ packages:
   - zinit
 
 vm_packages:
-  openbox:
-    - openbox
-    - openbox-menu
-    - obconf
-    - obkey
-    - obmenu
-    - tint2
-    - conky
-    # duplicates with i3, find better way to handle common packages
-    - arandr
-    - brightness-controller-git
-    - cbatticon
-    - feh
-    - redshift
-    - rofi
-    - rxvt-unicode
-    - scrot
-    - urxvt-perls
-    - vlc
-    - volumeicon
-    - wmctrl
-    - xclip
-    - xorg
-    - xorg-xclipboard
-    - xorg-xinit
   i3:
     - polybar
     - i3-wm

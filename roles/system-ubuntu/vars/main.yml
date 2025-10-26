@@ -90,15 +90,10 @@ packages:
   - x11-apps
 
 vm_packages:
-  openbox:
-    - openbox
-    - obconf
-    - obkey
-    - obmenu
-    - openbox-menu
-    - tint2
   i3:
     - i3
+  sway:
+    - sway
 
 polybar_deps:
   - cmake

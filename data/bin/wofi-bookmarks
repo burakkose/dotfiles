@@ -43,7 +43,7 @@ wofi_input = "\n".join(options)
 
 # Call wofi in dmenu mode and capture the selected option
 result = subprocess.run(
-    ['wofi', '--show', 'dmenu', '--prompt', 'Select bookmark:'],
+    ['wofi', '-i', '--show', 'dmenu', '--prompt', 'Select bookmark:'],
     input=wofi_input,
     text=True,
     stdout=subprocess.PIPE

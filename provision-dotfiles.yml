@@ -1,6 +1,6 @@
 - name: Provision dotfiles
   hosts: target
-  gather_facts: false
+  gather_facts: true
   roles:
     - dotfile
   vars_files:
