@@ -3,7 +3,7 @@ packages:
   - arc-gtk-theme
   - base
   - base-devel
-  - docker
+  - podman
   - evince
   - featherpad
   - fpp-git
