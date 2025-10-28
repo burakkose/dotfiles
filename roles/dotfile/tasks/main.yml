@@ -25,6 +25,22 @@
     label: ".{{ item }}"
   register: dotfile_direct_stats
 
+- name: Ensure subdirectories exist for direct dotfiles
+  ansible.builtin.file:
+    path: "{{ dotfiles_backup_dir }}/{{ item }}"
+    state: directory
+    mode: "0700"
+  loop: >-
+    {{ dotfile_direct_stats.results
+       | selectattr('stat.exists')
+       | map(attribute='item')
+       | map('dirname')
+       | reject('equalto','.')
+       | unique
+       | list }}
+  loop_control:
+    label: "{{ item }}"
+
 - name: Backup existing direct dotfiles
   ansible.builtin.copy:
     src: "{{ item.stat.path }}"
@@ -141,6 +157,62 @@
   loop: "{{ dotfile_partial_entries | default([]) }}"
   loop_control:
     label: ".{{ item.dir }}/{{ item.name }}"
+
+# Handle custom path dotfiles
+- name: Gather existing custom dotfiles
+  ansible.builtin.stat:
+    path: "{{ dotfile_home }}/{{ item.dest }}"
+    follow: true
+  loop: "{{ custom | default([]) }}"
+  loop_control:
+    label: "{{ item.dest }}"
+  register: dotfile_custom_stats
+
+- name: Ensure subdirectories exist for custom dotfiles (backup)
+  ansible.builtin.file:
+    path: "{{ dotfiles_backup_dir }}/{{ item.dest | dirname }}"
+    state: directory
+    mode: "0700"
+  loop: "{{ custom | default([]) }}"
+  loop_control:
+    label: "{{ item.dest | dirname }}"
+  when:
+    - custom is defined
+    - item.dest | dirname != '.'
+
+- name: Ensure subdirectories exist for custom dotfiles (destination)
+  ansible.builtin.file:
+    path: "{{ dotfile_home }}/{{ item.dest | dirname }}"
+    state: directory
+    mode: "0755"
+  loop: "{{ custom | default([]) }}"
+  loop_control:
+    label: "{{ item.dest | dirname }}"
+  when:
+    - custom is defined
+    - item.dest | dirname != '.'
+
+- name: Backup existing custom dotfiles
+  ansible.builtin.copy:
+    src: "{{ dotfile_home }}/{{ item.item.dest }}"  # <-- Add dotfile_home here
+    dest: "{{ dotfiles_backup_dir }}/{{ item.item.dest }}"
+    remote_src: true
+    follow: true
+    mode: preserve
+  loop: "{{ dotfile_custom_stats.results }}"
+  loop_control:
+    label: "{{ item.item.dest }}"
+  when: item.stat.exists
+
+- name: Symlink custom dotfiles into place
+  ansible.builtin.file:
+    src: "{{ dotfile_repo_path }}/data/{{ item.src }}"
+    dest: "{{ dotfile_home }}/{{ item.dest }}"
+    state: link
+    force: true
+  loop: "{{ custom | default([]) }}"
+  loop_control:
+    label: "{{ item.dest }}"
 
 - name: Clone tmux plugin manager
   ansible.builtin.git:

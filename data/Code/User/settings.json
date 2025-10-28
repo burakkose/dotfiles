@@ -90,7 +90,7 @@
     "search.showLineNumbers": true,
     "terminal.integrated.fontFamily": "Inconsolata",
     "terminal.integrated.fontSize": 14,
-    "window.zoomLevel": 3,
+    "window.zoomLevel": 1,
     "workbench.colorTheme": "Ayu Dark Bordered",
     "workbench.editor.enablePreview": false,
     "workbench.editor.highlightModifiedTabs": true,

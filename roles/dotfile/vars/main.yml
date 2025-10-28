@@ -1,4 +1,13 @@
 ---
+# This file defines how dotfiles are symlinked from the repository to your home directory.
+# Three categories handle different symlinking strategies:
+
+# DIRECTLY: Simple 1:1 mapping with dot prefix
+# - Items are symlinked as: ~/dotfiles/data/{item} -> ~/.{item}
+# - Use for: standard dotfiles that go directly in home with a dot prefix
+# - Examples:
+#   - "zshrc" becomes ~/.zshrc
+#   - "tmux.conf" becomes ~/.tmux.conf
 directly:
   - bin
   - lib
@@ -18,5 +27,24 @@ directly:
   - work
   - vpn
 
+# PARTIALLY: Selective symlinking from directories
+# - Only specific files/subdirs within these directories are symlinked
+# - The directory itself is created, but only selected contents are linked
+# - Use for: large directories where you only want to manage specific files
+# - Example:
+#   - "config" means only files in ~/dotfiles/data/config/* are individually
+#     symlinked into ~/.config/*, not the entire directory
 partially:
   - config
+
+# CUSTOM: Full control over source and destination paths
+# - Allows non-standard path mappings (no automatic dot prefix)
+# - Use for: files that need to go somewhere other than ~/.{name}
+# - Format:
+#     src: path/in/repository (relative to ~/dotfiles/data/)
+#     dest: path/in/home (relative to ~/, no automatic dot added)
+custom:
+  - src: Code/User/settings.json
+    dest: .config/Code/User/settings.json
+  - src: Code/User/keybindings.json
+    dest: .config/Code/User/keybindings.json
