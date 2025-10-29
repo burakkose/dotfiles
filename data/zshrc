@@ -183,9 +183,9 @@ alias ....='cd ../../..'
 # Modern CLI tool replacements
 alias cat='bat --style=plain --paging=never'
 alias ls='eza --icons --group-directories-first'
-alias l='eza -lah --icons --git --group-directories-first'
-alias ll='eza -lh --icons --git --group-directories-first'
-alias la='eza -lah --icons --git --group-directories-first'
+alias l='eza -lah --git --group-directories-first'
+alias ll='eza -lh --git --group-directories-first'
+alias la='eza -lah --git --group-directories-first'
 alias lt='eza --tree --level=2 --icons'  # Tree view
 alias find='fd'
 alias grep='rg'
