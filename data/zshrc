@@ -79,6 +79,7 @@ export HADOOP_COMMON_LIB_NATIVE_DIR="$HADOOP_HOME/lib/native"
 export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"
 export DOCKER_HOST="unix:///var/run/docker.sock"
 export ELECTRON_OZONE_PLATFORM_HINT="wayland"
+export YSU_MODE=disabled
 
 # PATH – prepend dev/tooling directories but keep $PATH fallback last
 export PATH="$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:$HOME/.bin:$HOME/.toolbox/bin:$HOME/.rbenv/plugins/ruby-build/bin:$SPARK_HOME/bin:$PATH"
@@ -94,28 +95,49 @@ source /usr/share/zinit/zinit.zsh
 zinit light romkatv/powerlevel10k
 
 # --- Core UX plugins --------------------------------------------------------
-zinit ice wait'1' atload'_zsh_autosuggest_start'
+zinit ice wait'1' lucid atload'_zsh_autosuggest_start'
 zinit light zsh-users/zsh-autosuggestions
 
-zinit ice wait'1'
+zinit ice wait'1' lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
+
+zinit ice wait'1' lucid
 zinit light zsh-users/zsh-completions
+
+zinit ice wait'1' lucid
 zinit snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
+
+zinit ice wait'1' lucid
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 
 # --- Productivity helpers (silent / no prompts) ----------------------------
+zinit ice wait'2' lucid
 zinit light hcgraf/zsh-sudo
-zinit light MichaelAquilina/zsh-you-should-use  # “Use your aliases!”
-zinit light rupa/z                              # Directory jumping
-zinit light djui/alias-tips                     # Alias suggestions
+
+zinit ice wait'2' lucid
+zinit light rupa/z
+
+zinit ice wait'2' lucid
+zinit light djui/alias-tips
+
+zinit ice wait'2' lucid
 zinit light zdharma-continuum/history-search-multi-word
 
 ###############################################################################
 # 5. Completions, colours, aliases, helpers                                   #
 ###############################################################################
 
-# Completion system
-autoload -Uz compinit && compinit -u
+# Completion system - only rebuild cache once per day
+autoload -Uz compinit
+setopt EXTENDEDGLOB
+for dump in ~/.zcompdump(#qN.m+1); do
+  compinit
+  if [[ -s "$dump" && (! -s "$dump.zwc" || "$dump" -nt "$dump.zwc") ]]; then
+    zcompile "$dump"
+  fi
+done
+unsetopt EXTENDEDGLOB
+compinit -C  # -C skips security check for speed
 
 # Colour definitions for scripts
 autoload -U colors && colors
