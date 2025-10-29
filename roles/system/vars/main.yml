@@ -35,6 +35,7 @@ packages:
   - transmission-gtk
   - ttf-inconsolata
   - ttf-ms-fonts
+  - ttf-jetbrains-mono-nerd
   - unrar
   - wget
   - xarchiver
