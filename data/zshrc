@@ -4,18 +4,18 @@
 
 # Automatically jump into (or create) a tmux session called “workspace”
 # after the prompt preload is finished.
-# TMUX
-if which tmux >/dev/null 2>&1; then
-    # Use a unique session name if none is running
-    if [ -z "$TMUX" ]; then
+# TMUX - auto-start with unique sessions
+if [[ -o interactive ]] && command -v tmux >/dev/null 2>&1; then
+    if [[ -z "$TMUX" ]] && [[ -z "$VSCODE_INJECTION" ]]; then
+        # Create unique timestamped session
         SESSION_NAME="term-$(date +%Y%m%d-%H%M%S)"
-        tmux new-session -s "$SESSION_NAME"
-    fi
+        tmux new-session -s "$SESSION_NAME" 2>/dev/null
 
-    # After tmux exits, try to reattach to the last session
-    while [ -z "$TMUX" ]; do
-        tmux attach || break
-    done
+        # After any session exits, reattach to another available session
+        while [[ -z "$TMUX" ]]; do
+            tmux attach-session 2>/dev/null || break
+        done
+    fi
 fi
 
 
