@@ -3,8 +3,13 @@ packages:
   - arc-gtk-theme
   - base
   - base-devel
-  - podman
+  - bat
+  - btop
+  - duf
+  - dust
   - evince
+  - eza
+  - fd
   - featherpad
   - fpp-git
   - galculator
@@ -24,9 +29,11 @@ packages:
   - papirus-icon-theme
   - pavucontrol
   - pcmanfm-gtk3
+  - podman
   - powerline
   - powerline-fonts
   - ranger
+  - ripgrep
   - the_silver_searcher
   - thefuck
   - tig
@@ -34,8 +41,8 @@ packages:
   - tpm
   - transmission-gtk
   - ttf-inconsolata
-  - ttf-ms-fonts
   - ttf-jetbrains-mono-nerd
+  - ttf-ms-fonts
   - unrar
   - wget
   - xarchiver

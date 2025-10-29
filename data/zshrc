@@ -43,8 +43,8 @@ setopt HIST_IGNORE_DUPS  \
 
 # History file & size
 export HISTFILE="$HOME/.zsh_history"
-export HISTSIZE=10000
-export SAVEHIST=10000
+export HISTSIZE=100000
+export SAVEHIST=100000
 
 # Flush history on every command (useful inside multiple tmux panes)
 autoload -Uz add-zsh-hook
@@ -79,7 +79,6 @@ export HADOOP_COMMON_LIB_NATIVE_DIR="$HADOOP_HOME/lib/native"
 export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"
 export DOCKER_HOST="unix:///var/run/docker.sock"
 export ELECTRON_OZONE_PLATFORM_HINT="wayland"
-export YSU_MODE=disabled
 
 # PATH – prepend dev/tooling directories but keep $PATH fallback last
 export PATH="$HOME/.rbenv/bin:$HOME/bin:/usr/local/bin:$HOME/.bin:$HOME/.toolbox/bin:$HOME/.rbenv/plugins/ruby-build/bin:$SPARK_HOME/bin:$PATH"
@@ -104,24 +103,37 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit ice wait'1' lucid
 zinit light zsh-users/zsh-completions
 
-zinit ice wait'1' lucid
-zinit snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
-
-zinit ice wait'1' lucid
-zinit snippet OMZ::plugins/git/git.plugin.zsh
-
 # --- Productivity helpers (silent / no prompts) ----------------------------
-zinit ice wait'2' lucid
-zinit light hcgraf/zsh-sudo
+zinit ice wait'1' lucid from'gh-r' as'program' \
+    atload'eval "$(zoxide init zsh --cmd cd)"'
+zinit light ajeetdsouza/zoxide
+# Now use: cd <partial-name> to jump
+
+zinit ice wait lucid from'gh-r' as'program'
+zinit light junegunn/fzf
+zinit ice wait lucid
+zinit snippet https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
+# Ctrl-R = fuzzy history search
+# Ctrl-T = fuzzy file search
+# Alt-C  = fuzzy cd
+
+zinit ice wait'1' lucid
+zinit light Aloxaf/fzf-tab
+
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER == sudo\ * ]]; then
+        LBUFFER="${LBUFFER#sudo }"
+    else
+        LBUFFER="sudo $LBUFFER"
+    fi
+}
+zle -N sudo-command-line
+bindkey "\e\e" sudo-command-line  # Press ESC twice to add/remove sudo
 
 zinit ice wait'2' lucid
-zinit light rupa/z
-
-zinit ice wait'2' lucid
-zinit light djui/alias-tips
-
-zinit ice wait'2' lucid
-zinit light zdharma-continuum/history-search-multi-word
+zinit light wfxr/forgit
+# Adds: ga (interactive add), glo (interactive log), gd (interactive diff), etc.
 
 ###############################################################################
 # 5. Completions, colours, aliases, helpers                                   #
@@ -139,6 +151,22 @@ done
 unsetopt EXTENDEDGLOB
 compinit -C  # -C skips security check for speed
 
+# Better completion matching
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'  # Case insensitive
+zstyle ':completion:*' menu select                       # Visual menu
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # Colored completion
+zstyle ':completion:*' group-name ''                     # Group results
+zstyle ':completion:*:descriptions' format '[%d]'        # Group descriptions
+
+# Better directory navigation
+setopt AUTO_PUSHD           # Push directories to stack automatically
+setopt PUSHD_IGNORE_DUPS    # Don't duplicate in stack
+setopt PUSHD_MINUS          # Use cd -<n> for stack
+
+# Quick directory stack navigation
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index
+
 # Colour definitions for scripts
 autoload -U colors && colors
 
@@ -149,6 +177,19 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+# Modern CLI tool replacements
+alias cat='bat --style=plain --paging=never'
+alias ls='eza --icons --group-directories-first'
+alias l='eza -lah --icons --git --group-directories-first'
+alias ll='eza -lh --icons --git --group-directories-first'
+alias la='eza -lah --icons --git --group-directories-first'
+alias lt='eza --tree --level=2 --icons'  # Tree view
+alias find='fd'
+alias grep='rg'
+alias du='dust'
+alias df='duf'
+alias top='btop'
+
 # Git / dotfiles quick access
 alias ogit='nano $GITFOLDER'
 alias cgit='cd   $GITFOLDER'
@@ -156,12 +197,6 @@ alias cdot='cd   $DOTFILES'
 alias odot='nano $DOTFILES'
 alias cdp='cd $GITFOLDER/personal'
 alias cdt='cd $GITFOLDER/third-party'
-
-# ls shortcuts
-alias ls='ls --color=auto'
-alias l='ls -lAhF --color=auto'
-alias ll='ls -lh --color=auto'
-alias la='ls -lah --color=auto'
 
 # Convenience
 alias c='clear'
@@ -178,7 +213,6 @@ alias shutdown='sudo shutdown -h now'
 alias suspend='sudo systemctl suspend'
 
 # Misc tooling
-alias weather='curl wttr.in/Dublin'
 alias disk-usage='sudo du -h --max-depth=1 .'
 
 # JSON helpers
@@ -204,8 +238,13 @@ alias monitors='nwg-displays'
 # 6. External helpers & services                                             #
 ###############################################################################
 
-# TheFuck (command correction) – only load if installed
-command -v thefuck >/dev/null && eval "$(thefuck --alias)"
+# TheFuck (lazy-loaded) – only initialize when first used
+if command -v thefuck >/dev/null; then
+    fuck() {
+        eval "$(thefuck --alias)"
+        fuck "$@"
+    }
+fi
 
 # ssh‑agent autostart (if no agent yet running)
 if [[ -z "$SSH_AUTH_SOCK" ]] && command -v ssh-agent >/dev/null; then
