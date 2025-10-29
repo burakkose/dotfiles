@@ -56,6 +56,9 @@ add-zsh-hook preexec sync-history
 # 2. Key‑bindings                                                             #
 ###############################################################################
 
+# Ctrl+C - properly interrupt/clear line
+bindkey '^C' send-break
+
 # Word‑wise movement with Ctrl+←/→
 bindkey '^[[1;5C' forward-word   # Ctrl+Right
 bindkey '^[[1;5D' backward-word  # Ctrl+Left
@@ -227,6 +230,13 @@ alias disableipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1'
 
 # Git helpers
 alias gaa-only-modified='git ls-files --modified | xargs git add'
+alias g='git'
+alias gst='git status'
+alias ga='git add'
+alias gaa='git add --all'
+alias gcm='git commit -m'
+alias gp='git push'
+alias gl='git pull'
 
 # Other utilities
 alias proxy='proxychains4'
