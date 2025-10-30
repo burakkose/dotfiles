@@ -24,7 +24,7 @@ Encrypted files may appear post-installation. These are protected using Ansible 
 ```bash
 git clone https://github.com/burakkose/dotfiles.git
 cd dotfiles
-make install-deps-arch && make arch
+make install-deps-arch && make system-arch && make dotfiles
 ```
 
 ### Ubuntu Installation
@@ -32,7 +32,7 @@ As I primarily use Arch and not Ubuntu much these days, the Ubuntu setup will al
 ```bash
 git clone https://github.com/burakkose/dotfiles.git
 cd dotfiles
-make install-deps-ubuntu && make ubuntu
+make install-deps-ubuntu && make system-ubuntu && make dotfiles
 ```
 
 ### To provision dotfiles only:

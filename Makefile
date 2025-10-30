@@ -1,14 +1,8 @@
-arch:
-	ansible-playbook -i inventory -l target provision.yml --ask-become-pass
-
-ubuntu:
-	ansible-playbook -i inventory -l target provision-ubuntu.yml --ask-become-pass
-
 dotfiles:
 	ansible-playbook -i inventory -l target provision-dotfiles.yml --ask-become-pass
 
 system-arch:
-	ansible-playbook -i inventory -l target provision-system.yml --ask-become-pass
+	sudo ansible-playbook -i inventory -l target provision-system.yml
 
 system-ubuntu:
 	ansible-playbook -i inventory -l target provision-system-ubuntu.yml --ask-become-pass
