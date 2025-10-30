@@ -1,5 +1,5 @@
 dotfiles:
-	ansible-playbook -i inventory -l target provision-dotfiles.yml --ask-become-pass
+	ansible-playbook -i inventory -l target provision-dotfiles.yml
 
 system-arch:
 	sudo ansible-playbook -i inventory -l target provision-system.yml
