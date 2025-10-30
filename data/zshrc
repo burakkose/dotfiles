@@ -41,6 +41,8 @@ setopt HIST_IGNORE_DUPS  \
        HIST_SAVE_NO_DUPS \
        COMPLETE_ALIASES
 
+unsetopt BEEP  # Disable visual/audible bell
+
 # History file & size
 export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=100000
