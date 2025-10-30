@@ -21,7 +21,7 @@ packages:
   - jq
   - libreoffice-fresh
   - lxappearance
-  - lxinput-gtk3
+  - lxinput
   - neofetch
   - network-manager-applet
   - networkmanager-openvpn
@@ -69,7 +69,7 @@ vm_packages:
     - xorg-xclipboard
     - xorg-xinit
   sway:
-    - sway
+    - sway-git
     - brightnessctl
     - foot
     - grim
