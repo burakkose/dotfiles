@@ -19,6 +19,7 @@ system_arch_packages:
   - eza
   - fastfetch
   - fd
+  - fzf
   - htop
   - httpie
   - jq
