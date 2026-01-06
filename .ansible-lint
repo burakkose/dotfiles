@@ -1,0 +1,17 @@
+---
+profile: production
+
+exclude_paths:
+  - .git/
+  - .github/
+
+skip_list:
+  - yaml[line-length]
+
+warn_list:
+  - command-instead-of-module
+  - no-changed-when
+
+enable_list:
+  - no-same-owner
+  - yaml
