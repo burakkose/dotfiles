@@ -1,0 +1,255 @@
+---
+# =============================================================================
+# Repository Setup
+# =============================================================================
+- name: Add PPAs
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+  loop: "{{ system_ubuntu_ppa }}"
+  failed_when: false
+
+- name: Add i3 PPAs
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+  loop: "{{ system_ubuntu_ppa_i3 }}"
+  failed_when: false
+  when: configs.vm == 'i3'
+
+- name: Create keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: Download GPG keys
+  ansible.builtin.get_url:
+    url: "{{ item.key_url }}"
+    dest: "/etc/apt/keyrings/{{ item.key_file }}"
+    mode: "0644"
+  loop: "{{ system_ubuntu_repos }}"
+
+- name: Add APT repositories
+  ansible.builtin.apt_repository:
+    repo: "{{ item.repo }}"
+    filename: "{{ item.name }}"
+    state: present
+  loop: "{{ system_ubuntu_repos }}"
+
+# =============================================================================
+# System Update
+# =============================================================================
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: dist
+
+# =============================================================================
+# APT Package Installation
+# =============================================================================
+- name: Accept Microsoft fonts EULA
+  ansible.builtin.debconf:
+    name: ttf-mscorefonts-installer
+    question: msttcorefonts/accepted-mscorefonts-eula
+    value: "true"
+    vtype: select
+
+- name: Install common packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_ubuntu_packages }}"
+
+- name: Install i3 packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_ubuntu_packages_i3 }}"
+  when: configs.vm == 'i3'
+
+- name: Install sway packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_ubuntu_packages_sway }}"
+  when: configs.vm == 'sway'
+
+# =============================================================================
+# Pip Package Installation
+# =============================================================================
+- name: Install pip packages
+  ansible.builtin.pip:
+    name: "{{ system_ubuntu_packages_pip }}"
+    executable: pip3
+    state: present
+
+# =============================================================================
+# Rustup & Cargo
+# =============================================================================
+- name: Download rustup installer
+  become: false
+  ansible.builtin.get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rustup.sh
+    mode: "0755"
+
+- name: Install rustup
+  become: false
+  ansible.builtin.command:
+    cmd: /tmp/rustup.sh -y
+    creates: ~/.cargo/bin/rustup
+
+- name: Install cargo packages
+  become: false
+  ansible.builtin.command:
+    cmd: "~/.cargo/bin/cargo install {{ item.name }}"
+    creates: "~/.cargo/bin/{{ item.binary }}"
+  loop: "{{ system_ubuntu_packages_cargo }}"
+
+# =============================================================================
+# Git Repository Clones
+# =============================================================================
+- name: Clone git repositories
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    version: "{{ item.version | default('master') }}"
+    depth: 1
+    update: true
+  become: "{{ item.become | default(true) }}"
+  when: item.when is not defined or (item.when == 'sway' and configs.vm == 'sway')
+  loop: "{{ system_ubuntu_git_installs }}"
+
+# =============================================================================
+# Gruvbox GTK Theme
+# =============================================================================
+- name: Install Gruvbox GTK theme
+  ansible.builtin.command:
+    cmd: ./install.sh -t all -d /usr/share/themes
+    chdir: /tmp/gruvbox-gtk-theme/themes
+    creates: /usr/share/themes/Gruvbox-Dark
+
+# =============================================================================
+# nwg-displays (Sway)
+# =============================================================================
+- name: Install nwg-displays from source
+  ansible.builtin.pip:
+    name: /tmp/nwg-displays
+    executable: pip3
+    state: present
+  when: configs.vm == 'sway'
+
+# =============================================================================
+# swaylock-effects (Sway)
+# =============================================================================
+- name: Build and install swaylock-effects
+  when: configs.vm == 'sway'
+  block:
+    - name: Setup swaylock-effects build
+      ansible.builtin.command:
+        cmd: meson setup build
+        chdir: /tmp/swaylock-effects
+        creates: /tmp/swaylock-effects/build
+
+    - name: Build swaylock-effects
+      ansible.builtin.command:
+        cmd: ninja -C build
+        chdir: /tmp/swaylock-effects
+        creates: /tmp/swaylock-effects/build/swaylock
+
+    - name: Install swaylock-effects
+      ansible.builtin.command:
+        cmd: ninja -C build install
+        chdir: /tmp/swaylock-effects
+        creates: /usr/local/bin/swaylock
+
+# =============================================================================
+# PathPicker
+# =============================================================================
+- name: Build PathPicker deb package
+  ansible.builtin.command:
+    cmd: ./package.sh
+    chdir: /tmp/PathPicker/debian
+    creates: /tmp/PathPicker/debian/pathpicker_0.9.5_all.deb
+
+- name: Install PathPicker deb package
+  ansible.builtin.shell:
+    cmd: dpkg -i /tmp/PathPicker/debian/pathpicker_*_all.deb
+    creates: /usr/local/bin/fpp
+
+# =============================================================================
+# Fonts
+# =============================================================================
+- name: Create fonts directory
+  become: false
+  ansible.builtin.file:
+    path: ~/.local/share/fonts
+    state: directory
+    mode: "0755"
+
+- name: Download and install fonts
+  become: false
+  ansible.builtin.unarchive:
+    src: "{{ item.url }}"
+    dest: ~/.local/share/fonts
+    remote_src: true
+  loop: "{{ system_ubuntu_fonts }}"
+
+- name: Refresh font cache
+  become: false
+  ansible.builtin.command:
+    cmd: fc-cache -fv
+  changed_when: false
+
+# =============================================================================
+# Zinit
+# =============================================================================
+- name: Install zinit
+  become: false
+  ansible.builtin.shell:
+    cmd: bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+    creates: ~/.local/share/zinit
+
+# =============================================================================
+# Symlinks
+# =============================================================================
+- name: Create symlinks
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    force: true
+  loop: "{{ system_ubuntu_symlinks }}"
+
+- name: Link copy command
+  ansible.builtin.file:
+    src: "{{ (configs.vm == 'sway') | ternary('/usr/bin/wl-copy', '/usr/bin/xclip') }}"
+    dest: /usr/bin/copy
+    state: link
+    force: true
+
+# =============================================================================
+# i3-specific: urxvt-perls
+# =============================================================================
+- name: Install urxvt-perls for i3
+  when: configs.vm == 'i3'
+  block:
+    - name: Download urxvt-perls
+      become: false
+      ansible.builtin.unarchive:
+        src: https://github.com/muennich/urxvt-perls/archive/2.2.tar.gz
+        dest: /tmp
+        remote_src: true
+
+    - name: Create urxvt perl directory
+      ansible.builtin.file:
+        path: /usr/lib/urxvt/perl/
+        state: directory
+        mode: "0755"
+
+    - name: Install urxvt-perls
+      ansible.builtin.shell:
+        cmd: cp /tmp/urxvt-perls-2.2/* /usr/lib/urxvt/perl/
+        creates: /usr/lib/urxvt/perl/keyboard-select

@@ -1,0 +1,146 @@
+---
+# =============================================================================
+# Trizen (AUR Helper) Installation
+# =============================================================================
+- name: Check if trizen is installed
+  ansible.builtin.command:
+    cmd: pacman -Q trizen
+  register: system_arch_trizen_check
+  changed_when: false
+  failed_when: false
+
+- name: Install trizen from AUR
+  when:
+    - system_arch_trizen_check.rc != 0
+    - not ansible_check_mode
+  block:
+    - name: Create temporary directory for trizen
+      become: false
+      ansible.builtin.file:
+        path: /tmp/trizen-build
+        state: directory
+        mode: "0755"
+
+    - name: Download trizen package
+      become: false
+      ansible.builtin.get_url:
+        url: https://aur.archlinux.org/cgit/aur.git/snapshot/trizen.tar.gz
+        dest: /tmp/trizen-build/trizen.tar.gz
+        mode: "0644"
+
+    - name: Extract trizen package
+      become: false
+      ansible.builtin.unarchive:
+        src: /tmp/trizen-build/trizen.tar.gz
+        dest: /tmp/trizen-build
+        remote_src: true
+
+    - name: Build trizen with makepkg
+      become: false
+      ansible.builtin.command:
+        cmd: makepkg -s --noconfirm
+        chdir: /tmp/trizen-build/trizen
+      changed_when: true
+
+    - name: Find built trizen package
+      ansible.builtin.find:
+        paths: /tmp/trizen-build/trizen
+        patterns: "trizen-*.pkg.tar.*"
+      register: system_arch_trizen_pkg
+
+    - name: Install trizen package
+      community.general.pacman:
+        name: "{{ system_arch_trizen_pkg.files[0].path }}"
+        state: present
+      when: system_arch_trizen_pkg.files | length > 0
+
+    - name: Clean up temporary directory
+      ansible.builtin.file:
+        path: /tmp/trizen-build
+        state: absent
+
+# =============================================================================
+# System Update
+# =============================================================================
+- name: Upgrade the system
+  community.general.pacman:
+    update_cache: true
+    upgrade: true
+
+# =============================================================================
+# Perl (required for AUR builds)
+# =============================================================================
+- name: Install perl for AUR builds
+  community.general.pacman:
+    name: perl
+    state: present
+
+- name: Link pod2man for AUR builds
+  ansible.builtin.file:
+    src: /usr/bin/core_perl/pod2man
+    dest: /usr/bin/pod2man
+    state: link
+    force: true
+
+# =============================================================================
+# Package Installation
+# =============================================================================
+- name: Install common packages
+  ansible.builtin.command:
+    cmd: "trizen -S {{ item }} --noconfirm --needed"
+  become: false
+  register: system_arch_trizen_common
+  changed_when: "'installing' in system_arch_trizen_common.stdout or 'upgrading' in system_arch_trizen_common.stdout"
+  loop: "{{ system_arch_packages }}"
+  when: not ansible_check_mode
+
+- name: Install i3 packages
+  ansible.builtin.command:
+    cmd: "trizen -S {{ item }} --noconfirm --needed"
+  become: false
+  register: system_arch_trizen_i3
+  changed_when: "'installing' in system_arch_trizen_i3.stdout or 'upgrading' in system_arch_trizen_i3.stdout"
+  loop: "{{ system_arch_packages_i3 }}"
+  when:
+    - configs.vm == 'i3'
+    - not ansible_check_mode
+
+- name: Install sway packages
+  ansible.builtin.command:
+    cmd: "trizen -S {{ item }} --noconfirm --needed"
+  become: false
+  register: system_arch_trizen_sway
+  changed_when: "'installing' in system_arch_trizen_sway.stdout or 'upgrading' in system_arch_trizen_sway.stdout"
+  loop: "{{ system_arch_packages_sway }}"
+  when:
+    - configs.vm == 'sway'
+    - not ansible_check_mode
+
+# =============================================================================
+# Symlinks
+# =============================================================================
+- name: Create symlinks
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    force: true
+  loop: "{{ system_arch_symlinks }}"
+
+- name: Link copy command
+  ansible.builtin.file:
+    src: "{{ (configs.vm == 'sway') | ternary('/usr/bin/wl-copy', '/usr/bin/xclip') }}"
+    dest: /usr/bin/copy
+    state: link
+    force: true
+
+# =============================================================================
+# Font Configuration
+# =============================================================================
+- name: Configure fonts
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    force: true
+  loop: "{{ system_arch_fontconfig }}"

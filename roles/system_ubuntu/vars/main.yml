@@ -1,0 +1,207 @@
+---
+# =============================================================================
+# APT Repositories with GPG keys
+# =============================================================================
+system_ubuntu_repos:
+  - name: eza
+    key_url: https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
+    key_file: gierens.asc
+    repo: "deb [signed-by=/etc/apt/keyrings/gierens.asc] http://deb.gierens.de stable main"
+  - name: vscode
+    key_url: https://packages.microsoft.com/keys/microsoft.asc
+    key_file: microsoft.asc
+    repo: "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/microsoft.asc] https://packages.microsoft.com/repos/code stable main"
+
+# =============================================================================
+# PPAs
+# =============================================================================
+system_ubuntu_ppa:
+  - ppa:papirus/papirus
+  - ppa:zhangsongcui3371/fastfetch
+
+system_ubuntu_ppa_i3:
+  - ppa:apandada1/brightness-controller
+
+# =============================================================================
+# APT Packages
+# =============================================================================
+system_ubuntu_packages:
+  # Core
+  - apt-transport-https
+  - build-essential
+  - ca-certificates
+  - curl
+  - git
+  - git-core
+  - gpg
+  - openssh-server
+  - software-properties-common
+  - wget
+
+  # Modern CLI tools
+  - bat
+  - btop
+  - duf
+  - eza
+  - fastfetch
+  - fd-find
+  - htop
+  - httpie
+  - jq
+  - powerline
+  - ranger
+  - ripgrep
+  - silversearcher-ag
+  - tig
+  - tmux
+  - unrar
+
+  # Shell
+  - zsh
+
+  # GUI applications
+  - code
+  - evince
+  - featherpad
+  - galculator
+  - gsimplecal
+  - imagemagick
+  - libreoffice
+  - transmission-gtk
+  - xarchiver
+
+  # Appearance
+  - fonts-inconsolata
+  - fonts-jetbrains-mono
+  - fonts-powerline
+  - papirus-icon-theme
+  - ttf-mscorefonts-installer
+
+  # Audio
+  - pavucontrol
+  - pulseaudio
+
+  # Network
+  - network-manager-gnome
+  - network-manager-openvpn-gnome
+
+  # Container
+  - podman
+
+  # Python
+  - python3-dev
+  - python3-pip
+
+# =============================================================================
+# WM-specific APT Packages
+# =============================================================================
+system_ubuntu_packages_i3:
+  - arandr
+  - brightness-controller
+  - brightnessctl
+  - cbatticon
+  - feh
+  - i3
+  - lxappearance
+  - lxinput
+  - polybar
+  - redshift
+  - rofi
+  - rxvt-unicode-256color
+  - scrot
+  - vlc
+  - volumeicon-alsa
+  - wmctrl
+  - x11-apps
+  - xclip
+  - xinit
+  - xorg
+
+system_ubuntu_packages_sway:
+  - brightnessctl
+  - foot
+  - gammastep
+  - grim
+  - gwenview
+  - kanshi
+  - mpv
+  # - nwg-look
+  - slurp
+  - sway
+  - swaybg
+  - waybar
+  - wl-clipboard
+  - wofi
+  # nwg-displays dependencies
+  - libgtk-layer-shell0
+  - python3-gi
+  - python3-i3ipc
+  # swaylock-effects build dependencies
+  - libcairo2-dev
+  - libgdk-pixbuf-2.0-dev
+  - libpam0g-dev
+  - libpango1.0-dev
+  - libwayland-dev
+  - libxkbcommon-dev
+  - meson
+  - scdoc
+  - wayland-protocols
+
+# =============================================================================
+# Pip Packages
+# =============================================================================
+system_ubuntu_packages_pip:
+  - thefuck
+
+# =============================================================================
+# Cargo Packages
+# =============================================================================
+system_ubuntu_packages_cargo:
+  - name: du-dust
+    binary: dust
+
+# =============================================================================
+# Git-based Installs
+# =============================================================================
+system_ubuntu_git_installs:
+  - name: tpm
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+    become: false
+
+  - name: gruvbox-gtk-theme
+    repo: https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git
+    dest: /tmp/gruvbox-gtk-theme
+
+  - name: nwg-displays
+    repo: https://github.com/nwg-piotr/nwg-displays.git
+    dest: /tmp/nwg-displays
+    when: sway
+
+  - name: swaylock-effects
+    repo: https://github.com/mortie/swaylock-effects.git
+    dest: /tmp/swaylock-effects
+    when: sway
+
+  - name: PathPicker
+    repo: https://github.com/facebook/PathPicker.git
+    dest: /tmp/PathPicker
+    version: main
+
+# =============================================================================
+# Fonts
+# =============================================================================
+system_ubuntu_fonts:
+  - name: JetBrainsMono
+    url: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
+
+# =============================================================================
+# Symlinks
+# =============================================================================
+system_ubuntu_symlinks:
+  - src: /usr/bin/firefox
+    dest: /usr/bin/browser
+  - src: /usr/bin/featherpad
+    dest: /usr/bin/editor
+  - src: /usr/bin/fdfind
+    dest: /usr/local/bin/fd

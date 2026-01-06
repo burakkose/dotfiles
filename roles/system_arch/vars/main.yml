@@ -1,0 +1,127 @@
+---
+# =============================================================================
+# Pacman/AUR Packages
+# =============================================================================
+system_arch_packages:
+  # Core
+  - base
+  - base-devel
+  - curl
+  - git
+  - openssh
+  - wget
+
+  # Modern CLI tools
+  - bat
+  - btop
+  - duf
+  - dust
+  - eza
+  - fastfetch
+  - fd
+  - htop
+  - httpie
+  - jq
+  - powerline
+  - powerline-fonts
+  - ranger
+  - ripgrep
+  - the_silver_searcher
+  - thefuck
+  - tig
+  - tmux
+  - unrar
+
+  # Shell
+  - fpp-git
+  - tpm
+  - zinit
+  - zsh
+
+  # GUI applications
+  - evince
+  - featherpad
+  - galculator
+  - gsimplecal
+  - imagemagick
+  - libreoffice-fresh
+  - transmission-gtk
+  - visual-studio-code-bin
+  - xarchiver
+
+  # Appearance
+  - gruvbox-gtk-theme-git
+  - gtk3
+  - papirus-icon-theme
+  - ttf-inconsolata
+  - ttf-jetbrains-mono-nerd
+  - ttf-ms-fonts
+
+  # Audio
+  - pavucontrol
+
+  # Network
+  - network-manager-applet
+  - networkmanager-openvpn
+
+  # Container
+  - podman
+
+# =============================================================================
+# WM-specific Packages
+# =============================================================================
+system_arch_packages_i3:
+  - arandr
+  - brightness-controller-git
+  - cbatticon
+  - feh
+  - i3-wm
+  - lxappearance
+  - lxinput
+  - polybar
+  - redshift
+  - rofi
+  - rxvt-unicode
+  - scrot
+  - urxvt-perls
+  - vlc
+  - volumeicon
+  - wmctrl
+  - xclip
+  - xorg
+  - xorg-xclipboard
+  - xorg-xinit
+
+system_arch_packages_sway:
+  - brightnessctl
+  - foot
+  - gammastep
+  - grim
+  - gwenview
+  - kanshi
+  - mpv
+  - nwg-displays
+  - nwg-look
+  - slurp
+  - sway
+  - swaybg
+  - swaylock-effects
+  - waybar
+  - wl-clipboard
+  - wofi
+
+# =============================================================================
+# Symlinks
+# =============================================================================
+system_arch_symlinks:
+  - src: /usr/bin/firefox
+    dest: /usr/bin/browser
+  - src: /usr/bin/featherpad
+    dest: /usr/bin/editor
+
+# =============================================================================
+# Font Configuration
+# =============================================================================
+system_arch_fontconfig:
+  - src: /usr/share/fontconfig/conf.avail/10-hinting-full.conf
+    dest: /etc/fonts/conf.d/10-hinting-full.conf

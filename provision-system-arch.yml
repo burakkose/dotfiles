@@ -1,9 +1,9 @@
+---
 - name: Provision Arch system
-  become: yes
+  become: true
   hosts: target
   gather_facts: false
   roles:
-    - trizen
-    - system
+    - system_arch
   vars_files:
     - vars/config.yml

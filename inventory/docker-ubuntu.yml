@@ -1,0 +1,7 @@
+all:
+  hosts:
+    target:
+      ansible_host: dotfiles-ubuntu-test
+      ansible_connection: containers.podman.podman
+      ansible_python_interpreter: /usr/bin/python3
+      ansible_user: testuser

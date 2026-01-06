@@ -3,31 +3,33 @@
   ansible.builtin.set_fact:
     dotfile_repo_path: "{{ configs.dotfile_repo_path | expanduser }}"
     dotfile_backup_root: "{{ configs.dotfile_backup_path | expanduser }}"
-    dotfile_home: "{{ ansible_env.HOME | default(ansible_user_dir, true) }}"
+    dotfile_home: "{{ ansible_facts['user_dir'] }}"
 
 - name: Define backup directory
   ansible.builtin.set_fact:
-    dotfiles_backup_dir: "{{ dotfile_backup_root }}/{{ backup_timestamp }}"
+    dotfile_backup_dir: "{{ dotfile_backup_root }}/{{ backup_timestamp }}"
   vars:
-    backup_timestamp: "{{ (ansible_date_time.iso8601_basic if ansible_date_time is defined else lookup('pipe', 'date +%Y%m%d%H%M%SZ')) | regex_replace('T', '') }}"
+    backup_timestamp: "{{ (ansible_facts['date_time']['iso8601_basic'] if ansible_facts['date_time'] is defined else lookup('pipe', 'date +%Y%m%d%H%M%SZ')) | regex_replace('T', '') }}"
 
 - name: Ensure backup directory exists
   ansible.builtin.file:
-    path: "{{ dotfiles_backup_dir }}"
+    path: "{{ dotfile_backup_dir }}"
     state: directory
+    mode: "0755"
+  check_mode: false
 
 - name: Gather existing direct dotfiles
   ansible.builtin.stat:
     path: "{{ dotfile_home }}/.{{ item }}"
     follow: true
-  loop: "{{ directly | default([]) }}"
+  loop: "{{ dotfile_directly | default([]) }}"
   loop_control:
     label: ".{{ item }}"
   register: dotfile_direct_stats
 
 - name: Ensure subdirectories exist for direct dotfiles
   ansible.builtin.file:
-    path: "{{ dotfiles_backup_dir }}/{{ item }}"
+    path: "{{ dotfile_backup_dir }}/{{ item }}"
     state: directory
     mode: "0700"
   loop: >-
@@ -40,11 +42,12 @@
        | list }}
   loop_control:
     label: "{{ item }}"
+  check_mode: false
 
 - name: Backup existing direct dotfiles
   ansible.builtin.copy:
     src: "{{ item.stat.path }}"
-    dest: "{{ dotfiles_backup_dir }}/{{ item.item }}"
+    dest: "{{ dotfile_backup_dir }}/{{ item.item }}"
     remote_src: true
     follow: true
     mode: preserve
@@ -59,14 +62,14 @@
     dest: "{{ dotfile_home }}/.{{ item }}"
     state: link
     force: true
-  loop: "{{ directly | default([]) }}"
+  loop: "{{ dotfile_directly | default([]) }}"
   loop_control:
     label: ".{{ item }}"
 
 - name: Inspect repository directories for partial dotfiles
   ansible.builtin.stat:
     path: "{{ dotfile_repo_path }}/data/{{ item }}"
-  loop: "{{ partially | default([]) }}"
+  loop: "{{ dotfile_partially | default([]) }}"
   loop_control:
     label: "{{ item }}"
   register: dotfile_partial_repo_stats
@@ -101,16 +104,19 @@
 
 - name: Ensure backup directories exist for partial dotfiles
   ansible.builtin.file:
-    path: "{{ dotfiles_backup_dir }}/{{ item.item.item }}"
+    path: "{{ dotfile_backup_dir }}/{{ item.item.item }}"
     state: directory
+    mode: "0700"
   loop: "{{ dotfile_partial_repo_results }}"
   loop_control:
     label: "{{ item.item.item }}"
+  check_mode: false
 
 - name: Ensure partial dotfile directories exist
   ansible.builtin.file:
     path: "{{ dotfile_home }}/.{{ item.item.item }}"
     state: directory
+    mode: "0755"
   loop: "{{ dotfile_partial_repo_results }}"
   loop_control:
     label: ".{{ item.item.item }}"
@@ -139,7 +145,7 @@
 - name: Backup existing partial dotfiles
   ansible.builtin.copy:
     src: "{{ dotfile_home }}/.{{ item.item.dir }}/{{ item.item.name }}"
-    dest: "{{ dotfiles_backup_dir }}/{{ item.item.dir }}/{{ item.item.name }}"
+    dest: "{{ dotfile_backup_dir }}/{{ item.item.dir }}/{{ item.item.name }}"
     remote_src: true
     follow: true
     mode: preserve
@@ -163,39 +169,40 @@
   ansible.builtin.stat:
     path: "{{ dotfile_home }}/{{ item.dest }}"
     follow: true
-  loop: "{{ custom | default([]) }}"
+  loop: "{{ dotfile_custom | default([]) }}"
   loop_control:
     label: "{{ item.dest }}"
   register: dotfile_custom_stats
 
 - name: Ensure subdirectories exist for custom dotfiles (backup)
   ansible.builtin.file:
-    path: "{{ dotfiles_backup_dir }}/{{ item.dest | dirname }}"
+    path: "{{ dotfile_backup_dir }}/{{ item.dest | dirname }}"
     state: directory
     mode: "0700"
-  loop: "{{ custom | default([]) }}"
+  loop: "{{ dotfile_custom | default([]) }}"
   loop_control:
     label: "{{ item.dest | dirname }}"
   when:
-    - custom is defined
+    - dotfile_custom is defined
     - item.dest | dirname != '.'
+  check_mode: false
 
 - name: Ensure subdirectories exist for custom dotfiles (destination)
   ansible.builtin.file:
     path: "{{ dotfile_home }}/{{ item.dest | dirname }}"
     state: directory
     mode: "0755"
-  loop: "{{ custom | default([]) }}"
+  loop: "{{ dotfile_custom | default([]) }}"
   loop_control:
     label: "{{ item.dest | dirname }}"
   when:
-    - custom is defined
+    - dotfile_custom is defined
     - item.dest | dirname != '.'
 
 - name: Backup existing custom dotfiles
   ansible.builtin.copy:
     src: "{{ dotfile_home }}/{{ item.item.dest }}"  # <-- Add dotfile_home here
-    dest: "{{ dotfiles_backup_dir }}/{{ item.item.dest }}"
+    dest: "{{ dotfile_backup_dir }}/{{ item.item.dest }}"
     remote_src: true
     follow: true
     mode: preserve
@@ -210,7 +217,7 @@
     dest: "{{ dotfile_home }}/{{ item.dest }}"
     state: link
     force: true
-  loop: "{{ custom | default([]) }}"
+  loop: "{{ dotfile_custom | default([]) }}"
   loop_control:
     label: "{{ item.dest }}"
 

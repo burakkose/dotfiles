@@ -1,12 +1,12 @@
+---
 - name: Decrypt files
-  become: no
+  become: false
   hosts: target
   gather_facts: false
-  tasks:
-    - name: Join file paths
-      set_fact:
-          f: " {{files | join(' ') }} "
-    - name: Encrypt
-      command: ansible-vault decrypt {{ f.strip() }}
   vars_files:
     - vars/vault.yml
+  tasks:
+    - name: Decrypt vault files
+      ansible.builtin.command:
+        cmd: ansible-vault decrypt {{ files | join(' ') }}
+      changed_when: true

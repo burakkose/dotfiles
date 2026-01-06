@@ -1,0 +1,25 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-apt \
+    python3-pip \
+    sudo \
+    software-properties-common \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create test user with sudo access
+RUN useradd -m -s /bin/bash testuser \
+    && echo "testuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Copy dotfiles repo
+COPY --chown=testuser:testuser . /home/testuser/dotfiles
+
+USER testuser
+WORKDIR /home/testuser
+
+CMD ["sleep", "infinity"]

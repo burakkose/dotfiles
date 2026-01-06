@@ -1,0 +1,20 @@
+FROM archlinux:latest
+
+RUN pacman -Syu --noconfirm && pacman -S --noconfirm \
+    python \
+    sudo \
+    git \
+    base-devel \
+    && pacman -Scc --noconfirm
+
+# Create test user with sudo access
+RUN useradd -m -s /bin/bash testuser \
+    && echo "testuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Copy dotfiles repo
+COPY --chown=testuser:testuser . /home/testuser/dotfiles
+
+USER testuser
+WORKDIR /home/testuser
+
+CMD ["sleep", "infinity"]

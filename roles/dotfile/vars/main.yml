@@ -8,7 +8,7 @@
 # - Examples:
 #   - "zshrc" becomes ~/.zshrc
 #   - "tmux.conf" becomes ~/.tmux.conf
-directly:
+dotfile_directly:
   - bin
   - lib
   - gtkrc-2.0
@@ -34,7 +34,7 @@ directly:
 # - Example:
 #   - "config" means only files in ~/dotfiles/data/config/* are individually
 #     symlinked into ~/.config/*, not the entire directory
-partially:
+dotfile_partially:
   - config
 
 # CUSTOM: Full control over source and destination paths
@@ -43,7 +43,7 @@ partially:
 # - Format:
 #     src: path/in/repository (relative to ~/dotfiles/data/)
 #     dest: path/in/home (relative to ~/, no automatic dot added)
-custom:
+dotfile_custom:
   - src: Code/User/settings.json
     dest: .config/Code/User/settings.json
   - src: Code/User/keybindings.json
