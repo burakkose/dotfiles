@@ -50,6 +50,12 @@
     remote_src: yes
     mode: "0755"
 
+- name: Install copy command
+  copy:
+    src: "{{ playbook_dir }}/data/bin/copy"
+    dest: /usr/local/bin/copy
+    mode: "0755"
+
 - name: Ensure mapped command aliases exist
   file:
     src: "{{ item.src }}"

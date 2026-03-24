@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -gt 0 ]]; then
+  payload="$*"
+else
+  payload="$(cat)"
+fi
+
+if command -v tmux >/dev/null 2>&1 && [[ -n "${TMUX:-}" ]]; then
+  # -w asks tmux to forward the buffer to the terminal clipboard when
+  # set-clipboard is enabled.
+  printf '%s' "$payload" | tmux load-buffer -w -
+  exit 0
+fi
+
+encoded="$(printf '%s' "$payload" | base64 | tr -d '\n')"
+osc52=$'\033]52;c;'"${encoded}"$'\a'
+
+if [[ -w /dev/tty ]]; then
+  printf '%s' "$osc52" > /dev/tty
+else
+  printf '%s' "$osc52"
+fi
