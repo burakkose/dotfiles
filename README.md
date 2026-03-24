@@ -35,6 +35,14 @@ cd dotfiles
 make install-deps-ubuntu && make system-ubuntu && make dotfiles
 ```
 
+### Ubuntu Server Installation
+This target installs the non-graphical CLI/tooling subset of the Arch package set on Ubuntu Server. It intentionally excludes Wayland, X11, window managers, launchers, bars, and other GUI packages.
+```bash
+git clone https://github.com/burakkose/dotfiles.git
+cd dotfiles
+make install-deps-ubuntu && make system-ubuntu-server && make dotfiles
+```
+
 ### To provision dotfiles only:
 ```bash
 make dotfiles

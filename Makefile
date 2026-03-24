@@ -1,4 +1,4 @@
-.PHONY: dotfiles system-arch system-ubuntu decrypt encrypt lint \
+.PHONY: dotfiles system-arch system-ubuntu system-ubuntu-server decrypt encrypt lint \
         check check-system-arch check-system-ubuntu \
         install-deps-arch install-deps-ubuntu \
         container-arch-build container-arch-start container-arch-stop container-arch-test container-arch-shell container-arch-clean \
@@ -16,6 +16,9 @@ system-arch:
 
 system-ubuntu:
 	sudo $(PLAYBOOK) provision-system-ubuntu.yml
+
+system-ubuntu-server:
+	sudo $(PLAYBOOK) provision-system-ubuntu-server.yml
 
 decrypt:
 	$(PLAYBOOK) decrypt.yml

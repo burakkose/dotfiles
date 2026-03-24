@@ -1,0 +1,8 @@
+- name: Provision Ubuntu server system
+  become: yes
+  hosts: target
+  gather_facts: false
+  roles:
+    - system-ubuntu-server
+  vars_files:
+    - vars/config.yml

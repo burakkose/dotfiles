@@ -1,0 +1,59 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Upgrade installed packages
+  apt:
+    upgrade: dist
+
+- name: Install bootstrap packages
+  apt:
+    name: "{{ ubuntu_bootstrap_packages }}"
+    state: present
+
+- name: Install Ubuntu packages
+  apt:
+    name: "{{ ubuntu_cli_apt_packages }}"
+    state: present
+
+- name: Install upstream deb packages
+  apt:
+    deb: "{{ item.url }}"
+    state: present
+  loop: "{{ ubuntu_cli_deb_packages }}"
+  register: ubuntu_cli_deb_install
+  failed_when:
+    - ubuntu_cli_deb_install is failed
+    - "'A later version is already installed' not in (ubuntu_cli_deb_install.msg | default(''))"
+
+- name: Install git-backed packages
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    version: "{{ item.version }}"
+    update: yes
+  become: "{{ item.become | default(false) }}"
+  become_user: "{{ configs.user if not (item.become | default(false)) else omit }}"
+  loop: "{{ ubuntu_cli_git_repos }}"
+
+- name: Set zsh as default shell
+  user:
+    name: "{{ configs.user }}"
+    shell: /usr/bin/zsh
+
+- name: Install PathPicker executable
+  copy:
+    src: /opt/PathPicker/fpp
+    dest: /usr/local/bin/fpp
+    remote_src: yes
+    mode: "0755"
+
+- name: Ensure mapped command aliases exist
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    force: yes
+  loop: "{{ ubuntu_cli_links }}"

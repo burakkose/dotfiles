@@ -1,0 +1,104 @@
+---
+# Canonical CLI/server tool set for Ubuntu server provisioning.
+cli_tool_packages:
+  - base
+  - base-devel
+  - bat
+  - btop
+  - duf
+  - dust
+  - eza
+  - fd
+  - fpp-git
+  - htop
+  - httpie
+  - imagemagick
+  - jq
+  - neofetch
+  - openssh
+  - podman
+  - powerline
+  - powerline-fonts
+  - ranger
+  - ripgrep
+  - the_silver_searcher
+  - thefuck
+  - tig
+  - tmux
+  - tpm
+  - ttf-inconsolata
+  - ttf-jetbrains-mono-nerd
+  - ttf-ms-fonts
+  - unrar
+  - wget
+  - zinit
+
+# Ubuntu-specific packages required to install the server tool set.
+ubuntu_bootstrap_packages:
+  - ca-certificates
+  - curl
+  - git
+  - python3-pip
+
+# Native Ubuntu packages for the server tool set.
+ubuntu_cli_apt_packages:
+  - build-essential
+  - bat
+  - btop
+  - duf
+  - eza
+  - fd-find
+  - htop
+  - httpie
+  - imagemagick
+  - jq
+  - openssh-server
+  - podman
+  - powerline
+  - fonts-powerline
+  - ranger
+  - ripgrep
+  - silversearcher-ag
+  - thefuck
+  - tig
+  - tmux
+  - fonts-inconsolata
+  - fonts-jetbrains-mono
+  - ttf-mscorefonts-installer
+  - unrar
+  - wget
+  - zsh
+
+ubuntu_cli_deb_packages:
+  - name: dust
+    url: https://github.com/bootandy/dust/releases/download/v1.1.1/du-dust_1.1.1-1_amd64.deb
+
+ubuntu_cli_git_repos:
+  - name: zinit
+    repo: https://github.com/zdharma-continuum/zinit.git
+    dest: /usr/share/zinit
+    version: main
+    become: true
+  - name: neofetch
+    repo: https://github.com/dylanaraps/neofetch.git
+    dest: /opt/neofetch
+    version: master
+    become: true
+  - name: fpp
+    repo: https://github.com/facebook/PathPicker.git
+    dest: /opt/PathPicker
+    version: master
+    become: true
+  - name: tpm
+    repo: https://github.com/tmux-plugins/tpm.git
+    dest: "/home/{{ configs.user }}/.tmux/plugins/tpm"
+    version: master
+    become: false
+
+ubuntu_cli_links:
+  - src: /usr/bin/fdfind
+    dest: /usr/local/bin/fd
+  - src: /opt/neofetch/neofetch
+    dest: /usr/local/bin/neofetch
+  - src: /opt/PathPicker/fpp
+    dest: /usr/local/bin/fpp
