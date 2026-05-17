@@ -56,11 +56,15 @@ system_arch_packages_desktop:
   # Appearance
   - gruvbox-gtk-theme-git
   - gtk3
+  - inter-font
+  - otf-font-awesome
   - papirus-icon-theme
   - powerline-fonts
+  - siji-git
   - ttf-inconsolata
   - ttf-jetbrains-mono-nerd
   - ttf-ms-fonts
+  - ttf-symbola
 
   # Audio
   - pavucontrol

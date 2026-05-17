@@ -246,21 +246,36 @@
   loop: "{{ system_ubuntu_fonts }}"
   when: system_ubuntu_profile != 'server'
 
+- name: Install Powerline fonts from source
+  become: false
+  ansible.builtin.command:
+    cmd: ./install.sh
+    chdir: ~/.local/src/powerline-fonts
+    creates: ~/.local/share/fonts/Inconsolata for Powerline.otf
+  when: system_ubuntu_profile != 'server'
+
+- name: Install Siji font
+  become: false
+  ansible.builtin.copy:
+    src: ~/.local/src/siji/pcf/siji.pcf
+    dest: ~/.local/share/fonts/siji.pcf
+    remote_src: true
+    mode: "0644"
+  when: system_ubuntu_profile != 'server'
+
+- name: Generate bitmap font index
+  become: false
+  ansible.builtin.command:
+    cmd: mkfontdir ~/.local/share/fonts
+  changed_when: false
+  when: system_ubuntu_profile != 'server'
+
 - name: Refresh font cache
   become: false
   ansible.builtin.command:
     cmd: fc-cache -fv
   changed_when: false
   when: system_ubuntu_profile != 'server'
-
-# =============================================================================
-# Zinit
-# =============================================================================
-- name: Install zinit
-  become: false
-  ansible.builtin.shell:
-    cmd: bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
-    creates: ~/.local/share/zinit
 
 # =============================================================================
 # Symlinks

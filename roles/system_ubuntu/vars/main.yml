@@ -89,11 +89,15 @@ system_ubuntu_packages_desktop:
   - xarchiver
 
   # Appearance
+  - fonts-font-awesome
   - fonts-inconsolata
+  - fonts-inter
   - fonts-jetbrains-mono
   - fonts-powerline
+  - fonts-symbola
   - papirus-icon-theme
   - ttf-mscorefonts-installer
+  - xfonts-utils
 
   # Audio
   - pavucontrol
@@ -173,10 +177,27 @@ system_ubuntu_packages_cargo:
 # Git-based Installs
 # =============================================================================
 system_ubuntu_git_installs:
+  - name: zinit
+    repo: https://github.com/zdharma-continuum/zinit.git
+    dest: /usr/share/zinit
+    version: main
+
   - name: tpm
     repo: https://github.com/tmux-plugins/tpm
     dest: ~/.tmux/plugins/tpm
     become: false
+
+  - name: powerline-fonts
+    repo: https://github.com/powerline/fonts.git
+    dest: ~/.local/src/powerline-fonts
+    become: false
+    when: desktop
+
+  - name: siji
+    repo: https://github.com/stark/siji.git
+    dest: ~/.local/src/siji
+    become: false
+    when: desktop
 
   - name: gruvbox-gtk-theme
     repo: https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git
