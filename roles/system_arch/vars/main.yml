@@ -24,7 +24,6 @@ system_arch_packages:
   - httpie
   - jq
   - powerline
-  - powerline-fonts
   - ranger
   - ripgrep
   - the_silver_searcher
@@ -39,6 +38,10 @@ system_arch_packages:
   - zinit
   - zsh
 
+  # Container
+  - podman
+
+system_arch_packages_desktop:
   # GUI applications
   - evince
   - featherpad
@@ -54,19 +57,18 @@ system_arch_packages:
   - gruvbox-gtk-theme-git
   - gtk3
   - papirus-icon-theme
+  - powerline-fonts
   - ttf-inconsolata
   - ttf-jetbrains-mono-nerd
   - ttf-ms-fonts
 
   # Audio
   - pavucontrol
+  - pulseaudio
 
   # Network
   - network-manager-applet
   - networkmanager-openvpn
-
-  # Container
-  - podman
 
 # =============================================================================
 # WM-specific Packages
@@ -74,6 +76,7 @@ system_arch_packages:
 system_arch_packages_i3:
   - arandr
   - brightness-controller-git
+  - brightnessctl
   - cbatticon
   - feh
   - i3-wm
@@ -90,7 +93,6 @@ system_arch_packages_i3:
   - wmctrl
   - xclip
   - xorg
-  - xorg-xclipboard
   - xorg-xinit
 
 system_arch_packages_sway:
@@ -102,7 +104,6 @@ system_arch_packages_sway:
   - kanshi
   - mpv
   - nwg-displays
-  - nwg-look
   - slurp
   - sway
   - swaybg
@@ -114,7 +115,9 @@ system_arch_packages_sway:
 # =============================================================================
 # Symlinks
 # =============================================================================
-system_arch_symlinks:
+system_arch_symlinks: []
+
+system_arch_symlinks_desktop:
   - src: /usr/bin/firefox
     dest: /usr/bin/browser
   - src: /usr/bin/featherpad

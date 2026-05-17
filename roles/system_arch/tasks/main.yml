@@ -1,4 +1,14 @@
 ---
+- name: Resolve system profile
+  ansible.builtin.set_fact:
+    system_arch_profile: "{{ system_profile | default(configs.vm | default('sway')) }}"
+
+- name: Validate system profile
+  ansible.builtin.assert:
+    that:
+      - system_arch_profile in ['server', 'i3', 'sway']
+    fail_msg: "system_profile or configs.vm must be one of: server, i3, sway"
+
 # =============================================================================
 # Trizen (AUR Helper) Installation
 # =============================================================================
@@ -94,6 +104,17 @@
   loop: "{{ system_arch_packages }}"
   when: not ansible_check_mode
 
+- name: Install desktop packages
+  ansible.builtin.command:
+    cmd: "trizen -S {{ item }} --noconfirm --needed"
+  become: false
+  register: system_arch_trizen_desktop
+  changed_when: "'installing' in system_arch_trizen_desktop.stdout or 'upgrading' in system_arch_trizen_desktop.stdout"
+  loop: "{{ system_arch_packages_desktop }}"
+  when:
+    - system_arch_profile != 'server'
+    - not ansible_check_mode
+
 - name: Install i3 packages
   ansible.builtin.command:
     cmd: "trizen -S {{ item }} --noconfirm --needed"
@@ -102,7 +123,7 @@
   changed_when: "'installing' in system_arch_trizen_i3.stdout or 'upgrading' in system_arch_trizen_i3.stdout"
   loop: "{{ system_arch_packages_i3 }}"
   when:
-    - configs.vm == 'i3'
+    - system_arch_profile == 'i3'
     - not ansible_check_mode
 
 - name: Install sway packages
@@ -113,13 +134,13 @@
   changed_when: "'installing' in system_arch_trizen_sway.stdout or 'upgrading' in system_arch_trizen_sway.stdout"
   loop: "{{ system_arch_packages_sway }}"
   when:
-    - configs.vm == 'sway'
+    - system_arch_profile == 'sway'
     - not ansible_check_mode
 
 # =============================================================================
 # Symlinks
 # =============================================================================
-- name: Create symlinks
+- name: Create common symlinks
   ansible.builtin.file:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -127,12 +148,22 @@
     force: true
   loop: "{{ system_arch_symlinks }}"
 
+- name: Create desktop symlinks
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    force: true
+  loop: "{{ system_arch_symlinks_desktop }}"
+  when: system_arch_profile != 'server'
+
 - name: Link copy command
   ansible.builtin.file:
-    src: "{{ (configs.vm == 'sway') | ternary('/usr/bin/wl-copy', '/usr/bin/xclip') }}"
+    src: "{{ (system_arch_profile == 'sway') | ternary('/usr/bin/wl-copy', '/usr/bin/xclip') }}"
     dest: /usr/bin/copy
     state: link
     force: true
+  when: system_arch_profile != 'server'
 
 # =============================================================================
 # Font Configuration
@@ -144,3 +175,4 @@
     state: link
     force: true
   loop: "{{ system_arch_fontconfig }}"
+  when: system_arch_profile != 'server'

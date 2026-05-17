@@ -1,19 +1,46 @@
 ---
+- name: Resolve system profile
+  ansible.builtin.set_fact:
+    system_ubuntu_profile: "{{ system_profile | default(configs.vm | default('sway')) }}"
+
+- name: Validate system profile
+  ansible.builtin.assert:
+    that:
+      - system_ubuntu_profile in ['server', 'i3', 'sway']
+    fail_msg: "system_profile or configs.vm must be one of: server, i3, sway"
+
+- name: Resolve active APT repositories
+  ansible.builtin.set_fact:
+    system_ubuntu_active_repos: "{{ system_ubuntu_repos + (system_ubuntu_repos_desktop if system_ubuntu_profile != 'server' else []) }}"
+
 # =============================================================================
 # Repository Setup
 # =============================================================================
+- name: Install APT repository prerequisites
+  ansible.builtin.apt:
+    name: "{{ system_ubuntu_repository_prerequisites }}"
+    state: present
+    update_cache: true
+
 - name: Add PPAs
   ansible.builtin.apt_repository:
     repo: "{{ item }}"
   loop: "{{ system_ubuntu_ppa }}"
   failed_when: false
 
+- name: Add desktop PPAs
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+  loop: "{{ system_ubuntu_ppa_desktop }}"
+  failed_when: false
+  when: system_ubuntu_profile != 'server'
+
 - name: Add i3 PPAs
   ansible.builtin.apt_repository:
     repo: "{{ item }}"
   loop: "{{ system_ubuntu_ppa_i3 }}"
   failed_when: false
-  when: configs.vm == 'i3'
+  when: system_ubuntu_profile == 'i3'
 
 - name: Create keyrings directory
   ansible.builtin.file:
@@ -26,14 +53,14 @@
     url: "{{ item.key_url }}"
     dest: "/etc/apt/keyrings/{{ item.key_file }}"
     mode: "0644"
-  loop: "{{ system_ubuntu_repos }}"
+  loop: "{{ system_ubuntu_active_repos }}"
 
 - name: Add APT repositories
   ansible.builtin.apt_repository:
     repo: "{{ item.repo }}"
     filename: "{{ item.name }}"
     state: present
-  loop: "{{ system_ubuntu_repos }}"
+  loop: "{{ system_ubuntu_active_repos }}"
 
 # =============================================================================
 # System Update
@@ -55,6 +82,7 @@
     question: msttcorefonts/accepted-mscorefonts-eula
     value: "true"
     vtype: select
+  when: system_ubuntu_profile != 'server'
 
 - name: Install common packages
   ansible.builtin.apt:
@@ -62,19 +90,26 @@
     state: present
   loop: "{{ system_ubuntu_packages }}"
 
+- name: Install desktop packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_ubuntu_packages_desktop }}"
+  when: system_ubuntu_profile != 'server'
+
 - name: Install i3 packages
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   loop: "{{ system_ubuntu_packages_i3 }}"
-  when: configs.vm == 'i3'
+  when: system_ubuntu_profile == 'i3'
 
 - name: Install sway packages
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   loop: "{{ system_ubuntu_packages_sway }}"
-  when: configs.vm == 'sway'
+  when: system_ubuntu_profile == 'sway'
 
 # =============================================================================
 # Pip Package Installation
@@ -119,7 +154,7 @@
     depth: 1
     update: true
   become: "{{ item.become | default(true) }}"
-  when: item.when is not defined or (item.when == 'sway' and configs.vm == 'sway')
+  when: item.when is not defined or item.when == system_ubuntu_profile or (item.when == 'desktop' and system_ubuntu_profile != 'server')
   loop: "{{ system_ubuntu_git_installs }}"
 
 # =============================================================================
@@ -130,6 +165,7 @@
     cmd: ./install.sh -t all -d /usr/share/themes
     chdir: /tmp/gruvbox-gtk-theme/themes
     creates: /usr/share/themes/Gruvbox-Dark
+  when: system_ubuntu_profile != 'server'
 
 # =============================================================================
 # nwg-displays (Sway)
@@ -139,13 +175,13 @@
     name: /tmp/nwg-displays
     executable: pip3
     state: present
-  when: configs.vm == 'sway'
+  when: system_ubuntu_profile == 'sway'
 
 # =============================================================================
 # swaylock-effects (Sway)
 # =============================================================================
 - name: Build and install swaylock-effects
-  when: configs.vm == 'sway'
+  when: system_ubuntu_profile == 'sway'
   block:
     - name: Setup swaylock-effects build
       ansible.builtin.command:
@@ -172,12 +208,23 @@
   ansible.builtin.command:
     cmd: ./package.sh
     chdir: /tmp/PathPicker/debian
-    creates: /tmp/PathPicker/debian/pathpicker_0.9.5_all.deb
+    creates: /tmp/PathPicker/pathpicker_0.9.5_all.deb
+
+- name: Find PathPicker deb package
+  ansible.builtin.find:
+    paths: /tmp/PathPicker
+    patterns: "pathpicker_*_all.deb"
+  register: system_ubuntu_pathpicker_deb
+
+- name: Validate PathPicker deb package exists
+  ansible.builtin.assert:
+    that:
+      - system_ubuntu_pathpicker_deb.files | length > 0
+    fail_msg: "PathPicker package.sh did not create a pathpicker deb package in /tmp/PathPicker"
 
 - name: Install PathPicker deb package
-  ansible.builtin.shell:
-    cmd: dpkg -i /tmp/PathPicker/debian/pathpicker_*_all.deb
-    creates: /usr/local/bin/fpp
+  ansible.builtin.apt:
+    deb: "{{ system_ubuntu_pathpicker_deb.files[0].path }}"
 
 # =============================================================================
 # Fonts
@@ -188,6 +235,7 @@
     path: ~/.local/share/fonts
     state: directory
     mode: "0755"
+  when: system_ubuntu_profile != 'server'
 
 - name: Download and install fonts
   become: false
@@ -196,12 +244,14 @@
     dest: ~/.local/share/fonts
     remote_src: true
   loop: "{{ system_ubuntu_fonts }}"
+  when: system_ubuntu_profile != 'server'
 
 - name: Refresh font cache
   become: false
   ansible.builtin.command:
     cmd: fc-cache -fv
   changed_when: false
+  when: system_ubuntu_profile != 'server'
 
 # =============================================================================
 # Zinit
@@ -215,7 +265,7 @@
 # =============================================================================
 # Symlinks
 # =============================================================================
-- name: Create symlinks
+- name: Create common symlinks
   ansible.builtin.file:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -223,18 +273,28 @@
     force: true
   loop: "{{ system_ubuntu_symlinks }}"
 
+- name: Create desktop symlinks
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    force: true
+  loop: "{{ system_ubuntu_symlinks_desktop }}"
+  when: system_ubuntu_profile != 'server'
+
 - name: Link copy command
   ansible.builtin.file:
-    src: "{{ (configs.vm == 'sway') | ternary('/usr/bin/wl-copy', '/usr/bin/xclip') }}"
+    src: "{{ (system_ubuntu_profile == 'sway') | ternary('/usr/bin/wl-copy', '/usr/bin/xclip') }}"
     dest: /usr/bin/copy
     state: link
     force: true
+  when: system_ubuntu_profile != 'server'
 
 # =============================================================================
 # i3-specific: urxvt-perls
 # =============================================================================
 - name: Install urxvt-perls for i3
-  when: configs.vm == 'i3'
+  when: system_ubuntu_profile == 'i3'
   block:
     - name: Download urxvt-perls
       become: false

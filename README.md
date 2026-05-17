@@ -12,8 +12,8 @@ This repository provides a template for managing dotfiles using Ansible on Arch 
 * AUR Helper (Arch): trizen
 
 ### Package List
-*  **Arch Linux**: Refer to `roles/system/vars/main.yml` for the full list.
-*  **Ubuntu**: Refer to `roles/system-ubuntu/vars/main.yml` for the full list.
+*  **Arch Linux**: Refer to `roles/system_arch/vars/main.yml` for the full list.
+*  **Ubuntu**: Refer to `roles/system_ubuntu/vars/main.yml` for the full list.
 
 ## Installation
 Before installation, review `vars/config.yml` for essential configurations such as the username and the location of the dotfiles repository.
@@ -24,24 +24,27 @@ Encrypted files may appear post-installation. These are protected using Ansible 
 ```bash
 git clone https://github.com/burakkose/dotfiles.git
 cd dotfiles
-make install-deps-arch && make system-arch && make dotfiles
+make arch
 ```
 
 ### Ubuntu Installation
-As I primarily use Arch and not Ubuntu much these days, the Ubuntu setup will always lag behind.
 ```bash
 git clone https://github.com/burakkose/dotfiles.git
 cd dotfiles
-make install-deps-ubuntu && make system-ubuntu && make dotfiles
+make ubuntu
 ```
 
-### Ubuntu Server Installation
-This target installs the non-graphical CLI/tooling subset of the Arch package set on Ubuntu Server. It intentionally excludes Wayland, X11, window managers, launchers, bars, and other GUI packages.
+### Server Installation
+The server profiles use the same Arch/Ubuntu flow but skip desktop packages, desktop repositories, desktop symlinks, and window-manager-specific tasks.
+
 ```bash
 git clone https://github.com/burakkose/dotfiles.git
 cd dotfiles
-make install-deps-ubuntu && make system-ubuntu-server && make dotfiles
+make arch-server
+make ubuntu-server
 ```
+
+The Ubuntu dependency bootstrap installs Ansible from the default Ubuntu repositories; no Ansible PPA is required.
 
 ### To provision dotfiles only:
 ```bash
