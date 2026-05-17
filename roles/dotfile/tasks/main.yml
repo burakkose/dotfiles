@@ -225,5 +225,5 @@
   ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm.git
     dest: "{{ dotfile_home }}/.tmux/plugins/tpm"
-    version: master
+    version: v3.1.0
     update: true

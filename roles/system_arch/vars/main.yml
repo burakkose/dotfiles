@@ -45,10 +45,12 @@ system_arch_packages_desktop:
   # GUI applications
   - evince
   - featherpad
+  - firefox
   - galculator
   - gsimplecal
   - imagemagick
   - libreoffice-fresh
+  - pcmanfm
   - transmission-gtk
   - visual-studio-code-bin
   - xarchiver
@@ -68,11 +70,14 @@ system_arch_packages_desktop:
 
   # Audio
   - pavucontrol
-  - pulseaudio
 
   # Network
+  - bluez
+  - bluez-utils
   - network-manager-applet
   - networkmanager-openvpn
+  - openvpn
+  - wireguard-tools
 
 # =============================================================================
 # WM-specific Packages
@@ -87,6 +92,7 @@ system_arch_packages_i3:
   - lxappearance
   - lxinput
   - polybar
+  - pulseaudio
   - redshift
   - rofi
   - rxvt-unicode
@@ -108,11 +114,17 @@ system_arch_packages_sway:
   - kanshi
   - mpv
   - nwg-displays
+  - pipewire
+  - pipewire-alsa
+  - pipewire-audio
+  - pipewire-jack
+  - pipewire-pulse
   - slurp
   - sway
   - swaybg
   - swaylock-effects
   - waybar
+  - wireplumber
   - wl-clipboard
   - wofi
 

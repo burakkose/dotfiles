@@ -10,11 +10,11 @@ import argparse
 __version__ = '0.2.5'
 
 
-HEX_DIGIT_PATTERN = '[0-9A-F]'
+HEX_DIGIT_PATTERN = '[0-9A-Fa-f]'
 HEX_BYTE_PATTERN = '%s{2}' % HEX_DIGIT_PATTERN
 MAC_ADDRESS_PATTERN = ':'.join((HEX_BYTE_PATTERN, ) * 6)
-DEVICE_PATTERN = re.compile('^(?:.*\s)?Device\s(?P<mac>%s)\s(?P<name>.*)' % MAC_ADDRESS_PATTERN)
-CONTROLLER_PATTERN = re.compile('^(?:.*\s)?Controller\s(?P<mac>%s)\s(?P<name>.*)' % MAC_ADDRESS_PATTERN)
+DEVICE_PATTERN = re.compile(r'^(?:.*\s)?Device\s(?P<mac>%s)\s(?P<name>.*)' % MAC_ADDRESS_PATTERN)
+CONTROLLER_PATTERN = re.compile(r'^(?:.*\s)?Controller\s(?P<mac>%s)\s(?P<name>.*)' % MAC_ADDRESS_PATTERN)
 WAIT_TIME = .75
 TRIES = 8
 
@@ -149,7 +149,7 @@ async def wait():
 
 
 async def execute_command(cmd):
-    p = await asyncio.create_subprocess_shell(cmd, stdout=sb.PIPE, stderr=sb.PIPE)
+    p = await asyncio.create_subprocess_exec(*cmd, stdout=sb.PIPE, stderr=sb.PIPE)
     stdout, stderr = await p.communicate()
     stdout, stderr = \
         stdout.decode() if stdout is not None else '', \
@@ -183,19 +183,34 @@ async def execute_find(cmd, pattern, tries=0, fail_safe=False):
 
 
 async def find_dev_id(mac, **kw):
-    return await execute_find('pactl list cards short', 'bluez_card.%s' % '_'.join(mac), **kw)
+    return await execute_find(
+        ['pactl', 'list', 'cards', 'short'],
+        'bluez_card.%s' % re.escape('_'.join(mac)),
+        **kw,
+    )
 
 
 async def find_sink(mac, **kw):
-    return await execute_find('pacmd list-sinks', 'bluez_sink.%s' % '_'.join(mac), **kw)
+    return await execute_find(
+        ['pacmd', 'list-sinks'],
+        'bluez_sink.%s' % re.escape('_'.join(mac)),
+        **kw,
+    )
 
 
 async def set_profile(device_id, profile='a2dp_sink'):
-    return await execute_command('pactl set-card-profile %s %s' % (device_id, profile))
+    return await execute_command(['pactl', 'set-card-profile', device_id, profile])
 
 
 async def set_default_sink(sink):
-    return await execute_command('pacmd set-default-sink %s' % sink)
+    return await execute_command(['pacmd', 'set-default-sink', sink])
+
+
+def normalize_mac(mac):
+    normalized = mac.replace('_', ':')
+    if not re.fullmatch(MAC_ADDRESS_PATTERN, normalized):
+        raise SubprocessError('Invalid Bluetooth MAC address: %s' % mac)
+    return normalized.upper().split(':')
 
 
 async def main(args):
@@ -222,7 +237,7 @@ async def main(args):
             print('Selecting device:')
             mac, _ = await protocol.select_paired_device()
 
-        mac = mac.split(':' if ':' in mac else '_')
+        mac = normalize_mac(mac)
         print('Device MAC: %s' % ':'.join(mac))
 
         device_id = await find_dev_id(mac, fail_safe=True)

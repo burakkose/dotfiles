@@ -13,6 +13,10 @@
   ansible.builtin.set_fact:
     system_ubuntu_active_repos: "{{ system_ubuntu_repos + (system_ubuntu_repos_desktop if system_ubuntu_profile != 'server' else []) }}"
 
+- name: Resolve active APT preferences
+  ansible.builtin.set_fact:
+    system_ubuntu_active_apt_preferences: "{{ system_ubuntu_apt_preferences + (system_ubuntu_apt_preferences_desktop if system_ubuntu_profile != 'server' else []) }}"
+
 # =============================================================================
 # Repository Setup
 # =============================================================================
@@ -26,20 +30,17 @@
   ansible.builtin.apt_repository:
     repo: "{{ item }}"
   loop: "{{ system_ubuntu_ppa }}"
-  failed_when: false
 
 - name: Add desktop PPAs
   ansible.builtin.apt_repository:
     repo: "{{ item }}"
   loop: "{{ system_ubuntu_ppa_desktop }}"
-  failed_when: false
   when: system_ubuntu_profile != 'server'
 
 - name: Add i3 PPAs
   ansible.builtin.apt_repository:
     repo: "{{ item }}"
   loop: "{{ system_ubuntu_ppa_i3 }}"
-  failed_when: false
   when: system_ubuntu_profile == 'i3'
 
 - name: Create keyrings directory
@@ -55,12 +56,29 @@
     mode: "0644"
   loop: "{{ system_ubuntu_active_repos }}"
 
+- name: Verify APT repository GPG key fingerprints
+  ansible.builtin.command:
+    cmd: "gpg --show-keys --with-colons /etc/apt/keyrings/{{ item.key_file }}"
+  register: system_ubuntu_repo_key
+  changed_when: false
+  failed_when: >-
+    system_ubuntu_repo_key.rc != 0 or
+    (item.fingerprint is defined and item.fingerprint not in system_ubuntu_repo_key.stdout)
+  loop: "{{ system_ubuntu_active_repos }}"
+
 - name: Add APT repositories
   ansible.builtin.apt_repository:
     repo: "{{ item.repo }}"
     filename: "{{ item.name }}"
     state: present
   loop: "{{ system_ubuntu_active_repos }}"
+
+- name: Configure APT preferences
+  ansible.builtin.copy:
+    dest: "/etc/apt/preferences.d/{{ item.name }}"
+    content: "{{ item.content }}"
+    mode: "0644"
+  loop: "{{ system_ubuntu_active_apt_preferences }}"
 
 # =============================================================================
 # System Update
@@ -84,11 +102,33 @@
     vtype: select
   when: system_ubuntu_profile != 'server'
 
+- name: Check for Firefox snap
+  ansible.builtin.command:
+    cmd: snap list firefox
+  register: system_ubuntu_firefox_snap
+  changed_when: false
+  failed_when: false
+  when: system_ubuntu_profile != 'server'
+
+- name: Remove Firefox snap
+  ansible.builtin.command:
+    cmd: snap remove firefox
+  when:
+    - system_ubuntu_profile != 'server'
+    - system_ubuntu_firefox_snap.rc | default(1) == 0
+
 - name: Install common packages
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   loop: "{{ system_ubuntu_packages }}"
+
+- name: Install server packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_ubuntu_packages_server }}"
+  when: system_ubuntu_profile == 'server'
 
 - name: Install desktop packages
   ansible.builtin.apt:
@@ -119,27 +159,14 @@
     name: "{{ system_ubuntu_packages_pip }}"
     executable: pip3
     state: present
-
-# =============================================================================
-# Rustup & Cargo
-# =============================================================================
-- name: Download rustup installer
-  become: false
-  ansible.builtin.get_url:
-    url: https://sh.rustup.rs
-    dest: /tmp/rustup.sh
-    mode: "0755"
-
-- name: Install rustup
-  become: false
-  ansible.builtin.command:
-    cmd: /tmp/rustup.sh -y
-    creates: ~/.cargo/bin/rustup
+  when: system_ubuntu_packages_pip | length > 0
 
 - name: Install cargo packages
   become: false
   ansible.builtin.command:
-    cmd: "~/.cargo/bin/cargo install {{ item.name }}"
+    cmd: >-
+      cargo install {{ item.name }}
+      {% if item.version is defined %}--version {{ item.version }} --locked{% endif %}
     creates: "~/.cargo/bin/{{ item.binary }}"
   loop: "{{ system_ubuntu_packages_cargo }}"
 

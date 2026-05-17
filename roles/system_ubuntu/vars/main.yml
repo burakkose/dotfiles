@@ -11,13 +11,37 @@ system_ubuntu_repos:
   - name: eza
     key_url: https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
     key_file: gierens.asc
-    repo: "deb [signed-by=/etc/apt/keyrings/gierens.asc] http://deb.gierens.de stable main"
+    fingerprint: 1548BC8A4B4D2688F9B0DAF7EC29E2090CE3FD43
+    repo: "deb [signed-by=/etc/apt/keyrings/gierens.asc] https://deb.gierens.de stable main"
 
 system_ubuntu_repos_desktop:
+  - name: mozilla
+    key_url: https://packages.mozilla.org/apt/repo-signing-key.gpg
+    key_file: packages.mozilla.org.asc
+    fingerprint: 35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3
+    repo: "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main"
+
   - name: vscode
     key_url: https://packages.microsoft.com/keys/microsoft.asc
     key_file: microsoft.asc
+    fingerprint: BC528686B50D79E339D3721CEB3E94ADBE1229CF
     repo: "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/microsoft.asc] https://packages.microsoft.com/repos/code stable main"
+
+# =============================================================================
+# APT Preferences
+# =============================================================================
+system_ubuntu_apt_preferences: []
+
+system_ubuntu_apt_preferences_desktop:
+  - name: mozilla
+    content: |
+      Package: *
+      Pin: origin packages.mozilla.org
+      Pin-Priority: 1000
+
+      Package: firefox*
+      Pin: release o=Ubuntu
+      Pin-Priority: -1
 
 # =============================================================================
 # PPAs
@@ -39,12 +63,14 @@ system_ubuntu_packages:
   - apt-transport-https
   - build-essential
   - ca-certificates
+  - cargo
   - curl
   - git
   - git-core
   - gpg
-  - openssh-server
+  - openssh-client
   - software-properties-common
+  - thefuck
   - wget
 
   # Modern CLI tools
@@ -76,15 +102,20 @@ system_ubuntu_packages:
   - python3-dev
   - python3-pip
 
+system_ubuntu_packages_server:
+  - openssh-server
+
 system_ubuntu_packages_desktop:
   # GUI applications
   - code
   - evince
   - featherpad
+  - firefox
   - galculator
   - gsimplecal
   - imagemagick
   - libreoffice
+  - pcmanfm
   - transmission-gtk
   - xarchiver
 
@@ -101,11 +132,13 @@ system_ubuntu_packages_desktop:
 
   # Audio
   - pavucontrol
-  - pulseaudio
 
   # Network
+  - bluez
   - network-manager-gnome
   - network-manager-openvpn-gnome
+  - openvpn
+  - wireguard-tools
 
 # =============================================================================
 # WM-specific APT Packages
@@ -120,6 +153,7 @@ system_ubuntu_packages_i3:
   - lxappearance
   - lxinput
   - polybar
+  - pulseaudio
   - redshift
   - rofi
   - rxvt-unicode-256color
@@ -138,11 +172,16 @@ system_ubuntu_packages_sway:
   - grim
   - gwenview
   - kanshi
+  - libspa-0.2-bluetooth
   - mpv
+  - pipewire
+  - pipewire-audio-client-libraries
+  - pipewire-pulse
   - slurp
   - sway
   - swaybg
   - waybar
+  - wireplumber
   - wl-clipboard
   - wofi
   # nwg-displays dependencies
@@ -163,8 +202,7 @@ system_ubuntu_packages_sway:
 # =============================================================================
 # Pip Packages
 # =============================================================================
-system_ubuntu_packages_pip:
-  - thefuck
+system_ubuntu_packages_pip: []
 
 # =============================================================================
 # Cargo Packages
@@ -172,6 +210,7 @@ system_ubuntu_packages_pip:
 system_ubuntu_packages_cargo:
   - name: du-dust
     binary: dust
+    version: 1.1.1
 
 # =============================================================================
 # Git-based Installs
@@ -180,44 +219,50 @@ system_ubuntu_git_installs:
   - name: zinit
     repo: https://github.com/zdharma-continuum/zinit.git
     dest: /usr/share/zinit
-    version: main
+    version: v3.9.0
 
   - name: tpm
     repo: https://github.com/tmux-plugins/tpm
     dest: ~/.tmux/plugins/tpm
+    version: v3.1.0
     become: false
 
   - name: powerline-fonts
     repo: https://github.com/powerline/fonts.git
     dest: ~/.local/src/powerline-fonts
+    version: a029626780dd4af32f15a3e708a5b00528c22f1d
     become: false
     when: desktop
 
   - name: siji
     repo: https://github.com/stark/siji.git
     dest: ~/.local/src/siji
+    version: c691f200c1c66e76daa2afc9cbbd1aa39045c906
     become: false
     when: desktop
 
   - name: gruvbox-gtk-theme
     repo: https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git
     dest: /tmp/gruvbox-gtk-theme
+    version: 578cd220b5ff6e86b078a6111d26bb20ec8c733f
     when: desktop
 
   - name: nwg-displays
     repo: https://github.com/nwg-piotr/nwg-displays.git
     dest: /tmp/nwg-displays
+    version: v0.4.2
     when: sway
 
   - name: swaylock-effects
     repo: https://github.com/mortie/swaylock-effects.git
     dest: /tmp/swaylock-effects
+    version: v1.6-4
     when: sway
 
   - name: PathPicker
     repo: https://github.com/facebook/PathPicker.git
     dest: /tmp/PathPicker
-    version: main
+    version: 0.9.5
 
 # =============================================================================
 # Fonts

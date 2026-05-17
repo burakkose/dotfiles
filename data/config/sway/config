@@ -19,7 +19,7 @@ bindsym $mod+b exec ~/.bin/wofi-bookmarks
 bindsym $mod+r exec "wofi --show=run"
 
 # Wofi window switcher
-bindsym $mod+w exec "bash ~/.bin/wofi-window-selector""
+bindsym $mod+w exec "bash ~/.bin/wofi-window-selector"
 
 # Wofi for power management
 bindsym $mod+m exec "~/.bin/wofi-power-menu"

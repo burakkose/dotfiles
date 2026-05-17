@@ -10,13 +10,6 @@ import subprocess
 home = os.getenv("HOME")
 sys.path.append(home + "/.lib/pybase")
 
-# Try to load YAML with the faster CLoader if available
-try:
-    from yaml import CLoader as Loader
-except ImportError:
-    from yaml import Loader
-
-
 def get_path(path_str):
     """Expand the user's home directory in the path."""
     return os.path.expanduser(path_str)
@@ -27,13 +20,17 @@ config_path = get_path("~/.config/rofi/bookmarks-config.yaml")
 
 # Read the bookmarks from YAML and CSV files
 with open(config_path, "r") as stream:
-    files = yaml.load(stream, Loader=Loader)
+    files = yaml.safe_load(stream) or []
     attr = []
     for file in files:
         with open(get_path(file), "r") as csv_file:
             reader = csv.reader(csv_file, delimiter=",")
             # Skip the first line (headers) and extend the attributes
-            attr.extend(list(reader)[1:])
+            rows = list(reader)[1:]
+            for row in rows:
+                if len(row) != 2:
+                    raise ValueError(f"Invalid bookmark row in {file}: {row}")
+                attr.append(row)
 
 # Separate options (names) and values (URLs or commands)
 (options, values) = zip(*attr)
@@ -53,6 +50,6 @@ result = subprocess.run(
 selected_option = result.stdout.strip()
 if selected_option in options:
     index = options.index(selected_option)
-    
-    # Call the browser or another command with the selected value
-    subprocess.call(f"browser {' '.join(values[index].split('|'))}", shell=True)
+
+    browser_args = [arg.strip() for arg in values[index].split("|") if arg.strip()]
+    subprocess.run(["browser", *browser_args], check=False)

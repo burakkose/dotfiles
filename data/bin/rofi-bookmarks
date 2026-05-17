@@ -2,21 +2,15 @@
 
 import sys
 import os
+import csv
+import subprocess
 
 home = os.getenv("HOME")
 sys.path.append(home + "/.lib/pybase")
 
 from rofi import Rofi
 
-import csv
 import yaml
-import os
-import subprocess
-
-try:
-    from yaml import CLoader as Loader
-except ImportError:
-    from yaml import Loader
 
 
 def get_path(path_str):
@@ -26,16 +20,19 @@ def get_path(path_str):
 config_path = get_path("~/.config/rofi/bookmarks-config.yaml")
 
 with open(config_path, "r") as stream:
-    files = yaml.load(stream, Loader=Loader)
+    files = yaml.safe_load(stream) or []
     attr = []
     for file in files:
         with open(get_path(file), "r") as csv_file:
             reader = csv.reader(csv_file, delimiter=",")
-            attr.extend(list(reader)[1:])
+            rows = list(reader)[1:]
+            for row in rows:
+                if len(row) != 2:
+                    raise ValueError(f"Invalid bookmark row in {file}: {row}")
+                attr.append(row)
     (options, values) = zip(*attr)
     r = Rofi()
     index = r.select("Select bookmark: ", options)[0]
     if index != -1:
-        subprocess.call(
-            "browser {}".format(" ".join(values[index].split("|"))), shell=True
-        )
+        browser_args = [arg.strip() for arg in values[index].split("|") if arg.strip()]
+        subprocess.run(["browser", *browser_args], check=False)
