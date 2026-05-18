@@ -51,8 +51,8 @@ bar {
 }
 # exec_always --no-startup-id ~/.bin/waybar-relaunch
 
-# Launch NetworkManager applet (consider Wayland alternatives)
-exec_always --no-startup-id nm-applet
+# Launch NetworkManager applet (X11 tray under XWayland; consider Wayland alternatives)
+exec_always sh -c 'pkill -x nm-applet 2>/dev/null; nm-applet &'
 
 ## Sway autostart additions
 # Auto-mount + tray icon for removable USB drives
@@ -98,8 +98,7 @@ bindsym --locked XF86AudioPrev  exec playerctl previous
 # Let Sway manage the wallpaper directly instead of spawning swaybg on reload
 output * bg "$HOME/.config/wallpaper/wallpaper.png" fill
 
-# Start PulseAudio
-exec --no-startup-id pulseaudio --start
+# PipeWire already provides the PulseAudio compatibility layer
 
 # Assign applications to workspaces
 assign [instance="brave-browser"] workspace 2:Internet
