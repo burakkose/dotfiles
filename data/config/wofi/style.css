@@ -1,82 +1,78 @@
-/* Define color variables */
-@define-color normal_text   #000000;   /* Black */
-@define-color normal_bg     #e0e0e0;   /* Light Gray */
-@define-color selected_text #ffffff;   /* White */
-@define-color selected_bg   #00897b;   /* Teal */
-@define-color urgent_bg     #dc322f;   /* Red */
-@define-color active_bg     #c2cad0;   /* Light Gray */
-@define-color window_bg     #f5f5f5;   /* Very Light Gray */
-@define-color window_border #ffffff;   /* White */
+/* Catppuccin Mocha palette for wofi.
+ * Variable names match the original light defaults so the structure
+ * is unaffected by palette swaps. Font family/size preserved. */
+@define-color normal_text   #ffffff;
+@define-color normal_bg     #181825;
+@define-color selected_text #181825;
+@define-color selected_bg   #f9e2af;
+@define-color urgent_bg     #f38ba8;
+@define-color active_bg     #313244;
+@define-color window_bg     #181825;
+@define-color window_border #45475a;
+@define-color input_bg      #11111b;
 
-/* General window styling */
 window {
-    border: 0px;
-    border-radius: 10px;
+    border: 1px solid @window_border;
+    border-radius: 12px;
     font-family: sans-serif;
-    font-size: 16px;
-    background-color: @window_border;
+    font-size: 18px;
+    background-color: @window_bg;
+    color: @normal_text;
 }
 
-/* Input box styling */
 #input {
-    border-radius: 10px 10px 0px 0px;
-    border: 0px;
-    padding: 8px 12px;
-    margin: 0px;
-    font-size: 20px;
+    border-radius: 8px;
+    border: 1px solid @window_border;
+    padding: 10px 14px;
+    margin: 12px;
+    font-size: 22px;
     color: @normal_text;
-    background-color: @window_bg;
+    background-color: @input_bg;
 }
 
-/* Inner container styling */
 #inner-box {
-    margin: 0px;
+    margin: 0 12px 12px 12px;
     color: @normal_text;
-    background-color: @window_bg;
+    background-color: transparent;
 }
 
-/* Outer container styling */
 #outer-box {
-    margin: 0px;
-    background-color: @window_border;
-    border-radius: 10px;
+    margin: 0;
+    background-color: @window_bg;
+    border-radius: 12px;
 }
 
-/* Selected item styling */
 #selected {
     background-color: @selected_bg;
     color: @selected_text;
+    border-radius: 8px;
 }
 
-/* Entry (unselected row) styling */
 #entry {
-    padding: 6px 12px;
-    margin: 0px;
-    background-color: @window_bg;
+    padding: 8px 12px;
+    margin: 2px 0;
+    background-color: transparent;
     color: @normal_text;
+    border-radius: 8px;
 }
 
-/* Urgent row styling */
 #entry.urgent {
     background-color: @urgent_bg;
-    color: @normal_text;
+    color: @selected_text;
 }
 
-/* Active row styling */
 #entry.active {
     background-color: @active_bg;
     color: @normal_text;
 }
 
-/* Scroll styling */
 #scroll {
-    margin: 5px;
-    background-color: @window_bg;
+    margin: 0 8px;
+    background-color: transparent;
 }
 
-/* Text styling inside entries */
 #text {
-    margin: 0px;
-    padding: 2px 0px;
-    color: @normal_text;
+    margin: 0;
+    padding: 2px 0;
+    color: inherit;
 }

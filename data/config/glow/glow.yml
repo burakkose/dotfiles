@@ -1,0 +1,8 @@
+# glow — terminal markdown renderer (charmbracelet)
+# 'dark' is glow's built-in dark style; harmonizes well with the
+# Catppuccin Mocha palette used by the rest of the desktop.
+style: "dark"
+pager: false
+width: 100
+local: true
+mouse: false

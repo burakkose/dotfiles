@@ -26,7 +26,18 @@ typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
 # 3. Colors and Icons
 # -------------------
-local grey=252 red=196 yellow=226 blue=33 magenta=201 cyan=51 white=15
+# 256-color indices chosen as the closest xterm matches to the
+# Catppuccin Mocha palette used by waybar / wofi / swaync / foot /
+# tmux. p10k uses the fixed 256-color cube (not the 16-color slots
+# remapped by foot), so the mapping is approximate but visually close.
+#   grey    250 #bcbcbc -> Mocha subtext0/1 #a6adc8/#bac2de
+#   red     211 #ff87af -> Mocha red        #f38ba8
+#   yellow  222 #ffd787 -> Mocha yellow     #f9e2af
+#   blue    111 #87afff -> Mocha blue       #89b4fa
+#   magenta 183 #d7afff -> Mocha mauve      #cba6f7
+#   cyan    117 #87d7ff -> Mocha sky        #89dceb
+#   white   189 #d7d7ff -> Mocha text       #cdd6f4
+local grey=250 red=211 yellow=222 blue=111 magenta=183 cyan=117 white=189
 
 typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE="%F{${yellow}}%n%f%F{${grey}}@%m%f"
 typeset -g POWERLEVEL9K_DIR_FOREGROUND=4

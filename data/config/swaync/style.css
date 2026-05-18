@@ -1,0 +1,10 @@
+/* swaync — active style selector.
+ *
+ * The full stylesheet lives in style-cool.css and style-warm.css; the
+ * variants differ only in the text colors that need to shift brightness
+ * to maintain 9-10:1 contrast across gammastep modes.
+ *
+ * ~/.config/swaync/style-active.css is a symlink managed by ~/.bin/sunset
+ * which points at whichever variant matches the current gammastep state. */
+
+@import "style-active.css";

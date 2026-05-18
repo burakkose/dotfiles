@@ -1,0 +1,37 @@
+/* Waybar palette — WARM variant (gammastep ON, 3400K).
+ * Same Catppuccin Mocha identity as palette-cool.css, but the four
+ * tokens that go on bright/dark surfaces are at full brightness so
+ * each pair lands in 9-10:1 contrast under 3400K gammastep warming
+ * (which compresses luminance and would otherwise drop contrast).
+ *
+ * Tokens that DIFFER from palette-cool.css:
+ *   fg      #d9deec  body text on mantle, 9.5:1 warm
+ *   yellow  #f9e2af  full pill bg, crust text 10.4:1 warm
+ *   aqua    #89dceb  full pill bg, crust text 10:1 warm
+ *   blue    #89b4fa  full pill bg, crust text 9:1 warm
+ *
+ * Everything else identical to palette-cool.css. */
+
+@define-color bg_dim      #11111b;
+@define-color bg0         #181825;
+@define-color bg1         #313244;
+@define-color bg2         #45475a;
+@define-color bg3         #585b70;
+@define-color bg4         #6c7086;
+@define-color bg5         #7f849c;
+@define-color bg_visual   #45475a;
+@define-color bg_red      #313244;
+@define-color bg_green    #181825;
+@define-color bg_blue     #313244;
+@define-color bg_yellow   #313244;
+@define-color fg          #d9deec;
+@define-color red         #f38ba8;
+@define-color orange      #fab387;
+@define-color yellow      #f9e2af;
+@define-color green       #a6e3a1;
+@define-color aqua        #89dceb;
+@define-color blue        #89b4fa;
+@define-color purple      #cba6f7;
+@define-color grey0       #6c7086;
+@define-color grey1       #7f849c;
+@define-color grey2       #9399b2;

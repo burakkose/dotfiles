@@ -3,16 +3,16 @@
     border-radius: 0px;
     margin: 0px 1px;
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "os4 Terminess Powerline", "Font Awesome", "Siji";
+    font-family: "Inter", "Font Awesome 7 Free", "Font Awesome 6 Free", "Font Awesome 5 Free", "Font Awesome", "Siji";
     font-size: 14px;
     min-height: 0px;
 }
 
-@import "everforest.css";
+@import "catppuccin-mocha.css";
 
 window#waybar {
     border: none;
-    background-color: @bg_green;
+    background-color: rgba(24, 24, 37, 0.88);
     color: @fg;
     transition-property: background-color;
     transition-duration: .5s;
@@ -64,19 +64,19 @@ window#waybar.empty #window {
     border-radius: 5px 0px 0px 5px;
     padding: 0px 5px;
     background-color: @yellow;
-    color: @bg_yellow;
+    color: @bg_dim;
 }
 
 #memory {
     padding: 0px 5px;
     background-color: @yellow;
-    color: @bg_yellow;
+    color: @bg_dim;
 }
 
 #temperature {
     padding: 0px 5px;
     background-color: @yellow;
-    color: @bg_yellow;
+    color: @bg_dim;
 }
 
 #temperature.critical {
@@ -86,20 +86,20 @@ window#waybar.empty #window {
 #custom-gpu-temp {
     padding: 0px 5px;
     background-color: @yellow;
-    color: @bg_yellow;
+    color: @bg_dim;
 }
 
 #disk {
     border-radius: 0px 5px 5px 0px;
     padding: 0px 5px;
     background-color: @yellow;
-    color: @bg_yellow;
+    color: @bg_dim;
 }
 
 #disk.home {
     padding: 0px 5px;
     background-color: @yellow;
-    color: @bg_yellow;
+    color: @bg_dim;
 }
 
 #battery {
@@ -117,7 +117,8 @@ window#waybar.empty #window {
 #battery {
     padding: 0px 5px;
     background-color: @aqua;
-    color: @bg_yellow;
+    color: @bg_dim;
+    margin-left: 8px;
 }
 
 #battery.plugged {
@@ -150,27 +151,27 @@ window#waybar.empty #window {
 #backlight {
     border-radius: 5px 0px 0px 5px;
     padding: 0px 5px;
-    margin-left: 5px;
+    margin-left: 8px;
     background-color: @blue;
-    color: @bg_yellow;
+    color: @bg_dim;
 }
 
 #pulseaudio {
     padding: 0px 5px;
     border-radius: 0px 5px 5px 0px;
     background-color: @blue;
-    color: @bg_yellow;
+    color: @bg_dim;
 }
 
 #pulseaudio.muted {
     background-color: @grey1;
-    color: @bg_yellow;
+    color: @bg_dim;
 }
 
 #tray {
     padding: 0px 5px;
     border-radius: 5px;
-    margin-left: 5px;
+    margin-left: 8px;
     color: @fg;
     background-color: @bg0;
 }
@@ -178,21 +179,25 @@ window#waybar.empty #window {
 #clock {
     padding: 0px 5px;
     border-radius: 5px;
-    margin: 0px 5px;
+    margin: 0px 5px 0px 8px;
     background-color: @bg0;
+    /* Tabular figures: Inter uses proportional digits by default which
+       made the clock width wobble every second. GTK CSS wants the
+       feature tag as a quoted string with no on/off literal. */
+    font-feature-settings: "tnum";
 }
 
 #custom-sunset {
     padding: 0px 5px;
     border-radius: 5px;
     margin: 0px 5px;
-    color: #a9b1d6;
+    color: @fg;
     background-color: @bg0;
 }
 
 #bluetooth {
     border-radius: 5px;
-    color: #a9b1d6;
+    color: @fg;
     background-color: @bg0;
 }
 
@@ -204,4 +209,25 @@ window#waybar.empty #window {
     border-radius: 5px;
     font-weight: normal;
     font-size: 14px;
+}
+
+#custom-notification {
+    padding: 0px 8px;
+    margin-right: 5px;
+    background-color: @bg0;
+    color: @fg;
+    border-radius: 5px;
+}
+
+#custom-notification.notification {
+    color: @red;
+}
+
+#custom-notification.dnd-notification,
+#custom-notification.dnd-none,
+#custom-notification.inhibited-notification,
+#custom-notification.inhibited-none,
+#custom-notification.dnd-inhibited-notification,
+#custom-notification.dnd-inhibited-none {
+    color: @grey1;
 }

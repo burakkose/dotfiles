@@ -1,0 +1,62 @@
+# lazygit — TUI git client.
+# Docs: https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+
+gui:
+  theme:
+    activeBorderColor:
+      - "#f9e2af"
+      - bold
+    inactiveBorderColor:
+      - "#45475a"
+    optionsTextColor:
+      - "#89b4fa"
+    selectedLineBgColor:
+      - "#313244"
+    selectedRangeBgColor:
+      - "#45475a"
+    cherryPickedCommitBgColor:
+      - "#cba6f7"
+    cherryPickedCommitFgColor:
+      - "#11111b"
+    unstagedChangesColor:
+      - "#f38ba8"
+  authorColors:
+    "*": "#cdd6f4"
+  showFileTree: true
+  showRandomTip: false
+  showCommandLog: false
+  nerdFontsVersion: "3"
+  commitLength:
+    show: true
+  mouseEvents: true
+  scrollHeight: 4
+  scrollPastBottom: false
+  language: "auto"
+  showBottomLine: false
+  expandFocusedSidePanel: false
+git:
+  pagers:
+    - colorArg: always
+      pager: delta --paging=never --color-only --syntax-theme="Catppuccin Mocha"
+  commit:
+    signOff: false
+    autoWrapCommitMessage: true
+    autoWrapWidth: 72
+  merging:
+    manualCommit: false
+    args: ""
+  log:
+    order: "topo-order"
+    showGraph: "always"
+    showWholeGraph: false
+  skipHookPrefix: WIP
+  autoFetch: true
+  autoRefresh: true
+  fetchAll: true
+  branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --'
+  allBranchesLogCmds:
+    - git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium
+confirmOnQuit: false
+quitOnTopLevelReturn: false
+disableStartupPopups: true
+pager: delta --paging=never --color-only --syntax-theme="Catppuccin Mocha"

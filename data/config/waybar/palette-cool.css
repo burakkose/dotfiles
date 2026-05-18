@@ -1,0 +1,38 @@
+/* Waybar palette — COOL variant (gammastep OFF).
+ * Same Catppuccin Mocha identity as palette-warm.css, but the four
+ * tokens that go on bright/dark surfaces are dimmed so each pair
+ * lands in 9-10:1 contrast on this side of the gammastep toggle.
+ *
+ * Tokens that DIFFER from palette-warm.css:
+ *   fg      #bac2de  body text on mantle, 9.95:1 cool
+ *   yellow  #c7b58c  dimmed pill bg, crust text 9.5:1 cool
+ *   aqua    #6fb3bf  dimmed pill bg, crust text 9.5:1 cool
+ *   blue    #7191c8  dimmed pill bg, crust text 9.5:1 cool
+ *
+ * Everything else is the official Catppuccin Mocha (surfaces, accents
+ * we don't put text on, etc.). Switching cool<->warm only changes
+ * brightness in the three pill groups + body text. */
+
+@define-color bg_dim      #11111b;
+@define-color bg0         #181825;
+@define-color bg1         #313244;
+@define-color bg2         #45475a;
+@define-color bg3         #585b70;
+@define-color bg4         #6c7086;
+@define-color bg5         #7f849c;
+@define-color bg_visual   #45475a;
+@define-color bg_red      #313244;
+@define-color bg_green    #181825;
+@define-color bg_blue     #313244;
+@define-color bg_yellow   #313244;
+@define-color fg          #bac2de;
+@define-color red         #f38ba8;
+@define-color orange      #fab387;
+@define-color yellow      #c7b58c;
+@define-color green       #a6e3a1;
+@define-color aqua        #6fb3bf;
+@define-color blue        #7191c8;
+@define-color purple      #cba6f7;
+@define-color grey0       #6c7086;
+@define-color grey1       #7f849c;
+@define-color grey2       #9399b2;

@@ -36,7 +36,7 @@ bindsym $mod+m exec "rofi -show power-menu -modi power-menu:~/.bin/rofi-power-me
 bindsym mod4+l exec "bash ~/.bin/lock"
 
 # Show file manager
-bindsym $mod+t exec pcmanfm
+bindsym $mod+t exec nautilus
 
 # Border of the windows
 for_window [class="^.*"] border pixel 2

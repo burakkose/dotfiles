@@ -1,0 +1,4 @@
+# Local GTK2 overrides — kept empty intentionally.
+# The main ~/.gtkrc-2.0 (symlinked from data/gtkrc-2.0) includes this
+# file at the top. Add per-host or per-machine GTK2 tweaks here that
+# you don't want committed to the dotfiles repository.

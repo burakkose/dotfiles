@@ -21,6 +21,7 @@
         "custom/vpn-name",
         "bluetooth",
         "custom/sunset",
+        "custom/notification",
         "clock"
     ],
     "tray": {
@@ -33,11 +34,11 @@
         "return-type": "json",
         "format": "{icon}",
         "format-icons": {
-            "off": "",
-            "on": ""
+            "off": "",
+            "on": ""
         },
         "exec": "~/.bin/sunset",
-        "on-click": "exec ~/.bin/sunset toggle; pkill -RTMIN+11 waybar",
+        "on-click": "~/.bin/sunset toggle && /usr/bin/pkill -RTMIN+11 waybar",
         "exec-if": "~/.bin/sunset check",
         "exec-on-event": true,
         "signal": 11
@@ -50,22 +51,27 @@
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
-        "format": " {status}",
-        "format-disabled": "", // an empty format will hide the module
-        "format-connected": " {num_connections} connected",
-        "tooltip-format": "{controller_alias}\t{controller_address}",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "format": "",
+        "format-disabled": "",
+        "format-off": "",
+        "format-on": "",
+        "format-no-controller": "",
+        "format-connected": " {num_connections}",
+        "format-connected-battery": " {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}  {controller_address}",
+        "tooltip-format-connected": "{controller_alias}  {controller_address}",
+        "tooltip-format-enumerate-connected": "{device_alias}  {device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}  {device_address}  {device_battery_percentage}%",
         "on-click": "foot bluetoothctl",
     },
     "clock": {
         "format": "{:%A %d.%m.%Y - %H:%M}",
-        "tooltip-format": "<span color='#D3C6AA' size='larger'>{:%Y %B}</span>\n<tt>{calendar}</tt>",
+        "tooltip-format": "<span color='#cdd6f4' size='larger'>{:%Y %B}</span>\n<tt>{calendar}</tt>",
         "calendar-weeks-pos": "right",
-        "today-format": "<span color='#E67E80' weight='ultrabold'>{}</span>",
-        "format-calendar": "<span color='#D3C6AA' weight='normal'>{}</span>",
-        "format-calendar-weeks": "<span color='#7FBBB3'><b>W{:%V}</b></span>",
-        "format-calendar-weekdays": "<span color='#A7C080'><b>{}</b></span>",
+        "today-format": "<span color='#f38ba8' weight='ultrabold'>{}</span>",
+        "format-calendar": "<span color='#cdd6f4' weight='normal'>{}</span>",
+        "format-calendar-weeks": "<span color='#89b4fa'><b>W{:%V}</b></span>",
+        "format-calendar-weekdays": "<span color='#a6e3a1'><b>{}</b></span>",
         "on-scroll": {
             "calendar": 1
         },
@@ -167,5 +173,25 @@
         "interval": 5,
         "format": "{text}",
         "tooltip": true
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "  <span foreground='red'><sup>•</sup></span>",
+            "none": " ",
+            "dnd-notification": "  <span foreground='red'><sup>•</sup></span>",
+            "dnd-none": " ",
+            "inhibited-notification": "  <span foreground='red'><sup>•</sup></span>",
+            "inhibited-none": " ",
+            "dnd-inhibited-notification": "  <span foreground='red'><sup>•</sup></span>",
+            "dnd-inhibited-none": " "
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     }
 }

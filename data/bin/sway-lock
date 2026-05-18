@@ -1,3 +1,69 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Polished swaylock-effects invocation: screenshot of current screen,
+# scaled + blurred + vignetted for a soft frosted-glass feel, with
+# Catppuccin Mocha indicator ring + clock.
+#
+# Yellow accent (#f9e2af) is reused on the ring/text so the lock
+# screen reads as part of the same design language as the rest of
+# the desktop chrome.
 
-swaylock --clock --indicator --screenshots --effect-scale 0.4 --effect-vignette 0.2:0.5 --effect-blur 4x2 --datestr "%a %e.%m.%Y" --timestr "%k:%M"
+set -euo pipefail
+
+# Mocha palette (xRRGGBBAA where AA=ff is fully opaque)
+BASE="1e1e2eff"      # base text bg
+MANTLE="181825ff"
+SURFACE0="313244ff"
+SURFACE1="45475aff"
+TEXT="cdd6f4ff"
+SUBTEXT0="a6adc8ff"
+YELLOW="f9e2afff"
+GREEN="a6e3a1ff"
+RED="f38ba8ff"
+SAPPHIRE="74c7ecff"
+
+exec swaylock \
+  --screenshots \
+  --effect-scale 0.5 \
+  --effect-blur 8x4 \
+  --effect-vignette 0.25:0.65 \
+  --clock \
+  --indicator \
+  --indicator-radius 110 \
+  --indicator-thickness 8 \
+  --datestr "%A, %B %-d" \
+  --timestr "%H:%M" \
+  --font "Inter" \
+  --font-size 28 \
+  \
+  --ring-color           "$SURFACE0" \
+  --ring-clear-color     "$YELLOW"   \
+  --ring-caps-lock-color "$YELLOW"   \
+  --ring-ver-color       "$SAPPHIRE" \
+  --ring-wrong-color     "$RED"      \
+  \
+  --inside-color           "${MANTLE%ff}aa" \
+  --inside-clear-color     "${MANTLE%ff}aa" \
+  --inside-caps-lock-color "${MANTLE%ff}aa" \
+  --inside-ver-color       "${MANTLE%ff}aa" \
+  --inside-wrong-color     "${MANTLE%ff}aa" \
+  \
+  --key-hl-color    "$YELLOW"  \
+  --bs-hl-color     "$RED"     \
+  --caps-lock-key-hl-color "$YELLOW" \
+  --caps-lock-bs-hl-color  "$RED"    \
+  \
+  --separator-color "00000000" \
+  \
+  --line-color         "00000000" \
+  --line-clear-color   "00000000" \
+  --line-caps-lock-color "00000000" \
+  --line-ver-color     "00000000" \
+  --line-wrong-color   "00000000" \
+  \
+  --text-color           "$TEXT" \
+  --text-clear-color     "$TEXT" \
+  --text-caps-lock-color "$TEXT" \
+  --text-ver-color       "$TEXT" \
+  --text-wrong-color     "$RED"  \
+  \
+  --fade-in 0.2

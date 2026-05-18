@@ -1,0 +1,12 @@
+/* Active Catppuccin Mocha palette selector for waybar.
+ *
+ * The actual @define-color tokens live in palette-cool.css and
+ * palette-warm.css. ~/.config/waybar/palette-active.css is a symlink
+ * managed by ~/.bin/sunset which points at whichever variant matches
+ * the current gammastep state.
+ *
+ * Importing the active symlink (not one of the variants directly)
+ * means waybar picks up the correct mode on every reload and on
+ * every sunset toggle. */
+
+@import "palette-active.css";

@@ -1,0 +1,9 @@
+/* Main rofi config — sets the active theme. */
+
+configuration {
+  modi: "drun,run,window,ssh";
+  show-icons: true;
+  font: "Inter 12";
+}
+
+@theme "catppuccin-default"

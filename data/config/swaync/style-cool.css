@@ -1,0 +1,186 @@
+/* swaync — COOL variant (gammastep OFF).
+ * Identical structural CSS to style-warm.css; differs only in the
+ * brightness of the two text colors that needed adjustment to hit
+ * 9-10:1 contrast without gammastep warming compressing luminance.
+ *
+ * Body text (.body / .summary-on-surface): #cdd6f4 → 8.87:1 on surface0
+ * Title text (.summary / titles on mantle): #bac2de → 9.95:1 on mantle */
+
+* {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+}
+
+/* ---- Floating toast notifications ---- */
+.floating-notifications.background .notification {
+  background: rgba(24, 24, 37, 0.95);
+  border: 1px solid #45475a;
+  border-radius: 10px;
+  margin: 6px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+.floating-notifications.background .notification-content {
+  padding: 10px;
+  color: #cdd6f4;
+}
+
+.floating-notifications.background .notification.critical {
+  border-color: #f38ba8;
+}
+
+.floating-notifications.background .notification.low {
+  opacity: 0.85;
+}
+
+/* ---- Control center pane ---- */
+.control-center {
+  background: rgba(24, 24, 37, 0.95);
+  color: #bac2de;
+  border: 1px solid #45475a;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.control-center-list {
+  background: transparent;
+}
+
+.control-center-list-placeholder {
+  color: #7f849c;
+  font-size: 14px;
+}
+
+.notification-row {
+  outline: none;
+  margin: 6px 0;
+}
+
+.notification {
+  background: rgba(49, 50, 68, 0.9);
+  border: 1px solid #45475a;
+  border-radius: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.notification-content {
+  padding: 10px;
+  color: #cdd6f4;
+}
+
+.summary {
+  color: #bac2de;
+  font-weight: bold;
+}
+
+.time {
+  color: #7f849c;
+  font-size: 12px;
+}
+
+.body {
+  color: #cdd6f4;
+}
+
+.close-button {
+  background: transparent;
+  color: #f38ba8;
+  border: none;
+  border-radius: 8px;
+  padding: 2px 8px;
+  margin: 4px;
+}
+
+.close-button:hover {
+  background: rgba(243, 139, 168, 0.2);
+}
+
+.notification.critical {
+  border-color: #f38ba8;
+}
+
+.notification.low {
+  opacity: 0.85;
+}
+
+/* ---- Widgets ---- */
+.widget-title {
+  margin: 4px 4px 8px 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #bac2de;
+}
+
+.widget-title > button {
+  background: #313244;
+  color: #bac2de;
+  border: 1px solid #45475a;
+  border-radius: 8px;
+  padding: 4px 12px;
+}
+
+.widget-title > button:hover {
+  background: #45475a;
+}
+
+.widget-volume,
+.widget-backlight {
+  background: rgba(49, 50, 68, 0.7);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 6px 0;
+  color: #cdd6f4;
+}
+
+trough {
+  background: #181825;
+  border-radius: 8px;
+  min-height: 6px;
+}
+
+highlight {
+  background: #f9e2af;
+  border-radius: 8px;
+  min-height: 6px;
+}
+
+slider {
+  background: #cdd6f4;
+  border: 1px solid #f9e2af;
+  border-radius: 8px;
+  min-width: 14px;
+  min-height: 14px;
+}
+
+.widget-mpris {
+  background: rgba(49, 50, 68, 0.7);
+  border-radius: 10px;
+  padding: 8px;
+  margin: 6px 0;
+}
+
+.widget-mpris-player {
+  padding: 4px;
+}
+
+.widget-mpris-title {
+  color: #bac2de;
+  font-weight: bold;
+}
+
+.widget-mpris-subtitle {
+  color: #cdd6f4;
+}
+
+.widget-mpris button {
+  background: transparent;
+  color: #cdd6f4;
+  border: none;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.widget-mpris button:hover {
+  background: #313244;
+}

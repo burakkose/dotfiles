@@ -2,10 +2,10 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/burak/.gtkrc-2.0.mine"
-gtk-theme-name="Gruvbox-Orange-Dark"
+gtk-theme-name="catppuccin-mocha-lavender-standard+default"
 gtk-icon-theme-name="Papirus-Dark"
 gtk-font-name="Inter Display 11"
-gtk-cursor-theme-name="Adwaita"
+gtk-cursor-theme-name="Bibata-Modern-Classic"
 gtk-cursor-theme-size=24
 gtk-toolbar-style=GTK_TOOLBAR_BOTH
 gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
@@ -15,5 +15,5 @@ gtk-enable-event-sounds=0
 gtk-enable-input-feedback-sounds=0
 gtk-xft-antialias=1
 gtk-xft-hinting=1
-gtk-xft-hintstyle="hintfull"
+gtk-xft-hintstyle="hintslight"
 gtk-xft-rgba="rgb"
