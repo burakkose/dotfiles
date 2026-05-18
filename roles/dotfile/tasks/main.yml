@@ -318,3 +318,19 @@
   failed_when: false
   when:
     - configs.vm | default('') == 'sway'
+# ============================================================================
+# VS Code extension provisioning.
+#
+# Runs the dotfiles' install-vscode-extensions.sh on every dotfile
+# provisioning. The script is idempotent: it queries
+# `code --list-extensions` first and only installs the ones that are
+# missing, so repeated runs are cheap. It also bails out cleanly when
+# `code` is not installed (e.g. on the server profile), so this task
+# can run unconditionally without a profile gate.
+# ============================================================================
+- name: Install or update VS Code extensions
+  ansible.builtin.command:
+    cmd: "{{ dotfile_repo_path }}/data/Code/install-vscode-extensions.sh"
+  register: dotfile_vscode_extensions
+  changed_when: "'Installed ' in (dotfile_vscode_extensions.stdout | default(''))"
+  failed_when: false

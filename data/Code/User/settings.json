@@ -60,24 +60,108 @@
         "**/compile_commands.json": false
     },
     "workbench.colorCustomizations": {
-        "activityBar.foreground": "#aeaeae",
-        "activityBar.inactiveForeground": "#646464",
-        "button.foreground": "#ffffff",
-        "dropdown.foreground": "#ffffff",
-        "editorLineNumber.activeForeground": "#ffffff",
-        "editorLineNumber.foreground": "#9c9c9c",
-        "editorWidget.foreground": "#ffffff",
-        "gitDecoration.ignoredResourceForeground": "#A6755B",
-        "list.activeSelectionForeground": "#ffffff",
-        "menu.foreground": "#ffffff",
-        "sideBar.foreground": "#aeaeae",
-        "statusBar.background": "#333333",
-        "statusBar.foreground": "#ffffff",
-        "tab.activeForeground": "#ffffff",
-        "tab.inactiveForeground": "#aeaeae",
+        "[Catppuccin Mocha]": {
+            "editor.background": "#15151f",
+            "editor.foreground": "#bac2de",
+            "editorGutter.background": "#15151f",
+            "editorStickyScroll.background": "#15151f",
+            "editorStickyScrollHover.background": "#15151f",
+            "minimap.background": "#15151f",
+            "breadcrumb.background": "#15151f",
+            "panel.background": "#15151f",
+            "terminal.background": "#15151f",
+            "sideBar.background": "#0d0d15",
+            "sideBarSectionHeader.background": "#0d0d15",
+            "activityBar.background": "#0d0d15",
+            "statusBar.background": "#0d0d15",
+            "titleBar.activeBackground": "#0d0d15",
+            "titleBar.inactiveBackground": "#0d0d15",
+            "editorGroupHeader.tabsBackground": "#0d0d15",
+            "editorGroupHeader.noTabsBackground": "#0d0d15",
+            "tab.activeBackground": "#15151f",
+            "tab.inactiveBackground": "#0d0d15",
+            "tab.hoverBackground": "#15151f",
+            "tab.activeBorderTop": "#f9e2af"
+        }
     },
     "editor.tokenColorCustomizations": {
-        "comments": "#63a33e"
+        "[Catppuccin Mocha]": {
+            "textMateRules": [
+                {
+                    "name": "Functions — yellow: low per-line density (verbs) so high-arousal yellow works as eye anchor without overwhelming",
+                    "scope": [
+                        "entity.name.function",
+                        "meta.function-call entity.name.function",
+                        "support.function"
+                    ],
+                    "settings": { "foreground": "#f9e2af" }
+                },
+                {
+                    "name": "Types, classes, interfaces, enums — teal: vivid cyan-green hue (Ayu-style), survives gammastep, perceptually calmer than yellow for high-frequency C++ types",
+                    "scope": [
+                        "entity.name.type",
+                        "entity.name.class",
+                        "entity.other.inherited-class",
+                        "support.class",
+                        "support.type",
+                        "storage.type"
+                    ],
+                    "settings": { "foreground": "#94e2d5", "fontStyle": "" }
+                },
+                {
+                    "name": "Function parameters — peach, distinct from regular variables (which stay text)",
+                    "scope": [
+                        "variable.parameter",
+                        "meta.function.parameters variable"
+                    ],
+                    "settings": { "foreground": "#fab387", "fontStyle": "" }
+                },
+                {
+                    "name": "Storage modifiers (public, static, async, const, let, var) — red, distinct from control keywords",
+                    "scope": [
+                        "storage.modifier"
+                    ],
+                    "settings": { "foreground": "#f38ba8" }
+                },
+                {
+                    "name": "Punctuation — dimmer (overlay1) so structure recedes harder against the darker chrome",
+                    "scope": [
+                        "punctuation",
+                        "punctuation.separator",
+                        "punctuation.terminator",
+                        "meta.brace"
+                    ],
+                    "settings": { "foreground": "#7f849c" }
+                },
+                {
+                    "name": "Comments — overlay0: deeply faint so they almost vanish, leaving only meaningful code visible",
+                    "scope": "comment",
+                    "settings": { "foreground": "#6c7086", "fontStyle": "italic" }
+                }
+            ]
+        }
+    },
+    "editor.semanticTokenColorCustomizations": {
+        "[Catppuccin Mocha]": {
+            "enabled": true,
+            "rules": {
+                "function": "#f9e2af",
+                "method": "#f9e2af",
+                "variable": "#bac2de",
+                "property": "#bac2de",
+                "parameter": { "foreground": "#fab387", "italic": false },
+                "type": { "foreground": "#94e2d5", "italic": false },
+                "class": { "foreground": "#94e2d5", "italic": false },
+                "interface": { "foreground": "#94e2d5", "italic": false },
+                "enum": { "foreground": "#94e2d5", "italic": false },
+                "enumMember": "#fab387",
+                "struct": { "foreground": "#94e2d5", "italic": false },
+                "typeParameter": { "foreground": "#94e2d5", "italic": false },
+                "namespace": "#94e2d5",
+                "*.constant": "#fab387",
+                "*.readonly": "#fab387"
+            }
+        }
     },
     "search.exclude": {
         "**/node_modules": true,
@@ -156,10 +240,16 @@
     "window.customTitleBarVisibility": "windowed",
     "window.menuBarVisibility": "compact",
     "window.zoomLevel": 1,
-    "workbench.colorTheme": "Ayu Dark Bordered",
+    "workbench.colorTheme": "Catppuccin Mocha",
     "workbench.editor.enablePreview": false,
     "workbench.editor.highlightModifiedTabs": true,
-    "workbench.iconTheme": "material-icon-theme",
+    "workbench.iconTheme": "catppuccin-mocha",
     "workbench.sideBar.location": "left",
     "workbench.statusBar.visible": true,
+    "catppuccin.accentColor": "lavender",
+    "catppuccin.workbenchMode": "flat",
+    "catppuccin.bracketMode": "dimmed",
+    "catppuccin.italicComments": true,
+    "catppuccin.italicKeywords": false,
+    "catppuccin.boldKeywords": true,
 }
