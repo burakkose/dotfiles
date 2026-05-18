@@ -171,6 +171,24 @@
   loop: "{{ system_ubuntu_packages_cargo }}"
 
 # =============================================================================
+# GitHub Release Binaries
+# =============================================================================
+- name: Install GitHub release binaries
+  ansible.builtin.shell:
+    cmd: |
+      set -euo pipefail
+      tmpdir=$(mktemp -d)
+      trap 'rm -rf "$tmpdir"' EXIT
+      curl -fsSL "{{ item.url }}" -o "$tmpdir/archive.tar.gz"
+      tar -xzf "$tmpdir/archive.tar.gz" -C "$tmpdir"
+      install -m 0755 "$tmpdir/{{ item.binary_path }}" "/usr/local/bin/{{ item.binary }}"
+      mkdir -p /usr/local/share/dotfiles-versions
+      touch "/usr/local/share/dotfiles-versions/{{ item.name }}-{{ item.version }}"
+    creates: "/usr/local/share/dotfiles-versions/{{ item.name }}-{{ item.version }}"
+    executable: /bin/bash
+  loop: "{{ system_ubuntu_github_binaries }}"
+
+# =============================================================================
 # Git Repository Clones
 # =============================================================================
 - name: Clone git repositories

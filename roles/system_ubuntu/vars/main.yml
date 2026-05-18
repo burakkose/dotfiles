@@ -14,6 +14,12 @@ system_ubuntu_repos:
     fingerprint: 1548BC8A4B4D2688F9B0DAF7EC29E2090CE3FD43
     repo: "deb [signed-by=/etc/apt/keyrings/gierens.asc] https://deb.gierens.de stable main"
 
+  - name: charm
+    key_url: https://repo.charm.sh/apt/gpg.key
+    key_file: charm.asc
+    fingerprint: ED927B38BE981E53CA09153D03BBF595D4DFD35C
+    repo: "deb [signed-by=/etc/apt/keyrings/charm.asc] https://repo.charm.sh/apt/ * *"
+
 system_ubuntu_repos_desktop:
   - name: mozilla
     key_url: https://packages.mozilla.org/apt/repo-signing-key.gpg
@@ -98,14 +104,10 @@ system_ubuntu_packages:
   # Container
   - podman
 
-  # Shell history / productivity
-  - atuin
-
   # Git tooling
   - git-delta
-  - lazygit
 
-  # Docs / reading
+  # Docs / reading (from charm.sh APT repo)
   - glow
 
   # Python
@@ -231,6 +233,24 @@ system_ubuntu_packages_cargo:
   - name: du-dust
     binary: dust
     version: 1.1.1
+
+# =============================================================================
+# GitHub Release Binaries
+# Tools without a usable APT repo, installed from upstream release tarballs.
+# URLs target linux x86_64; adjust per-entry if provisioning a different arch.
+# =============================================================================
+system_ubuntu_github_binaries:
+  - name: atuin
+    version: "18.16.1"
+    url: "https://github.com/atuinsh/atuin/releases/download/v18.16.1/atuin-x86_64-unknown-linux-gnu.tar.gz"
+    binary: atuin
+    binary_path: "atuin-x86_64-unknown-linux-gnu/atuin"
+
+  - name: lazygit
+    version: "0.61.1"
+    url: "https://github.com/jesseduffield/lazygit/releases/download/v0.61.1/lazygit_0.61.1_linux_x86_64.tar.gz"
+    binary: lazygit
+    binary_path: "lazygit"
 
 # =============================================================================
 # Git-based Installs
