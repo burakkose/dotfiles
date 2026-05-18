@@ -127,7 +127,6 @@ system_arch_packages_sway:
   - foot
   - gammastep
   - grim
-  - kanshi
   - mpv
   - nwg-displays
   - pipewire

@@ -187,7 +187,6 @@ system_ubuntu_packages_sway:
   - foot
   - gammastep
   - grim
-  - kanshi
   - libspa-0.2-bluetooth
   - mpv
   - pipewire

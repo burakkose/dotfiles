@@ -292,3 +292,29 @@
   loop: "{{ dotfile_gsettings | default([]) }}"
   loop_control:
     label: "{{ item.schema }}/{{ item.key }}"
+
+# ============================================================================
+# Per-machine sway output configuration.
+#
+# Replaces kanshi: on first provisioning we run ~/.bin/sway-detect-outputs
+# once, which writes ~/.config/sway/outputs.local based on the currently
+# connected monitors (matched by EDID make/model/serial). Subsequent
+# `make dotfiles` runs are skipped via `creates:` so any hand-edits the
+# user makes to that file (scale, position, disabling an output) are
+# preserved. To regenerate after a hardware change, run the script
+# directly with `~/.bin/sway-detect-outputs --force`.
+#
+# The script itself bails out cleanly if sway is not yet running (fresh
+# install), so this task is safe to run from a TTY before sway has been
+# started — it just won't produce a file yet. In that case the user runs
+# the script after their first sway session.
+# ============================================================================
+- name: Detect sway outputs and write per-machine config (first provisioning)
+  ansible.builtin.command:
+    cmd: "{{ dotfile_home }}/.bin/sway-detect-outputs"
+    creates: "{{ dotfile_home }}/.config/sway/outputs.local"
+  register: dotfile_sway_outputs_detect
+  changed_when: "'Wrote ' in (dotfile_sway_outputs_detect.stdout | default(''))"
+  failed_when: false
+  when:
+    - configs.vm | default('') == 'sway'

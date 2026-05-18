@@ -15,3 +15,7 @@ data/config/foot/colors-active.ini
 data/config/waybar/palette-active.css
 data/config/swaync/style-active.css
 
+# Per-machine sway output config generated on first provision by
+# ~/.bin/sway-detect-outputs. Stays local to each machine.
+data/config/sway/outputs.local
+
