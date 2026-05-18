@@ -1,0 +1,86 @@
+# Git configuration — vendored from dotfiles.
+# Per-user identity is intentionally NOT set here; the system gitconfig
+# (or ~/.gitconfig.local include below) carries name + email so the
+# repo file can be shared across machines without leaking identity.
+
+[include]
+    # Optional per-host overrides: user name/email, signingkey, etc.
+    # If the file doesn't exist git silently ignores it.
+    path = ~/.gitconfig.local
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = true              # never auto-merge on pull
+    ff = only                  # if rebase not requested, fast-forward only
+
+[push]
+    autoSetupRemote = true     # `git push` on a new branch sets upstream
+    followTags = true          # push annotated tags reachable from commits
+
+[fetch]
+    prune = true               # drop refs the remote no longer has
+    pruneTags = true
+
+[rebase]
+    autoStash = true           # auto-stash + pop around rebase
+    autoSquash = true          # honour fixup!/squash! commit prefixes
+    updateRefs = true          # update stacked branches on interactive rebase
+
+[merge]
+    conflictStyle = zdiff3     # 3-way diff with common ancestor context
+
+[diff]
+    algorithm = histogram      # better at moved/renamed code than myers
+    colorMoved = default
+    colorMovedWS = allow-indentation-change
+    mnemonicPrefix = true      # i= w= c= prefixes instead of a= b=
+    renames = copies
+
+[rerere]
+    enabled = true             # remember conflict resolutions, replay them
+    autoUpdate = true
+
+[branch]
+    sort = -committerdate      # `git branch` sorts by most-recent first
+
+[tag]
+    sort = version:refname     # natural-version sort for tag listings
+
+[column]
+    ui = auto                  # column-format multi-item output
+
+[core]
+    pager = delta
+    excludesfile = ~/.gitignore_global
+    fsmonitor = true           # background fs watcher for huge repos
+    untrackedCache = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true            # n/N to jump between hunks in less
+    light = false
+    line-numbers = true
+    side-by-side = false        # set true if you want split view
+    syntax-theme = Catppuccin Mocha
+    file-style = bold yellow ul
+    hunk-header-style = file line-number syntax
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+    hunk-header-decoration-style = cyan box ul
+
+[help]
+    autocorrect = prompt       # offer typo correction without auto-running
+
+[transfer]
+    fsckObjects = true         # validate object integrity on fetch/push
+[fetch]
+    fsckObjects = true
+[receive]
+    fsckObjects = true

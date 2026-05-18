@@ -1,0 +1,38 @@
+# Global gitignore — language-agnostic noise that shouldn't be tracked
+# anywhere. Per-project ignores still belong in each repo's own
+# .gitignore.
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+.Spotlight-V100
+.Trashes
+
+# Editors / IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.*.un~
+.netrwhist
+
+# Direnv / asdf / mise
+.envrc
+.tool-versions
+
+# Python / Node caches that escape per-project .gitignore
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+.npm/
+.yarn/
+.pnp.*
+
+# Build outputs
+*.log
+*.tmp
+*.bak

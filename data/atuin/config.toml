@@ -1,0 +1,32 @@
+# Atuin — shell history database
+# Docs: https://docs.atuin.sh/configuration/config/
+
+# Local-only by default. Run `atuin register` later to opt in to sync.
+auto_sync = false
+sync_address = "https://api.atuin.sh"
+sync_frequency = "10m"
+
+# Search UX
+search_mode = "fuzzy"          # fuzzy / prefix / fulltext / skim
+filter_mode = "global"         # global / host / session / directory
+filter_mode_shell_up_key_binding = "session"
+style = "compact"              # full / compact / auto
+inline_height = 25
+show_preview = true
+show_help = true
+
+# Statistics weighting (rank by recency + frequency)
+common_subcommands = ["cargo", "git", "go", "kubectl", "npm", "podman", "tmux"]
+common_prefix    = ["sudo"]
+stats_filter_mode = "global"
+
+# UI
+invert = false                 # prompt at the bottom
+exit_mode = "return-original"  # Esc restores the original command line
+update_check = false           # we update via pacman, not in-prompt
+
+# Ignore obvious secrets / pass(1) lookups
+history_filter = [
+  "^secret-tool",
+  "^pass ",
+]

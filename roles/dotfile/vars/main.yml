@@ -11,7 +11,10 @@
 dotfile_directly:
   - bin
   - lib
+  - gitconfig
+  - gitignore_global
   - gtkrc-2.0
+  - gtkrc-2.0.mine
   - nano
   - nanorc
   - scalafmt.conf
@@ -48,3 +51,34 @@ dotfile_custom:
     dest: .config/Code/User/settings.json
   - src: Code/User/keybindings.json
     dest: .config/Code/User/keybindings.json
+  - src: environment.d/50-cursor.conf
+    dest: .config/environment.d/50-cursor.conf
+  - src: atuin/config.toml
+    dest: .config/atuin/config.toml
+
+# LIBADWAITA THEME PASSTHROUGH
+# libadwaita (GTK4 GNOME apps: Nautilus, Loupe, Papers, etc.) ignores
+# gtk-theme-name and only reads CSS / assets from ~/.config/gtk-4.0/.
+# Symlink the active system theme's gtk-4.0 directory into the user
+# config so libadwaita picks up the same theme as GTK3. Set to '' to
+# disable libadwaita theming and fall back to default Adwaita.
+dotfile_libadwaita_theme: catppuccin-mocha-lavender-standard+default
+
+# DCONF / GSETTINGS — values that must agree with the *.ini files in
+# data/config/gtk-*/ so libadwaita apps, xdg-desktop-portal and any
+# GNOME setting consumer all resolve to the same theme + cursor +
+# fonts + dark-mode preference. Empty value or commented-out key =
+# don't manage this setting.
+dotfile_gsettings:
+  - { schema: "org.gnome.desktop.interface", key: "gtk-theme",            value: "'catppuccin-mocha-lavender-standard+default'" }
+  - { schema: "org.gnome.desktop.interface", key: "icon-theme",           value: "'Papirus-Dark'" }
+  - { schema: "org.gnome.desktop.interface", key: "cursor-theme",         value: "'Bibata-Modern-Classic'" }
+  - { schema: "org.gnome.desktop.interface", key: "cursor-size",          value: "24" }
+  - { schema: "org.gnome.desktop.interface", key: "color-scheme",         value: "'prefer-dark'" }
+  - { schema: "org.gnome.desktop.interface", key: "accent-color",         value: "'yellow'" }
+  - { schema: "org.gnome.desktop.interface", key: "font-name",            value: "'Inter 11'" }
+  - { schema: "org.gnome.desktop.interface", key: "document-font-name",   value: "'Inter 11'" }
+  - { schema: "org.gnome.desktop.interface", key: "monospace-font-name",  value: "'JetBrainsMono Nerd Font 10'" }
+  - { schema: "org.gnome.desktop.interface", key: "font-hinting",         value: "'slight'" }
+  - { schema: "org.gnome.desktop.interface", key: "font-antialiasing",    value: "'rgba'" }
+  - { schema: "org.gnome.desktop.interface", key: "font-rgba-order",      value: "'rgb'" }

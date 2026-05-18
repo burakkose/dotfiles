@@ -185,13 +185,14 @@
   loop: "{{ system_ubuntu_git_installs }}"
 
 # =============================================================================
-# Gruvbox GTK Theme
+# Catppuccin GTK Theme (Mocha + Lavender accent)
 # =============================================================================
-- name: Install Gruvbox GTK theme
-  ansible.builtin.command:
-    cmd: ./install.sh -t all -d /usr/share/themes
-    chdir: /tmp/gruvbox-gtk-theme/themes
-    creates: /usr/share/themes/Gruvbox-Dark
+- name: Install Catppuccin Mocha GTK theme
+  ansible.builtin.unarchive:
+    src: https://github.com/catppuccin/gtk/releases/download/v1.0.3/catppuccin-mocha-lavender-standard+default.zip
+    dest: /usr/share/themes/
+    remote_src: true
+    creates: /usr/share/themes/catppuccin-mocha-lavender-standard+default
   when: system_ubuntu_profile != 'server'
 
 # =============================================================================

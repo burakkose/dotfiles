@@ -98,6 +98,16 @@ system_ubuntu_packages:
   # Container
   - podman
 
+  # Shell history / productivity
+  - atuin
+
+  # Git tooling
+  - git-delta
+  - lazygit
+
+  # Docs / reading
+  - glow
+
   # Python
   - python3-dev
   - python3-pip
@@ -108,25 +118,31 @@ system_ubuntu_packages_server:
 system_ubuntu_packages_desktop:
   # GUI applications
   - code
-  - evince
   - featherpad
   - firefox
   - galculator
   - gsimplecal
   - imagemagick
   - libreoffice
-  - pcmanfm
+  - loupe
+  - nautilus
+  - papers
   - transmission-gtk
   - xarchiver
 
   # Appearance
+  - bibata-cursor-theme
   - fonts-font-awesome
   - fonts-inconsolata
   - fonts-inter
   - fonts-jetbrains-mono
+  - fonts-noto
+  - fonts-noto-cjk
+  - fonts-noto-color-emoji
   - fonts-powerline
   - fonts-symbola
   - papirus-icon-theme
+  - sassc
   - ttf-mscorefonts-installer
   - xfonts-utils
 
@@ -167,23 +183,28 @@ system_ubuntu_packages_i3:
 
 system_ubuntu_packages_sway:
   - brightnessctl
+  - cliphist
   - foot
   - gammastep
   - grim
-  - gwenview
   - kanshi
   - libspa-0.2-bluetooth
   - mpv
   - pipewire
   - pipewire-audio-client-libraries
   - pipewire-pulse
+  - playerctl
+  - satty
   - slurp
   - sway
+  - sway-notification-center
   - swaybg
+  - udiskie
   - waybar
   - wireplumber
   - wl-clipboard
   - wofi
+  - xdg-desktop-portal-wlr
   # nwg-displays dependencies
   - libgtk-layer-shell0
   - python3-gi
@@ -241,10 +262,10 @@ system_ubuntu_git_installs:
     become: false
     when: desktop
 
-  - name: gruvbox-gtk-theme
-    repo: https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git
-    dest: /tmp/gruvbox-gtk-theme
-    version: 578cd220b5ff6e86b078a6111d26bb20ec8c733f
+  - name: catppuccin-gtk-theme
+    repo: https://github.com/catppuccin/gtk.git
+    dest: /tmp/catppuccin-gtk
+    version: v1.0.3
     when: desktop
 
   - name: nwg-displays
