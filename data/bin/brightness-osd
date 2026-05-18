@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Brightness control with on-screen-display via swaync.
+# Uses brightnessctl with a fractional percent step so the OSD smoothly
+# advances on each key press, never going past 100% or below 1%.
+
+set -euo pipefail
+
+STEP=5
+cmd="${1:-}"
+
+case "$cmd" in
+  up)   brightnessctl set "${STEP}%+" >/dev/null ;;
+  down)
+    # Floor at 1% so the screen never blanks via the keybind alone.
+    current=$(brightnessctl get)
+    max=$(brightnessctl max)
+    pct=$(( current * 100 / max ))
+    if (( pct - STEP <= 0 )); then
+      brightnessctl set 1% >/dev/null
+    else
+      brightnessctl set "${STEP}%-" >/dev/null
+    fi
+    ;;
+  *)    echo "Usage: $0 {up|down}" >&2; exit 2 ;;
+esac
+
+current=$(brightnessctl get)
+max=$(brightnessctl max)
+percent=$(( current * 100 / max ))
+
+if   (( percent < 34 )); then icon="display-brightness-low-symbolic"
+elif (( percent < 67 )); then icon="display-brightness-medium-symbolic"
+else                          icon="display-brightness-high-symbolic"
+fi
+
+notify-send -a "brightness" -i "$icon" \
+            -h string:x-canonical-private-synchronous:brightness \
+            -h "int:value:$percent" \
+            "Brightness" "${percent}%"

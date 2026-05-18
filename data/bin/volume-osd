@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Volume control with on-screen-display via swaync.
+# Wires the XF86Audio* media keys to wpctl (PipeWire) and emits a
+# replaceable notification (-r/-h string:x-canonical-private-synchronous:)
+# so repeated key presses update the same toast instead of stacking.
+
+set -euo pipefail
+
+SINK="@DEFAULT_AUDIO_SINK@"
+SOURCE="@DEFAULT_AUDIO_SOURCE@"
+STEP="5%"
+
+cmd="${1:-}"
+
+case "$cmd" in
+  up)        wpctl set-mute   "$SINK"   0
+             wpctl set-volume -l 1.5 "$SINK" "${STEP}+" ;;
+  down)      wpctl set-mute   "$SINK"   0
+             wpctl set-volume "$SINK" "${STEP}-" ;;
+  mute)      wpctl set-mute   "$SINK"   toggle ;;
+  mic-mute)  wpctl set-mute   "$SOURCE" toggle ;;
+  *)         echo "Usage: $0 {up|down|mute|mic-mute}" >&2; exit 2 ;;
+esac
+
+# Read back the new state and emit a replaceable toast.
+read -r _ volume muted < <(wpctl get-volume "$SINK")
+percent=$(awk -v v="$volume" 'BEGIN { printf "%d", v * 100 }')
+
+if [[ "$cmd" == "mic-mute" ]]; then
+  read -r _ _ mic_muted < <(wpctl get-volume "$SOURCE")
+  if [[ "${mic_muted:-}" == "[MUTED]" ]]; then
+    icon=" microphone-sensitivity-muted"
+    title="Microphone muted"
+  else
+    icon=" microphone-sensitivity-high"
+    title="Microphone on"
+  fi
+  notify-send -a "volume" -i "$icon" -h string:x-canonical-private-synchronous:volume \
+              -h int:value:0 "$title"
+  exit 0
+fi
+
+if [[ "${muted:-}" == "[MUTED]" ]] || [[ "$percent" -eq 0 ]]; then
+  icon="audio-volume-muted-symbolic"
+  body="Muted"
+else
+  if   [[ $percent -lt 34 ]]; then icon="audio-volume-low-symbolic"
+  elif [[ $percent -lt 67 ]]; then icon="audio-volume-medium-symbolic"
+  else                              icon="audio-volume-high-symbolic"
+  fi
+  body="${percent}%"
+fi
+
+notify-send -a "volume" -i "$icon" \
+            -h string:x-canonical-private-synchronous:volume \
+            -h "int:value:$percent" \
+            "Volume" "$body"

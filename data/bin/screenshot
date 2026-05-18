@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Capture a screenshot with grim/slurp, open it in satty for annotation,
+# then save the annotated PNG to ~/Pictures/Screenshots and copy it to
+# the Wayland clipboard.
+#
+# Usage:
+#   screenshot region    select a rectangle (default)
+#   screenshot full      capture every output
+#   screenshot window    capture the focused sway window
+
+set -euo pipefail
+
+mode="${1:-region}"
+out_dir="${HOME}/Pictures/Screenshots"
+out_file="${out_dir}/$(date +%F-%H%M%S).png"
+mkdir -p "$out_dir"
+
+annotate() {
+  satty \
+    --filename - \
+    --output-filename "$out_file" \
+    --early-exit \
+    --copy-command wl-copy
+}
+
+case "$mode" in
+  full)
+    grim - | annotate
+    ;;
+  region)
+    geom=$(slurp -o) || exit 0
+    grim -g "$geom" - | annotate
+    ;;
+  window)
+    geom=$(swaymsg -t get_tree \
+      | jq -r '.. | select(.focused? == true) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')
+    grim -g "$geom" - | annotate
+    ;;
+  *)
+    echo "Usage: $0 [region|full|window]" >&2
+    exit 2
+    ;;
+esac

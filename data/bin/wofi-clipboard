@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Show clipboard history via wofi and put the picked entry back on the
+# Wayland clipboard. Requires the cliphist daemon to already be running
+# (it is autostarted from sway/config via wl-paste --watch).
+set -euo pipefail
+cliphist list | wofi -i --dmenu --prompt='Clipboard' | cliphist decode | wl-copy

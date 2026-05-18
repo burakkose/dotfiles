@@ -1,40 +1,129 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Toggle gammastep AND swap the per-mode color palettes for foot,
+# waybar and swaync so contrast stays in the 9-10:1 range whether
+# warming is on or off.
+#
+# Symlinks managed (all in $XDG_CONFIG_HOME, default ~/.config):
+#   foot/colors-active.ini   -> colors-cool.ini or colors-warm.ini
+#   waybar/palette-active.css -> palette-cool.css or palette-warm.css
+#   swaync/style-active.css   -> style-cool.css or style-warm.css
+#
+# Each surface is then asked to reload its config:
+#   foot   SIGUSR1   (reloads ~/.config/foot/foot.ini)
+#   waybar SIGUSR2   (reloads ~/.config/waybar/style.css)
+#   swaync swaync-client --reload-css
 
-#Startup function
-function start(){
-	gammastep -PO 3400 -b 1.0
+set -u
+
+CFG="${XDG_CONFIG_HOME:-$HOME/.config}"
+GAMMA_TEMP=3400
+GAMMA_BRIGHTNESS=1.0
+
+apply_palette() {
+    local mode="$1"   # cool | warm
+
+    # foot
+    if [[ -d "$CFG/foot" ]]; then
+        ln -sf "colors-$mode.ini" "$CFG/foot/colors-active.ini"
+    fi
+
+    # waybar
+    if [[ -d "$CFG/waybar" ]]; then
+        ln -sf "palette-$mode.css" "$CFG/waybar/palette-active.css"
+    fi
+
+    # swaync
+    if [[ -d "$CFG/swaync" ]]; then
+        ln -sf "style-$mode.css" "$CFG/swaync/style-active.css"
+    fi
 }
 
-#Accepts managing parameter
-case $1'' in
-	'off')
-   	pkill gammastep
-	;;
+reload_surfaces() {
+    # foot — every running foot reads the new ~/.config/foot/foot.ini
+    local pid
+    for pid in $(pgrep -x foot 2>/dev/null); do
+        kill -USR1 "$pid" 2>/dev/null || true
+    done
 
-	'on')
-	start
-	;;
+    # waybar — single instance usually; signal all just in case
+    for pid in $(pgrep -x waybar 2>/dev/null); do
+        kill -USR2 "$pid" 2>/dev/null || true
+    done
 
-	'toggle')
-   	if pkill -0 gammastep
-	then
-		pkill gammastep
-	else
-		start
-	fi
-    ;;
+    # swaync — has a client for reload
+    if command -v swaync-client >/dev/null 2>&1; then
+        swaync-client --reload-css -sw >/dev/null 2>&1 || true
+    fi
+}
+
+start_gammastep() {
+    # Use setsid to fully detach from the (possibly short-lived) waybar
+    # on-click subshell — otherwise gammastep can receive SIGHUP when
+    # that subshell exits and exit immediately.
+    setsid -f gammastep -PO "$GAMMA_TEMP" -b "$GAMMA_BRIGHTNESS" \
+        </dev/null >/dev/null 2>&1
+}
+
+stop_gammastep() {
+    local pid
+    for pid in $(pgrep -x gammastep 2>/dev/null); do
+        kill "$pid" 2>/dev/null || true
+    done
+}
+
+gammastep_running() {
+    pgrep -x gammastep >/dev/null 2>&1
+}
+
+on() {
+    apply_palette warm
+    start_gammastep
+    reload_surfaces
+}
+
+off() {
+    apply_palette cool
+    stop_gammastep
+    reload_surfaces
+}
+
+case "${1:-}" in
+    'off')
+        off
+        ;;
+    'on')
+        on
+        ;;
+    'toggle')
+        if gammastep_running; then
+            off
+        else
+            on
+        fi
+        ;;
     'check')
-    command -v gammastep
-    exit $?
-    ;;
+        command -v gammastep >/dev/null 2>&1
+        exit $?
+        ;;
+    'apply-active')
+        # Re-apply the current palette without changing gammastep state.
+        # Used by sway autostart so symlinks exist on a fresh login even
+        # if the user never toggles.
+        if gammastep_running; then
+            apply_palette warm
+        else
+            apply_palette cool
+        fi
+        reload_surfaces
+        exit 0
+        ;;
 esac
 
-#Returns a string for Waybar
-if pkill -0 gammastep
-then
-	class="off"
+# Always print waybar status so the calling waybar module gets fresh data
+if gammastep_running; then
+    class="off"
 else
-	class="on"
+    class="on"
 fi
 
 printf '{"alt":"%s"}\n' "$class"

@@ -7,3 +7,11 @@
 data/nano/search_history
 data/config/gtk-3.0/bookmarks
 
+# Active palette symlinks managed at runtime by ~/.bin/sunset.
+# The .config/<app>/ directories in this repo are symlinked as a whole
+# into ~/.config/, so sunset's writes to ~/.config/<app>/*-active.*
+# actually land here. Ignore them so toggling doesn't churn git state.
+data/config/foot/colors-active.ini
+data/config/waybar/palette-active.css
+data/config/swaync/style-active.css
+

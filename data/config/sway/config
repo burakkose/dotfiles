@@ -28,7 +28,7 @@ bindsym $mod+m exec "~/.bin/wofi-power-menu"
 bindsym Mod4+l exec "~/.bin/sway-lock"
 
 # Open file manager
-bindsym $mod+t exec pcmanfm
+bindsym $mod+t exec nautilus
 
 # Set window borders
 for_window [app_id="^.*"] border pixel 2
@@ -49,8 +49,49 @@ bar {
 # Launch NetworkManager applet (consider Wayland alternatives)
 exec_always --no-startup-id nm-applet
 
-# Set background image using swaybg
-exec_always --no-startup-id swaybg -i "$HOME/.config/wallpaper/wallpaper.png" -m fill
+## Sway autostart additions
+# Auto-mount + tray icon for removable USB drives
+exec_always sh -c 'pkill -x udiskie 2>/dev/null; udiskie --tray --notify --automount &'
+
+# Notification daemon + control center
+# exec_always so sway reloads always bring it back; pkill guard avoids duplicates.
+exec_always sh -c 'pkill -x swaync 2>/dev/null; swaync &'
+
+# Toggle the notification / control center panel
+bindsym Mod4+n exec swaync-client -t -sw
+# Dismiss all visible notifications
+bindsym Mod4+Shift+n exec swaync-client -d -sw
+
+# Clipboard history (cliphist + wl-clipboard watchers)
+# exec_always so reloads respawn the watchers; pkill guard prevents duplicates.
+exec_always sh -c 'pkill -f "wl-paste --type text --watch cliphist" 2>/dev/null; wl-paste --type text --watch cliphist store &'
+exec_always sh -c 'pkill -f "wl-paste --type image --watch cliphist" 2>/dev/null; wl-paste --type image --watch cliphist store &'
+
+# Show clipboard history picker
+bindsym Mod4+v exec ~/.bin/wofi-clipboard
+# Wipe clipboard history
+bindsym Mod4+Shift+v exec cliphist wipe
+
+# Screenshot pipeline (grim/slurp -> satty for annotation -> wl-copy + save)
+bindsym Print exec ~/.bin/screenshot region
+bindsym Shift+Print exec ~/.bin/screenshot full
+bindsym $mod+Print exec ~/.bin/screenshot window
+
+# Media keys: volume & brightness with swaync OSD
+bindsym --locked XF86AudioRaiseVolume  exec ~/.bin/volume-osd up
+bindsym --locked XF86AudioLowerVolume  exec ~/.bin/volume-osd down
+bindsym --locked XF86AudioMute         exec ~/.bin/volume-osd mute
+bindsym --locked XF86AudioMicMute      exec ~/.bin/volume-osd mic-mute
+bindsym --locked XF86MonBrightnessUp   exec ~/.bin/brightness-osd up
+bindsym --locked XF86MonBrightnessDown exec ~/.bin/brightness-osd down
+
+# Media playback (works for Spotify, mpv, browser, etc. via MPRIS)
+bindsym --locked XF86AudioPlay  exec playerctl play-pause
+bindsym --locked XF86AudioNext  exec playerctl next
+bindsym --locked XF86AudioPrev  exec playerctl previous
+
+# Let Sway manage the wallpaper directly instead of spawning swaybg on reload
+output * bg "$HOME/.config/wallpaper/wallpaper.png" fill
 
 # Start PulseAudio
 exec --no-startup-id pulseaudio --start
@@ -60,13 +101,18 @@ assign [instance="brave-browser"] workspace 2:Internet
 assign [instance="code"] workspace 3:Code
 assign [app_id="libreoffice"] workspace 4:Doc
 
-### COLORS
-client.focused          #ffcdd2 #267fb5 #ffffff #d50000   #d50000
-client.focused_inactive #333333 #5f676a #ffffff #484e50   #333333
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-client.background       #ffffff
+### COLORS — Catppuccin Mocha
+# Format: client.<state> <border> <bg> <text> <indicator> <child_border>
+# Only the border / child_border are visible at `border pixel 2`; bg /
+# text / indicator are kept consistent for the rare titled mode.
+#
+#                       border    bg        text      indicator child_border
+client.focused          #f9e2af   #1e1e2e   #11111b   #f9e2af   #f9e2af
+client.focused_inactive #45475a   #181825   #cdd6f4   #45475a   #45475a
+client.unfocused        #181825   #181825   #7f849c   #181825   #181825
+client.urgent           #f38ba8   #f38ba8   #11111b   #f38ba8   #f38ba8
+client.placeholder      #11111b   #11111b   #cdd6f4   #11111b   #11111b
+client.background       #11111b
 
 # Start a terminal using Foot
 bindsym $mod+Ctrl+t exec foot -e /bin/zsh
@@ -182,6 +228,14 @@ mode "passthrough" {
 }
 
 bindsym $mod+Escape mode "passthrough"
+
+input type:touchpad {
+    tap enabled
+    natural_scroll disabled
+}
+
+# Cursor theme (also applied to XWayland apps via xcursor_theme)
+seat * xcursor_theme Bibata-Modern-Classic 24
 
 output "DP-1" {
     mode  3440x1440@144.001Hz

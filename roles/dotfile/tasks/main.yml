@@ -227,3 +227,68 @@
     dest: "{{ dotfile_home }}/.tmux/plugins/tpm"
     version: v3.1.0
     update: true
+
+# ============================================================================
+# libadwaita theme passthrough
+# Symlink the active system theme's gtk-4.0 directory into the user config
+# so libadwaita (GTK4 GNOME apps) honors the same theme as GTK3.
+# ============================================================================
+- name: Ensure ~/.config/gtk-4.0 exists for libadwaita symlinks
+  ansible.builtin.file:
+    path: "{{ dotfile_home }}/.config/gtk-4.0"
+    state: directory
+    mode: "0755"
+  when: dotfile_libadwaita_theme | default('') | length > 0
+
+- name: Symlink libadwaita theme assets from the active system theme
+  ansible.builtin.file:
+    src: "/usr/share/themes/{{ dotfile_libadwaita_theme }}/gtk-4.0/{{ item }}"
+    dest: "{{ dotfile_home }}/.config/gtk-4.0/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - gtk.css
+    - gtk-dark.css
+    - assets
+  when: dotfile_libadwaita_theme | default('') | length > 0
+
+# ============================================================================
+# Per-mode palette active symlinks (managed at runtime by ~/.bin/sunset).
+# Bootstrap them to the cool variant so a fresh install has working
+# styles before the user ever toggles. The sunset script retargets them
+# on each on/off. Symlinks are relative (target lives in the same dir).
+# ============================================================================
+- name: Bootstrap palette-active symlinks (cool defaults)
+  ansible.builtin.file:
+    src: "{{ item.target }}"
+    dest: "{{ dotfile_home }}/.config/{{ item.path }}"
+    state: link
+    force: false
+  loop:
+    - { path: "foot/colors-active.ini",       target: "colors-cool.ini" }
+    - { path: "waybar/palette-active.css",    target: "palette-cool.css" }
+    - { path: "swaync/style-active.css",      target: "style-cool.css" }
+  loop_control:
+    label: "{{ item.path }} -> {{ item.target }}"
+
+# ============================================================================
+# GSETTINGS / dconf — make sure libadwaita apps, xdg-desktop-portal and
+# any GNOME setting consumer agree with the *.ini files we ship in
+# data/config/gtk-*/. Without this, dconf defaults silently override our
+# theme / cursor / dark-mode / font choices in modern apps.
+#
+# Idempotent: gsettings only writes when the desired value differs from
+# the live one, so re-running the playbook is cheap and reports
+# 'changed' only on the keys that actually moved.
+# ============================================================================
+- name: Apply GSettings desktop preferences
+  ansible.builtin.command:
+    cmd: "gsettings set {{ item.schema }} {{ item.key }} {{ item.value }}"
+  register: dotfile_gsettings_apply
+  changed_when: false
+  failed_when:
+    - dotfile_gsettings_apply.rc != 0
+    - "'No such schema' not in (dotfile_gsettings_apply.stderr | default(''))"
+  loop: "{{ dotfile_gsettings | default([]) }}"
+  loop_control:
+    label: "{{ item.schema }}/{{ item.key }}"
