@@ -3,4 +3,20 @@
 # Wayland clipboard. Requires the cliphist daemon to already be running
 # (it is autostarted from sway/config via wl-paste --watch).
 set -euo pipefail
-cliphist list | wofi -i --dmenu --prompt='Clipboard' | cliphist decode | wl-copy
+
+clear_action="Clear clipboard history"
+selection="$(
+  {
+    printf '%s\n' "$clear_action"
+    cliphist list
+  } | wofi -i --dmenu --prompt='Clipboard'
+)" || exit 0
+
+[[ -n "$selection" ]] || exit 0
+
+if [[ "$selection" == "$clear_action" ]]; then
+  cliphist wipe
+  exit 0
+fi
+
+printf '%s\n' "$selection" | cliphist decode | wl-copy
