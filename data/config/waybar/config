@@ -16,13 +16,13 @@
         "disk#home",
         "disk",
         "network",
+        "bluetooth",
         "battery",
         "battery#bat2",
         "backlight",
         "pulseaudio",
         "tray",
         "custom/vpn-name",
-        "bluetooth",
         "custom/sunset",
         "custom/notification",
         "clock"
@@ -73,18 +73,18 @@
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
-        "format": "",
-        "format-disabled": "",
-        "format-off": "",
-        "format-on": "",
+        "format": "󰂯",
+        "format-disabled": "󰂲",
+        "format-off": "󰂲",
+        "format-on": "󰂯",
         "format-no-controller": "",
-        "format-connected": " {num_connections}",
-        "format-connected-battery": " {device_battery_percentage}%",
+        "format-connected": "󰂱",
+        "format-connected-battery": "󰂱",
         "tooltip-format": "{controller_alias}  {controller_address}",
         "tooltip-format-connected": "{controller_alias}  {controller_address}",
         "tooltip-format-enumerate-connected": "{device_alias}  {device_address}",
         "tooltip-format-enumerate-connected-battery": "{device_alias}  {device_address}  {device_battery_percentage}%",
-        "on-click": "foot bluetoothctl"
+        "on-click": "~/.bin/wofi-bluetooth"
     },
     "clock": {
         "format": "{:%A %d.%m.%Y - %H:%M}",
