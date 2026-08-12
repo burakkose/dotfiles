@@ -89,6 +89,18 @@ window#waybar.empty #window {
     color: @bg_dim;
 }
 
+#custom-gpu-usage {
+    padding: 0px 5px;
+    background-color: @yellow;
+    color: @bg_dim;
+}
+
+#custom-gpu-vram {
+    padding: 0px 5px;
+    background-color: @yellow;
+    color: @bg_dim;
+}
+
 #disk {
     border-radius: 0px 5px 5px 0px;
     padding: 0px 5px;
@@ -100,6 +112,19 @@ window#waybar.empty #window {
     padding: 0px 5px;
     background-color: @yellow;
     color: @bg_dim;
+}
+
+#network {
+    padding: 0px 5px;
+    margin-left: 8px;
+    border-radius: 5px;
+    background-color: @bg0;
+    color: @fg;
+}
+
+#network.disconnected {
+    background-color: @red;
+    color: @fg;
 }
 
 #battery {
@@ -213,10 +238,6 @@ window#waybar.empty #window {
 
 #custom-notification {
     padding: 0px 8px;
-    margin-right: 5px;
-    background-color: @bg0;
-    color: @fg;
-    border-radius: 5px;
 }
 
 #custom-notification.notification {
