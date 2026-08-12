@@ -69,7 +69,7 @@
         "format-ethernet": "{ipaddr}/{cidr} ",
         "format-disconnected": "⚠ Disconnected",
         "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "nm-connection-editor"
+        "on-click": "~/.bin/wofi-connectivity"
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system

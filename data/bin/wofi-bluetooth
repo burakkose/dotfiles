@@ -7,6 +7,10 @@ import subprocess
 import sys
 import time
 
+sys.path.insert(0, os.path.expanduser("~/.lib/pybase"))
+
+from wofi_helpers import choose, notify, run, succeeded
+
 
 DEVICE_PATTERN = re.compile(
     r"^Device\s+(?P<address>(?:[0-9A-F]{2}:){5}[0-9A-F]{2})\s+(?P<name>.+)$",
@@ -15,29 +19,7 @@ DEVICE_PATTERN = re.compile(
 
 
 def bluetoothctl(*args, timeout=35):
-    try:
-        return subprocess.run(
-            ["bluetoothctl", *args],
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            timeout=timeout,
-            check=False,
-        )
-    except subprocess.TimeoutExpired as error:
-        output = error.stdout or ""
-        return subprocess.CompletedProcess(error.cmd, 124, output)
-
-
-def notify(summary, message, urgency="normal"):
-    notifier = shutil.which("notify-send")
-    if notifier:
-        subprocess.run(
-            [notifier, "--urgency", urgency, summary, message],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            check=False,
-        )
+    return run(["bluetoothctl", *args], timeout=timeout)
 
 
 def parse_devices(output):
@@ -111,7 +93,6 @@ def menu_options():
             label = f"＋  {name}  pair{suffix}"
             action = "pair"
         options[label] = (action, address, name)
-    options["󰑐  Scan for devices"] = ("scan", None, None)
     if controller_discovering():
         options["󰅖  Stop scanning"] = ("scan-stop", None, None)
     else:
@@ -119,21 +100,8 @@ def menu_options():
     return options
 
 
-def choose(options):
-    launcher = os.path.expanduser("~/.bin/sway-nofullscreen-launcher")
-    result = subprocess.run(
-        [launcher, "wofi", "--dmenu", "--insensitive", "--prompt", "Bluetooth"],
-        input="\n".join(options),
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
-        check=False,
-    )
-    return result.stdout.rstrip("\n")
-
-
 def require_success(result, action, name):
-    if result.returncode == 0 and "failed" not in result.stdout.casefold():
+    if succeeded(result):
         return True
     message = result.stdout.strip() or f"{action.capitalize()} failed"
     notify(f"Bluetooth {action} failed", f"{name}: {message}", "critical")
@@ -145,10 +113,9 @@ def connect(address, name, pair=False):
         result = bluetoothctl("--timeout", "30", "pair", address, timeout=35)
         if not require_success(result, "pairing", name):
             return
-
-    trust_result = bluetoothctl("trust", address)
-    if not require_success(trust_result, "trust", name):
-        return
+        trust_result = bluetoothctl("trust", address)
+        if not require_success(trust_result, "trust", name):
+            return
 
     result = bluetoothctl("--timeout", "20", "connect", address, timeout=25)
     if require_success(result, "connection", name):
@@ -203,7 +170,7 @@ def main():
         return
 
     options = menu_options()
-    selected = choose(options)
+    selected = choose(options, "Bluetooth")
     if selected in options:
         run_action(options[selected])
 

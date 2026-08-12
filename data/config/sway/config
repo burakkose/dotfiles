@@ -38,6 +38,9 @@ bindsym $mod+w exec "bash ~/.bin/wofi-window-selector"
 # Wofi for power management
 bindsym $mod+m exec "~/.bin/sway-nofullscreen-launcher ~/.bin/wofi-power-menu"
 
+# Wofi network manager
+bindsym $mod+o exec ~/.bin/wofi-connectivity all
+
 # Lock screen using swaylock
 bindsym Mod4+l exec "~/.bin/sway-lock"
 
@@ -213,18 +216,6 @@ mode "resize" {
 }
 
 bindsym $mod+Shift+r mode "resize"
-
-# Move workspace mode
-mode "move workspace" {
-    bindsym Up move workspace to output up
-    bindsym Down move workspace to output down
-    bindsym Left move workspace to output left
-    bindsym Right move workspace to output right
-
-    bindsym Escape mode "default"
-}
-
-bindsym $mod+o mode "move workspace"
 
 # Move workspace to current output
 bindsym $mod+Shift+Control+1 [workspace=$ws1] move workspace to output current; workspace --no-auto-back-and-forth $ws1
