@@ -10,6 +10,16 @@ set $mod Mod1
 # Disable focus follows mouse
 focus_follows_mouse no
 
+# Sway does not support per-app popup layering above fullscreen windows.
+# This is the only reliable setting for rofi/wofi to remain visible.
+popup_during_fullscreen smart
+
+# Keep launcher popups floating and borderless as a fallback, but fullscreen stacking is still controlled globally.
+for_window [app_id="^wofi$"] floating enable
+for_window [app_id="^wofi$"] border none
+for_window [app_id="^rofi$"] floating enable
+for_window [app_id="^rofi$"] border none
+
 # Set font for window titles and the bar
 font pango:monospace 8
 
@@ -20,13 +30,13 @@ floating_modifier $mod
 bindsym $mod+b exec ~/.bin/wofi-bookmarks
 
 # Wofi run application
-bindsym $mod+r exec "wofi --show=run"
+bindsym $mod+r exec "~/.bin/sway-nofullscreen-launcher wofi --show=run"
 
 # Wofi window switcher
 bindsym $mod+w exec "bash ~/.bin/wofi-window-selector"
 
 # Wofi for power management
-bindsym $mod+m exec "~/.bin/wofi-power-menu"
+bindsym $mod+m exec "~/.bin/sway-nofullscreen-launcher ~/.bin/wofi-power-menu"
 
 # Lock screen using swaylock
 bindsym Mod4+l exec "~/.bin/sway-lock"
@@ -100,8 +110,14 @@ output * bg "$HOME/.config/wallpaper/wallpaper.png" fill
 # PipeWire already provides the PulseAudio compatibility layer
 
 # Assign applications to workspaces
-assign [instance="brave-browser"] workspace 2:Internet
+assign [class="firefox"] workspace 2:Internet
+assign [app_id="firefox"] workspace 2:Internet
+assign [class="spotify"] workspace 1:Main
+assign [instance="spotify"] workspace 1:Main
+assign [app_id="spotify"] workspace 1:Main
 assign [instance="code"] workspace 3:Code
+assign [class="Code"] workspace 3:Code
+assign [app_id="code"] workspace 3:Code
 assign [app_id="libreoffice"] workspace 4:Doc
 
 ### COLORS — Catppuccin Mocha
@@ -232,6 +248,17 @@ mode "passthrough" {
 
 bindsym $mod+Escape mode "passthrough"
 
+# Better font rendering for various toolkits
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
+# Force Wayland backend for better rendering
+exec_always {
+    gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
+    gsettings set org.gnome.desktop.interface font-hinting 'slight'
+}
+
 input type:touchpad {
     tap enabled
     natural_scroll disabled
@@ -239,4 +266,3 @@ input type:touchpad {
 
 # Cursor theme (also applied to XWayland apps via xcursor_theme)
 seat * xcursor_theme Bibata-Modern-Classic 24
-
