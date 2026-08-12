@@ -136,7 +136,7 @@
 - name: Gather existing partial dotfiles
   ansible.builtin.stat:
     path: "{{ dotfile_home }}/.{{ item.dir }}/{{ item.name }}"
-    follow: true
+    follow: false
   loop: "{{ dotfile_partial_entries | default([]) }}"
   loop_control:
     label: ".{{ item.dir }}/{{ item.name }}"
@@ -144,7 +144,7 @@
 
 - name: Backup existing partial dotfiles
   ansible.builtin.copy:
-    src: "{{ dotfile_home }}/.{{ item.item.dir }}/{{ item.item.name }}"
+    src: "{{ dotfile_home }}/.{{ item.item.dir }}/{{ item.item.name }}{{ '/' if item.stat.isdir | default(false) else '' }}"
     dest: "{{ dotfile_backup_dir }}/{{ item.item.dir }}/{{ item.item.name }}"
     remote_src: true
     follow: true
@@ -152,7 +152,26 @@
   loop: "{{ dotfile_partial_stats.results }}"
   loop_control:
     label: "{{ item.item.dir }}/{{ item.item.name }}"
-  when: item.stat.exists
+  when:
+    - item.stat.exists
+    - not (
+        item.stat.islnk | default(false) and
+        (item.stat.lnk_source | default(item.stat.lnk_target | default(''))) == item.item.source
+      )
+
+- name: Remove existing partial dotfiles after backup
+  ansible.builtin.file:
+    path: "{{ dotfile_home }}/.{{ item.item.dir }}/{{ item.item.name }}"
+    state: absent
+  loop: "{{ dotfile_partial_stats.results }}"
+  loop_control:
+    label: "{{ item.item.dir }}/{{ item.item.name }}"
+  when:
+    - item.stat.exists
+    - not (
+        item.stat.islnk | default(false) and
+        (item.stat.lnk_source | default(item.stat.lnk_target | default(''))) == item.item.source
+      )
 
 - name: Symlink partial dotfiles into place
   ansible.builtin.file:
