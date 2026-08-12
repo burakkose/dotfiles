@@ -20,7 +20,7 @@ swaymsg -t get_tree | jq -r '
     + (.workspace | gsub("^[^:]*:|<[^>]*>"; "") | sub("__i3_scratch"; "[S]"))
     + "\t " + (.app_id // .window_properties.class // "Unknown App")
     + "\t " + .name
-' | wofi --show dmenu --prompt='Focus a window' | {
+' | ~/.bin/sway-nofullscreen-launcher wofi --show dmenu --prompt='Focus a window' | {
     # Read the selected window's ID, application, and name
     read -r window_id window_name
     # Focus on the selected window by its ID

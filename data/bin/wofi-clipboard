@@ -9,7 +9,7 @@ selection="$(
   {
     printf '%s\n' "$clear_action"
     cliphist list
-  } | wofi -i --dmenu --prompt='Clipboard'
+  } | ~/.bin/sway-nofullscreen-launcher wofi -i --dmenu --prompt='Clipboard'
 )" || exit 0
 
 [[ -n "$selection" ]] || exit 0
