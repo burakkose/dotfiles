@@ -1,0 +1,5 @@
+show=drun
+prompt=Launch
+insensitive=true
+allow_images=true
+term=foot

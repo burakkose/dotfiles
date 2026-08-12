@@ -15,7 +15,7 @@ window {
     border: 1px solid @window_border;
     border-radius: 12px;
     font-family: sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     background-color: @window_bg;
     color: @normal_text;
 }
@@ -25,7 +25,7 @@ window {
     border: 1px solid @window_border;
     padding: 10px 14px;
     margin: 12px;
-    font-size: 22px;
+    font-size: 20px;
     color: @normal_text;
     background-color: @input_bg;
 }
