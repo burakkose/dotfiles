@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# On Sway, write directly to the Wayland clipboard. Streaming stdin preserves
+# trailing newlines and avoids shell-variable limitations for arbitrary input.
+if command -v wl-copy >/dev/null 2>&1 && [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
+  if [[ $# -gt 0 ]]; then
+    printf '%s' "$*" | wl-copy
+  else
+    wl-copy
+  fi
+  exit 0
+fi
+
 if [[ $# -gt 0 ]]; then
   payload="$*"
 else

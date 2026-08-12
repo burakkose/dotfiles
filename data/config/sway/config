@@ -68,9 +68,8 @@ bindsym Mod4+n exec swaync-client -t -sw
 bindsym Mod4+Shift+n exec swaync-client -d -sw
 
 # Clipboard history (cliphist + wl-clipboard watchers)
-# exec_always so reloads respawn the watchers; pkill guard prevents duplicates.
-exec_always sh -c 'pkill -f "wl-paste --type text --watch cliphist" 2>/dev/null; wl-paste --type text --watch cliphist store &'
-exec_always sh -c 'pkill -f "wl-paste --type image --watch cliphist" 2>/dev/null; wl-paste --type image --watch cliphist store &'
+# Use a dedicated helper to restart the watchers reliably on Sway reloads.
+exec_always ~/.bin/sway-clipboard-history
 
 # Show clipboard history picker
 bindsym Mod4+v exec ~/.bin/wofi-clipboard

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v cliphist >/dev/null 2>&1; then
+  echo "cliphist is not installed" >&2
+  exit 1
+fi
+
+if ! command -v wl-paste >/dev/null 2>&1; then
+  echo "wl-paste is not installed" >&2
+  exit 1
+fi
+
+# Ensure only one watcher per clipboard type is running.
+pkill -f 'wl-paste --type text --watch cliphist' 2>/dev/null || true
+pkill -f 'wl-paste --type image --watch cliphist' 2>/dev/null || true
+
+wl-paste --type text --watch cliphist store &
+wl-paste --type image --watch cliphist store &
+
+# The watchers are intentionally kept in the background so Sway can continue.
+exit 0
