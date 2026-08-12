@@ -252,9 +252,9 @@
 # =============================================================================
 - name: Build PathPicker deb package
   ansible.builtin.command:
-    cmd: ./package.sh
+    cmd: fakeroot ./package.sh
     chdir: /tmp/PathPicker/debian
-    creates: /tmp/PathPicker/pathpicker_0.9.5_all.deb
+    creates: /tmp/PathPicker/pathpicker_*_all.deb
 
 - name: Find PathPicker deb package
   ansible.builtin.find:
