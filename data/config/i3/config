@@ -14,7 +14,6 @@ font pango:monospace 8
 floating_modifier $mod
 
 # Rofi show bookmarks
-bindsym $mod+b exec ~/.bin/rofi-bookmarks
 
 # Rofi run application
 bindsym $mod+r exec "rofi -show run"

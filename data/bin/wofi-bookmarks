@@ -1,55 +1,169 @@
 #!/usr/bin/env python3
 
-import sys
+import configparser
 import os
-import csv
-import yaml
+import shutil
+import sqlite3
 import subprocess
-
-# Get the user's home directory
-home = os.getenv("HOME")
-sys.path.append(home + "/.lib/pybase")
-
-def get_path(path_str):
-    """Expand the user's home directory in the path."""
-    return os.path.expanduser(path_str)
+import tempfile
+import time
+from urllib.parse import urlsplit, urlunsplit
 
 
-# Path to the bookmarks config YAML file
-config_path = get_path("~/.config/rofi/bookmarks-config.yaml")
-
-# Read the bookmarks from YAML and CSV files
-with open(config_path, "r") as stream:
-    files = yaml.safe_load(stream) or []
-    attr = []
-    for file in files:
-        with open(get_path(file), "r") as csv_file:
-            reader = csv.reader(csv_file, delimiter=",")
-            # Skip the first line (headers) and extend the attributes
-            rows = list(reader)[1:]
-            for row in rows:
-                if len(row) != 2:
-                    raise ValueError(f"Invalid bookmark row in {file}: {row}")
-                attr.append(row)
-
-# Separate options (names) and values (URLs or commands)
-(options, values) = zip(*attr)
-
-# Prepare the options for wofi
-wofi_input = "\n".join(options)
-
-# Call wofi in dmenu mode and capture the selected option
-result = subprocess.run(
-    ['wofi', '-i', '--show', 'dmenu', '--prompt', 'Select bookmark:'],
-    input=wofi_input,
-    text=True,
-    stdout=subprocess.PIPE
+PROFILE_ROOTS = (
+    "~/.mozilla/firefox",
+    "~/.var/app/org.mozilla.firefox/data/mozilla/firefox",
+    "~/snap/firefox/common/.mozilla/firefox",
 )
 
-# Get the index of the selected option
-selected_option = result.stdout.strip()
-if selected_option in options:
-    index = options.index(selected_option)
 
-    browser_args = [arg.strip() for arg in values[index].split("|") if arg.strip()]
-    subprocess.run(["browser", *browser_args], check=False)
+def resolve_profile(root, path):
+    profile = os.path.expanduser(path)
+    if not os.path.isabs(profile):
+        profile = os.path.join(root, profile)
+    places = os.path.join(profile, "places.sqlite")
+    return profile if os.path.isfile(places) else None
+
+
+def firefox_active_profile_dir():
+    for configured_root in PROFILE_ROOTS:
+        root = os.path.expanduser(configured_root)
+        profiles_ini = os.path.join(root, "profiles.ini")
+        if not os.path.isfile(profiles_ini):
+            continue
+
+        config = configparser.ConfigParser()
+        try:
+            config.read(profiles_ini, encoding="utf-8")
+        except configparser.Error:
+            continue
+
+        for section in config.sections():
+            if section.startswith("Install") and config.has_option(section, "Default"):
+                profile = resolve_profile(root, config.get(section, "Default"))
+                if profile:
+                    return profile
+
+        for section in config.sections():
+            if not section.startswith("Profile"):
+                continue
+            if config.getboolean(section, "Default", fallback=False):
+                profile = resolve_profile(root, config.get(section, "Path", fallback=""))
+                if profile:
+                    return profile
+
+    return None
+
+
+def query_bookmark_snapshot(places_path):
+    query = """
+        WITH RECURSIVE excluded(id) AS (
+            SELECT id
+            FROM moz_bookmarks
+            WHERE type = 2 AND title = 'Mozilla Firefox'
+            UNION ALL
+            SELECT child.id
+            FROM moz_bookmarks AS child
+            JOIN excluded AS parent ON child.parent = parent.id
+        )
+        SELECT b.title, p.url
+        FROM moz_bookmarks AS b
+        JOIN moz_places AS p ON p.id = b.fk
+        WHERE b.type = 1
+          AND b.title IS NOT NULL
+          AND p.url IS NOT NULL
+          AND (p.url LIKE 'http://%' OR p.url LIKE 'https://%')
+          AND b.id NOT IN (SELECT id FROM excluded)
+        ORDER BY b.dateAdded DESC, b.title COLLATE NOCASE
+        LIMIT 500
+    """
+
+    for attempt in range(3):
+        try:
+            with tempfile.TemporaryDirectory(prefix="wofi-firefox-") as directory:
+                snapshot = os.path.join(directory, "places.sqlite")
+                shutil.copy2(places_path, snapshot)
+                for suffix in ("-wal", "-shm"):
+                    source = places_path + suffix
+                    if os.path.exists(source):
+                        shutil.copy2(source, snapshot + suffix)
+
+                with sqlite3.connect(snapshot, timeout=1) as connection:
+                    return connection.execute(query).fetchall()
+        except (OSError, sqlite3.DatabaseError):
+            if attempt == 2:
+                return []
+            time.sleep(0.05)
+
+    return []
+
+
+def firefox_custom_bookmarks():
+    profile = firefox_active_profile_dir()
+    if not profile:
+        return []
+
+    rows = query_bookmark_snapshot(os.path.join(profile, "places.sqlite"))
+    bookmarks = []
+    seen = set()
+    for title, url in rows:
+        key = url.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        bookmarks.append((title.strip(), url.strip()))
+    return bookmarks
+
+
+def menu_entries(bookmarks):
+    title_counts = {}
+    for title, _ in bookmarks:
+        title_counts[title.casefold()] = title_counts.get(title.casefold(), 0) + 1
+
+    entries = []
+    for title, url in bookmarks:
+        label = f"{title} — {url}" if title_counts[title.casefold()] > 1 else title
+        entries.append((label, url))
+    return entries
+
+
+def launch_target(url):
+    parsed = urlsplit(url)
+    if parsed.scheme not in ("http", "https") or not parsed.netloc:
+        return
+    secure_url = urlunsplit(("https", parsed.netloc, parsed.path or "/", parsed.query, parsed.fragment))
+
+    browser = shutil.which("browser")
+    command = [browser, "--new-tab", secure_url] if browser else ["xdg-open", secure_url]
+    subprocess.Popen(
+        command,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+    )
+
+
+def main():
+    entries = menu_entries(firefox_custom_bookmarks())
+    if not entries:
+        entries = [("No Firefox bookmarks found", "")]
+
+    labels = [label for label, _ in entries]
+    urls = dict(entries)
+    launcher = os.path.expanduser("~/.bin/sway-nofullscreen-launcher")
+    result = subprocess.run(
+        [launcher, "wofi", "-i", "--show", "dmenu", "--prompt", "Select bookmark:"],
+        input="\n".join(labels),
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+
+    selected = result.stdout.rstrip("\n")
+    if selected and urls.get(selected):
+        launch_target(urls[selected])
+
+
+if __name__ == "__main__":
+    main()
