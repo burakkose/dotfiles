@@ -82,7 +82,7 @@ bindsym Mod4+Shift+n exec swaync-client -d -sw
 exec_always ~/.bin/sway-clipboard-history
 
 # Show clipboard history picker
-bindsym Mod4+v exec ~/.bin/wofi-clipboard
+bindsym $mod+p exec ~/.bin/wofi-clipboard
 # Wipe clipboard history
 bindsym Mod4+Shift+v exec cliphist wipe
 
@@ -170,9 +170,6 @@ bindsym $mod+Shift+space floating toggle
 
 # Focus mode toggle
 bindsym $mod+space focus mode_toggle
-
-# Focus parent container
-bindsym $mod+p focus parent
 
 # Define workspace names
 set $ws1 "1:Main"
